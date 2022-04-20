@@ -57,8 +57,7 @@
 
   <!-- Head -->
   <section class="head bg-primary padding-y3">
-    <!-- make dynamic for booking head -->
-    <div class="container grid head-dashboard">
+    <div class="container grid head-dashboard">  <!-- make dynamic for booking head -->
       <article class="head-text">
         <h1 class="large">Dashboard</h1>
         <p class="txt-primary">Welcome User!</p>
@@ -72,8 +71,8 @@
   </section>
 
   <!-- Sub-Head -->
-  <section class="sub-head bg-light padding-y3">
-    <div class="container grid head-dashboard">
+  <section class="sub-head bg-light padding-y3 hidden">
+    <div class="container grid">
       <article class="head-text">
         <h2 class="medium">Choose Dates</h2>
         <p class="small">
@@ -84,8 +83,65 @@
     </div>
     </section>
 
+  <!-- User Dashboard -->
+  <section class="section dashboard-view margin-y4">
+    <div class="booking-view container grid">
+      <nav class="bookings-nav-card card bg-light padding-3">
+        <h3 class="margin-y2">View Bookings</h3>
+        <ul class="booking-filter-options">
+          <li>All Bookings</li>
+          <li>Current Bookings</li>
+          <li>Future Bookings</li>
+          <li>Past Bookings</li>
+        </ul>
+        <h3 class="margin-y2">Total Cost</h3>
+        <ul class="total-cost">
+          <li>$666.44</li>
+        </ul>
+      </nav>
+      <div class="container grid padding-1">
+        <div class="booking-card card flex">
+          <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
+          <summary class="booking-card-text">
+            <h3>One Bedroom Suite</h3>
+            <p class="small">
+              Duis aute irure dolor in reprehenderit in voluptate velit esse 
+              cillum dolore eu fugiat nulla pariatur. 
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+              officia deserunt mollit anim id est laborum.
+            </p>
+          </summary>
+        </div>
+        <div class="booking-card card flex">
+          <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
+          <summary class="booking-card-text">
+            <h3>One Bedroom Suite</h3>
+            <p class="small">
+              Duis aute irure dolor in reprehenderit in voluptate velit esse 
+              cillum dolore eu fugiat nulla pariatur. 
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+              officia deserunt mollit anim id est laborum.
+            </p>
+          </summary>
+        </div>
+        <div class="booking-card card flex">
+          <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
+          <summary class="booking-card-text">
+            <h3>One Bedroom Suite</h3>
+            <p class="small">
+              Duis aute irure dolor in reprehenderit in voluptate velit esse 
+              cillum dolore eu fugiat nulla pariatur. 
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+              officia deserunt mollit anim id est laborum.
+            </p>
+          </summary>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Booking Options --> 
-  <section class="booking-options-view margin-y2">
+  <section class="booking-options-view margin-y2 hidden">
     <div class="container grid">
       <!-- dynamically add booking cards here -->
       <div class="booking-card card flex">

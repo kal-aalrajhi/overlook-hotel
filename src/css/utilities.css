@@ -125,12 +125,20 @@
     padding: 1.6rem 0;
 }
 
+.padding-1 { 
+    padding: 1rem;
+}
+
 .padding-y2 { 
     padding: 2.2rem 0;
 }
 
 .padding-y3 { 
     padding: 3.2rem 0;
+}
+
+.padding-3 { 
+    padding: 3.2rem;
 }
 
 .padding-y4 { 
