@@ -142,6 +142,19 @@ img {
   position: fixed; 
 }
 
+/* Head */
+.head img {
+  width: 20rem;
+  justify-self: flex-end;
+}
+
+/* Sub-head */
+/* .sub-head img {
+  width: 10rem;
+  justify-self: flex-end;
+} */
+
+
 /* Footer
 .footer {
 } */
