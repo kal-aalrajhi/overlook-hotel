@@ -15,16 +15,16 @@
       <h1 class="logo">Overlook Hotel</h1>
       <nav>
         <ul>
-          <li id="homeView">Home</li>
-          <li id="dashView">Dashboard</li>
-          <li id="bookView">Book</li>
+          <li id="navHomeBtn">Home</li>
+          <li id="navDashboardBtn">Dashboard</li>
+          <li id="navBookBtn">Book</li>
         </ul>
       </nav>
     </div>
   </nav>
 
   <!-- Home View -->
-  <section class="home-view" id="homeView"> <!-- Target -->
+  <section class="home-view" id="homeView"> 
     <div class="container grid">
       <article class="home-view-txt">
         <h1>Best Bookings</h1>
@@ -55,7 +55,7 @@
   </section>
 
   <!-- Head -->
-  <section class="head bg-primary padding-y3 hidden">   <!-- Target -->
+  <section class="head bg-primary padding-y3 hidden" id="head">   
     <div class="container grid head-dashboard">  <!-- make dynamic for booking head -->
       <article class="head-text">
         <h1 class="large">Dashboard</h1>
@@ -70,7 +70,7 @@
   </section>
 
   <!-- Sub-Head -->
-  <section class="sub-head bg-light padding-y3 hidden"> <!-- Target -->
+  <section class="sub-head bg-light padding-y3 hidden" id="subHead"> <!-- Target -->
     <div class="container grid">
       <article class="head-text">
         <h2 class="medium">Choose Dates</h2>
@@ -83,7 +83,7 @@
     </section>
 
   <!-- User Dashboard View -->
-  <section class="section dashboard-view margin-y4 hidden"> <!-- Target -->
+  <section class="section dashboard-view margin-y4 hidden" id="dashboardView"> 
     <div class="booking-view container grid">
       <nav class="bookings-nav-card card bg-light padding-3">
         <h3 class="margin-y2">View Bookings</h3>
@@ -99,7 +99,7 @@
         </ul>
       </nav>
       <!-- Dashboard Booking Cards Container-->
-      <div class="booking-cards-container container grid padding-1 hidden"> <!-- Target -->
+      <div class="booking-cards-container container grid padding-1 hidden"> 
         <!-- CARD START -->
         <div class="booking-card card flex">
           <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
@@ -119,9 +119,9 @@
     </div>
   </section>
 
-  <!-- Booking Options View --> 
-  <section class="booking-options-view margin-y2 hidden"> <!-- Target -->
-    <!-- Booking Options Booking Cards Container-->
+  <!-- Book View --> 
+  <section class="booking-options-view margin-y2 hidden" id="bookView"> <!-- Target -->
+    <!-- Book Options Booking Cards Container-->
     <div class="container grid">
       <!-- dynamically add booking cards here -->
       <!-- CARD START -->
@@ -143,7 +143,7 @@
   </section>
 
   <!-- Footer -->
-  <footer class="footer bg-dark padding-y5 hidden"> <!--Target-->
+  <footer class="footer bg-dark padding-y5 hidden" id="footer"> 
     <div class="container grid grid-3">
       <h1>Overlook Hotel</h1>
       <p>Copyright &copy; 2022</p>
