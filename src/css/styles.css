@@ -154,6 +154,12 @@ img {
   justify-self: center;
 }
 
+/* Booking Options */
+.booking-options-view img {
+  width: 15rem;
+  justify-self: center;
+}
+
 
 /* Footer
 .footer {
