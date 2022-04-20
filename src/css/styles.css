@@ -2,12 +2,14 @@
 
 :root {
   font-size: 62.5%;
+  --primary-color: #047aed;
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  /* border: 0.1rem solid rgb(235, 243, 243); */
 }
 
 body {
@@ -45,7 +47,7 @@ img {
 
 /* Navbar */
 .navbar {
-  background-color: #047aed;
+  background-color: var(--primary-color);
   color: #ffffff;
   height: 7rem;
 }
@@ -68,11 +70,54 @@ img {
   justify-content: space-between;
 }
 
+/* Home View */
+.home-view {
+  height: 40rem;
+  background-color:var(--primary-color);
+  color: #ffffff;
+  position: relative;
+}
+
+.home-view h1 {
+  font-size: 4rem;
+}
+
+.home-view h2 {
+  font-size: 3rem;
+}
+
+.home-view p {
+  font-size: 1.8rem;
+  margin: 2rem 0;
+}
+
+.home-view .grid {
+  overflow: visible;
+  grid-template-columns: 55% 45%;
+  gap: 3rem;
+}
+
+.home-view-card {
+  position: relative;
+  top: 6rem;
+  height: 35rem;
+}
+
+/* Utilities (classes we'll use universally) */
 .container {
   max-width: 110rem;
   margin: 0 auto;
   overflow: auto;
   padding: 0 4rem;
+}
+
+.card {
+  background-color: #ffffff;
+  color: #333333;
+  border-radius: 1rem;
+  box-shadow: 0 0.3rem 1rem rgba(0,0,0, 0.2);
+  padding: 2.5rem;
+  margin: 2rem;
 }
 
 .flex {
@@ -81,4 +126,15 @@ img {
   align-items: center;
   height: 100%;
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* repeat twice, 1fractional unit */
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+
 
