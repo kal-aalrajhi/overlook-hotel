@@ -1,3 +1,84 @@
-body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+
+:root {
+  font-size: 62.5%;
 }
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  color: #333333;
+  line-height: 1.6;
+}
+
+ul {
+  list-style-type: none;
+}
+
+h1, 
+h2 {
+  font-weight: 300;
+  line-height: 1.2;
+  margin: 1rem 0;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+li {
+  font-size: 1.8rem;
+}
+
+p {
+  margin: 1rem 0;
+}
+
+img {
+  width: 100%; /*Let images take up their whole container*/
+} 
+
+/* Navbar */
+.navbar {
+  background-color: #047aed;
+  color: #ffffff;
+  height: 7rem;
+}
+
+.navbar ul {
+  display:flex;
+}
+
+.navbar li {
+  padding: 1rem;
+  margin: 0 0.5rem;
+}
+
+.navbar li:hover {
+  border-bottom: 0.2rem #ffffff solid;
+  cursor: pointer;
+}
+
+.navbar .flex {
+  justify-content: space-between;
+}
+
+.container {
+  max-width: 110rem;
+  margin: 0 auto;
+  overflow: auto;
+  padding: 0 4rem;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+

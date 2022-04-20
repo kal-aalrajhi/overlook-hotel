@@ -4,10 +4,50 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>Overlook Hotel</title>
 </head>
 <body>
-  
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container flex">
+      <h1 class="logo">Overlook Hotel</h1>
+      <nav>
+        <ul>
+          <li id="homeView">Home</li>
+          <li id="dashView">Dashboard</li>
+          <li id="bookView">Book</li>
+        </ul>
+      </nav>
+    </div>
+  </nav>
+
+  <!-- Home View -->
+  <section class="home-view" id="homeView">
+    <div class="container grid">
+      <article class="home-view-txt">
+        <h1>Best Bookings</h1>
+        <p>
+          Book hotels of all kinds, from all over.
+          Keep track of your stays and even book for
+          a future getaway. Just login to get started.
+        </p>
+        <button class="btn btn-outline">Read More</button>
+      </article>
+      <section class="home-view-form login">
+        <h2>Please login</h2>
+        <form>
+          <div class="form-control">
+            <input type="text" name="name" placeholder="Username" required>
+          </div>
+          <div class="form-control">
+            <input type="text" name="password" placeholder="Password" required>
+          </div>
+          <input type="submit" value="Login" class="btn btn-primary">
+        </form>
+      </section>
+    </div>
+  </section>
 </body>
   <script src="bundle.js"></script>
 </html>
