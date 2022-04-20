@@ -4,10 +4,231 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>Overlook Hotel</title>
 </head>
 <body>
-  
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container flex">
+      <h1 class="logo">Overlook Hotel</h1>
+      <nav>
+        <ul>
+          <li id="homeView">Home</li>
+          <li id="dashView">Dashboard</li>
+          <li id="bookView">Book</li>
+        </ul>
+      </nav>
+    </div>
+  </nav>
+
+  <!-- Home View -->
+  <section class="home-view hidden" id="homeView">
+    <div class="container grid">
+      <article class="home-view-txt">
+        <h1>Best Bookings</h1>
+        <p class=".txt-primary">
+          Book hotels of all kinds, from all over.
+          Keep track of your stays and even book for
+          a future getaway. Everything you need to have a 
+          magical and relaxing vacation starts here.
+        </p>
+        <p class=".txt-primary">Just login to get started.</p>
+      </article>
+      <section class="home-view-card card">
+        <h2>Please login</h2>
+        <form class="home-view-login">
+          <div class="form-control">
+            <input type="text" name="name" placeholder="Username" required>
+          </div>
+          <div class="form-control">
+            <input type="text" name="password" placeholder="Password" required>
+          </div>
+          <input type="submit" value="Login" class="btn btn-primary">
+        </form>
+      </section>
+    </div>
+    <section class="home-bottom">
+      <!-- <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" class="bg-img" alt="vacation hotel with palm trees and sunset"> -->
+      <img class="bg-img" src="./images/hotel-main.jpg" alt="vacation hotel with palm trees and sunset">
+    </section>
+  </section>
+
+  <!-- Head -->
+  <section class="head bg-primary padding-y3">
+    <div class="container grid head-dashboard">  <!-- make dynamic for booking head -->
+      <article class="head-text">
+        <h1 class="large">Dashboard</h1>
+        <p class="txt-primary">Welcome User!</p>
+        <p class="txt-primary">
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis 
+          praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.
+        </p>
+      </article>
+      <img class="head-icon icon-dashboard" src="./images/hotel-room-icon.png" alt="hotel room icon with double bed, desk lamp, and check mark">
+    </div>
+  </section>
+
+  <!-- Sub-Head -->
+  <section class="sub-head bg-light padding-y3">
+    <div class="container grid">
+      <article class="head-text">
+        <h2 class="medium">Choose Dates</h2>
+        <p class="small">
+          Dates and calendar form here
+        </p>
+      </article>
+      <img class="sub-head-icon" src="./images/calendar-icon.png" alt="hanging calendar icon with check mark">
+    </div>
+    </section>
+
+  <!-- User Dashboard -->
+  <section class="section dashboard-view margin-y4 hidden">
+    <div class="booking-view container grid">
+      <nav class="bookings-nav-card card bg-light padding-3">
+        <h3 class="margin-y2">View Bookings</h3>
+        <ul class="booking-filter-options">
+          <li>All Bookings</li>
+          <li>Current Bookings</li>
+          <li>Future Bookings</li>
+          <li>Past Bookings</li>
+        </ul>
+        <h3 class="margin-y2">Total Cost</h3>
+        <ul class="total-cost">
+          <li>$666.44</li>
+        </ul>
+      </nav>
+      <div class="container grid padding-1">
+        <div class="booking-card card flex">
+          <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
+          <summary class="booking-card-text">
+            <h3>One Bedroom Suite</h3>
+            <p class="small">
+              Duis aute irure dolor in reprehenderit in voluptate velit esse 
+              cillum dolore eu fugiat nulla pariatur. 
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+              officia deserunt mollit anim id est laborum.
+            </p>
+          </summary>
+        </div>
+        <div class="booking-card card flex">
+          <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
+          <summary class="booking-card-text">
+            <h3>One Bedroom Suite</h3>
+            <p class="small">
+              Duis aute irure dolor in reprehenderit in voluptate velit esse 
+              cillum dolore eu fugiat nulla pariatur. 
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+              officia deserunt mollit anim id est laborum.
+            </p>
+          </summary>
+        </div>
+        <div class="booking-card card flex">
+          <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
+          <summary class="booking-card-text">
+            <h3>One Bedroom Suite</h3>
+            <p class="small">
+              Duis aute irure dolor in reprehenderit in voluptate velit esse 
+              cillum dolore eu fugiat nulla pariatur. 
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+              officia deserunt mollit anim id est laborum.
+            </p>
+          </summary>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking Options --> 
+  <section class="booking-options-view margin-y2">
+    <div class="container grid">
+      <!-- dynamically add booking cards here -->
+      <div class="booking-card card flex">
+        <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
+        <summary class="booking-card-text">
+          <h3>One Bedroom Suite</h3>
+          <ul>
+            <li class="small"><span>Beds:</span> 1</li>
+            <li class="small"><span>Bed Size:</span> Queen</li>
+            <li class="small"><span>Bidet:</span> Yes</li>
+            <li class="small"><span>Date:</span> 2022/01/13</li>
+            <li class="small"><span>Cost/Night:</span> $480.12</li>
+          </ul>
+        </summary>
+      </div>
+      <div class="booking-card card flex">
+        <img class="bed-icon" src="./images/two-bed-icon.png" alt="front facing single bed icon">
+        <summary class="booking-card-text">
+          <h3>Two Bedroom Suite</h3>
+          <p class="small">
+            Duis aute irure dolor in reprehenderit in voluptate velit esse 
+            cillum dolore eu fugiat nulla pariatur. 
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+            officia deserunt mollit anim id est laborum.
+          </p>
+        </summary>
+      </div>
+      <div class="booking-card card flex">
+        <img class="bed-icon" src="./images/two-bed-icon.png" alt="front facing single bed icon">
+        <summary class="booking-card-text">
+          <h3>Two Bedroom Suite</h3>
+          <p class="small">
+            Duis aute irure dolor in reprehenderit in voluptate velit esse 
+            cillum dolore eu fugiat nulla pariatur. 
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+            officia deserunt mollit anim id est laborum.
+          </p>
+        </summary>
+      </div>
+      <div class="booking-card card flex">
+        <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
+        <summary class="booking-card-text">
+          <h3>One Bedroom Suite</h3>
+          <p class="small">
+            Duis aute irure dolor in reprehenderit in voluptate velit esse 
+            cillum dolore eu fugiat nulla pariatur. 
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+            officia deserunt mollit anim id est laborum.
+          </p>
+        </summary>
+      </div>
+      <div class="booking-card card flex">
+        <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
+        <summary class="booking-card-text">
+          <h3>One Bedroom Suite</h3>
+          <p class="small">
+            Duis aute irure dolor in reprehenderit in voluptate velit esse 
+            cillum dolore eu fugiat nulla pariatur. 
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+            officia deserunt mollit anim id est laborum.
+          </p>
+        </summary>
+      </div>
+      <div class="booking-card card flex">
+        <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
+        <summary class="booking-card-text">
+          <h3>One Bedroom Suite</h3>
+          <p class="small">
+            Duis aute irure dolor in reprehenderit in voluptate velit esse 
+            cillum dolore eu fugiat nulla pariatur. 
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+            officia deserunt mollit anim id est laborum.
+          </p>
+        </summary>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer bg-dark padding-y5">
+    <div class="container grid grid-3">
+      <h1>Overlook Hotel</h1>
+      <p>Copyright &copy; 2022</p>
+    </div>
+  </footer> 
+
 </body>
   <script src="bundle.js"></script>
 </html>

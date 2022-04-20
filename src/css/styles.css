@@ -1,3 +1,237 @@
-body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+
+:root {
+  font-size: 62.5%;
+  --primary-color: #047aed;
+  --secondary-color: #013a73;
+  --dark-blue: #002240;
+  --light-grey: #f4f4f4;
 }
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  /* border: 0.1rem solid rgb(245, 11, 11); */
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  color: #333333;
+  line-height: 1.6;
+}
+
+ul {
+  list-style-type: none;
+}
+
+h1, 
+h2 {
+  font-weight: 300;
+  line-height: 1.2;
+  margin: 1rem 0;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+li {
+  font-size: 1.8rem;
+}
+
+p {
+  margin: 1rem 0;
+}
+
+img {
+  width: 100%; /*Let images take up their whole container*/
+} 
+
+/* Navbar */
+.navbar {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  height: 7rem;
+}
+
+.navbar ul {
+  display:flex;
+}
+
+.navbar li {
+  padding: 1rem;
+  margin: 0 0.5rem;
+}
+
+.navbar li:hover {
+  border-bottom: 0.2rem #ffffff solid;
+  cursor: pointer;
+}
+
+.navbar .flex {
+  justify-content: space-between;
+}
+
+/* Home View */
+.home-view {
+  height: 40rem;
+  background-color:var(--primary-color);
+  color: #ffffff;
+  position: relative;
+}
+
+.home-view h1 {
+  font-size: 4rem;
+}
+
+.home-view h2 {
+  font-size: 3rem;
+}
+
+.home-view p {
+  font-size: 1.8rem;
+  margin: 2rem 0;
+}
+
+.home-view .grid {
+  overflow: visible;
+  grid-template-columns: 55% 45%;
+  gap: 3rem;
+}
+
+.home-view-card {
+  position: relative;
+  top: 6rem;
+  height: 35rem;
+  width: 40rem;
+  padding: 4rem;
+  z-index: 100;
+  justify-self: flex-end;
+}
+
+.home-view-card .form-control {
+  margin: 3rem 0;
+}
+
+.home-view-card input[type='text'] {
+  border: 0;
+  border-bottom: 0.1rem solid #b4becb;
+  width: 100%;
+  padding: 0.3rem;
+  font-size: 1.6rem;
+}
+
+.home-view-card input:focus { /*gets rid of login border..which may not be accessable */
+  outline: none;
+}
+
+.home-view::before, /* homepage slant */
+.home-view::after {
+  content: '';
+  position: absolute;
+  height: 10rem;
+  bottom: -7rem;
+  right: 0;
+  left: 0;
+  background: var(--secondary-color);
+  transform: skewY(-2deg);
+}
+
+.bg-img {
+  position: fixed; 
+}
+
+/* Head */
+.head img {
+  width: 20rem;
+  justify-self: flex-end;
+}
+
+/* Sub-head */
+.sub-head img {
+  width: 10rem;
+  justify-self: center;
+}
+
+/* Booking Options */ 
+.booking-options-view img {
+  width: 15rem;
+  margin-right: 1rem;
+  /* justify-self: center; */
+}
+
+.booking-card {
+  transition: all 500ms;
+}
+
+.booking-card:hover {
+  box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+  transform: translateY(-3px) scale(1.1);
+}
+
+.booking-card-text h3 {
+  font-size: 2rem;
+}
+
+.booking-card-text li {
+  font-weight: bold;
+  margin: 0;
+  padding: 0.2rem;
+}
+
+.booking-card-text span {
+  font-weight: normal;
+}
+
+/* Dashboard View */
+.dashboard-view .grid {
+  grid-template-columns: 1fr 2fr;
+  gap: 0;
+  align-items: start;
+  overflow: visible;
+}
+
+.booking-filter-options li {
+  margin-top: 2rem;
+}
+
+.booking-filter-options li:hover {
+  border-bottom: 0.2rem #b4becb solid;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.booking-view .grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.booking-view img {
+  width: 8rem;
+  margin-right: 1rem;
+  /* justify-self: center; */
+}
+
+.booking-view .booking-card-text h3 {
+  font-size: 1.5rem;
+}
+
+.booking-card-text p {
+  font-weight: bold;
+  font-size: 1.3rem;
+  padding: 1rem;
+}
+
+
+
+
+/* Footer
+.footer {
+} */
+
+
+
+
+
+
