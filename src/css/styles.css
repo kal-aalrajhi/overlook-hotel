@@ -174,9 +174,14 @@ img {
   font-size: 2rem;
 }
 
-.booking-card-text p {
+.booking-card-text li {
   font-weight: bold;
-  padding: 1rem;
+  margin: 0;
+  padding: 0.2rem;
+}
+
+.booking-card-text span {
+  font-weight: normal;
 }
 
 /* Dashboard View */

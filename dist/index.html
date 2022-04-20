@@ -24,7 +24,7 @@
   </nav>
 
   <!-- Home View -->
-  <section class="home-view hidden " id="homeView">
+  <section class="home-view hidden" id="homeView">
     <div class="container grid">
       <article class="home-view-txt">
         <h1>Best Bookings</h1>
@@ -71,7 +71,7 @@
   </section>
 
   <!-- Sub-Head -->
-  <section class="sub-head bg-light padding-y3 hidden">
+  <section class="sub-head bg-light padding-y3">
     <div class="container grid">
       <article class="head-text">
         <h2 class="medium">Choose Dates</h2>
@@ -84,7 +84,7 @@
     </section>
 
   <!-- User Dashboard -->
-  <section class="section dashboard-view margin-y4">
+  <section class="section dashboard-view margin-y4 hidden">
     <div class="booking-view container grid">
       <nav class="bookings-nav-card card bg-light padding-3">
         <h3 class="margin-y2">View Bookings</h3>
@@ -141,19 +141,20 @@
   </section>
 
   <!-- Booking Options --> 
-  <section class="booking-options-view margin-y2 hidden">
+  <section class="booking-options-view margin-y2">
     <div class="container grid">
       <!-- dynamically add booking cards here -->
       <div class="booking-card card flex">
         <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
         <summary class="booking-card-text">
           <h3>One Bedroom Suite</h3>
-          <p class="small">
-            Duis aute irure dolor in reprehenderit in voluptate velit esse 
-            cillum dolore eu fugiat nulla pariatur. 
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
-            officia deserunt mollit anim id est laborum.
-          </p>
+          <ul>
+            <li class="small"><span>Beds:</span> 1</li>
+            <li class="small"><span>Bed Size:</span> Queen</li>
+            <li class="small"><span>Bidet:</span> Yes</li>
+            <li class="small"><span>Date:</span> 2022/01/13</li>
+            <li class="small"><span>Cost/Night:</span> $480.12</li>
+          </ul>
         </summary>
       </div>
       <div class="booking-card card flex">
