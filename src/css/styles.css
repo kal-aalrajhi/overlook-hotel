@@ -3,13 +3,16 @@
 :root {
   font-size: 62.5%;
   --primary-color: #047aed;
+  --secondary-color: #013a73;
+  --dark-blue: #002240;
+  --light-grey: #f4f4f4;
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  /* border: 0.1rem solid rgb(235, 243, 243); */
+  border: 0.1rem solid rgb(245, 11, 11);
 }
 
 body {
@@ -101,40 +104,50 @@ img {
   position: relative;
   top: 6rem;
   height: 35rem;
+  width: 40rem;
+  padding: 4rem;
+  z-index: 100;
+  justify-self: flex-end;
 }
 
-/* Utilities (classes we'll use universally) */
-.container {
-  max-width: 110rem;
-  margin: 0 auto;
-  overflow: auto;
-  padding: 0 4rem;
+.home-view-card .form-control {
+  margin: 3rem 0;
 }
 
-.card {
-  background-color: #ffffff;
-  color: #333333;
-  border-radius: 1rem;
-  box-shadow: 0 0.3rem 1rem rgba(0,0,0, 0.2);
-  padding: 2.5rem;
-  margin: 2rem;
+.home-view-card input[type='text'] {
+  border: 0;
+  border-bottom: 0.1rem solid #b4becb;
+  width: 100%;
+  padding: 0.3rem;
+  font-size: 1.6rem;
 }
 
-.flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+.home-view-card input:focus { /*gets rid of login border..which may not be accessable */
+  outline: none;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* repeat twice, 1fractional unit */
-  gap: 2rem;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+.home-view::before, /* homepage slant */
+.home-view::after {
+  content: '';
+  position: absolute;
+  height: 10rem;
+  bottom: -7rem;
+  right: 0;
+  left: 0;
+  background: var(--secondary-color);
+  transform: skewY(-2deg);
 }
+
+.bg-img {
+  position: fixed; 
+}
+
+/* Footer
+.footer {
+} */
+
+
+
 
 
 

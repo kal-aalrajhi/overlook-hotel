@@ -1,0 +1,142 @@
+/* General Utilities (classes we'll use universally) */
+.container {
+    max-width: 110rem;
+    margin: 0 auto;
+    overflow: auto;
+    padding: 0 4rem;
+}
+  
+.card {
+    background-color: #ffffff;
+    color: #333333;
+    border-radius: 1rem;
+    box-shadow: 0 0.3rem 1rem rgba(0,0,0, 0.2);
+    padding: 2.5rem;
+    margin: 2rem;
+}
+
+/* Backgrounds & Buttons */
+.bg-primary,
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
+.bg-secondary,
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: #ffffff;
+}
+
+.bg-dark,
+.btn-dark {
+    background-color: var(--dark-blue);
+    color: #ffffff;
+}
+
+.bg-light,
+.btn-light {
+    background-color: var(--light-grey);
+    color: #333333;
+}
+
+.btn {
+    display: inline-block;
+    padding: 1rem 3rem;
+    cursor: pointer;
+    background: var(--primary-color);
+    color: #ffffff;
+    border-radius: 0.5rem;
+    border: none;
+}
+
+.btn:hover {
+    transform: scale(.98);
+}
+
+/* Text sizes */
+.txt-primary {
+    font-size: 2rem;
+}
+
+.small {
+    font-size: 1.6rem;
+}
+
+.medium {
+    font-size: 3.2rem;
+}
+
+.large {
+    font-size: 4.8rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* repeat twice, 1fractional unit */
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.grid-3 {
+    grid-template-columns: repeat(3, 1fr); /* repeat twice, 1fractional unit */
+}
+
+.hidden {
+    display: none;
+}
+
+/* Margins */ 
+.margin-y1 { /* margin top botom */
+    margin: 1.6rem 0;
+}
+
+.margin-y2 { 
+    margin: 2.2rem 0;
+}
+
+.margin-y3 { 
+    margin: 3.2rem 0;
+}
+
+.margin-y4 { 
+    margin: 4.8rem 0;
+}
+
+.margin-y5 { 
+    margin: 6.4rem 0;
+}
+
+/* Padding */ 
+.padding-y1 { 
+    padding: 1.6rem 0;
+}
+
+.padding-y2 { 
+    padding: 2.2rem 0;
+}
+
+.padding-y3 { 
+    padding: 3.2rem 0;
+}
+
+.padding-y4 { 
+    padding: 4.8rem 0;
+}
+
+.padding-y5 { 
+    padding: 6.4rem 0;
+}

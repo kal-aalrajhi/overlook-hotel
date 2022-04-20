@@ -8,6 +8,7 @@
   <title>Overlook Hotel</title>
 </head>
 <body>
+
   <!-- Navbar -->
   <nav class="navbar">
     <div class="container flex">
@@ -23,16 +24,17 @@
   </nav>
 
   <!-- Home View -->
-  <section class="home-view" id="homeView">
+  <section class="home-view hidden " id="homeView">
     <div class="container grid">
       <article class="home-view-txt">
         <h1>Best Bookings</h1>
-        <p>
+        <p class=".txt-primary">
           Book hotels of all kinds, from all over.
           Keep track of your stays and even book for
-          a future getaway. Just login to get started.
+          a future getaway. Everything you need to have a 
+          magical and relaxing vacation starts here.
         </p>
-        <button class="btn btn-outline">Read More</button>
+        <p class=".txt-primary">Just login to get started.</p>
       </article>
       <section class="home-view-card card">
         <h2>Please login</h2>
@@ -47,7 +49,39 @@
         </form>
       </section>
     </div>
+    <section class="home-bottom">
+      <!-- <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" class="bg-img" alt="vacation hotel with palm trees and sunset"> -->
+      <img src="src/images/hotel-main.jpg" class="bg-img" alt="vacation hotel with palm trees and sunset">
+    </section>
   </section>
+
+  <!-- Head -->
+  <section class="features-head bg-primary padding-3">
+    <div class="container grid">
+      <div>
+        <h1 class="large">Dashboard</h1>
+        <p class=".txt-primary">Welcome user!</p>
+        <p class=".txt-primary">
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis 
+          praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias 
+          excepturi sint occaecati cupiditate non provident, similique sunt in culpa 
+          qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum 
+          quidem rerum facilis est et expedita distinctio.
+        </p>
+      </div>
+        <img src="./src/images/hotel-room-icon.png" alt="hotel room icon with double bed, desk lamp, and check mark">
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="footer bg-dark padding-y5">
+    <div class="container grid grid-3">
+      <h1>Overlook Hotel</h1>
+      <p>Copyright &copy; 2022</p>
+    </div>
+  </footer> 
+
 </body>
   <script src="bundle.js"></script>
 </html>
