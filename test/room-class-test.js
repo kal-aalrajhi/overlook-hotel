@@ -34,4 +34,10 @@ describe('Room', () => {
         expect(room2.bidet).to.equal(false);
         expect(room3.bidet).to.equal(false);
     });
+
+    it('should tell us which bedsize it includes', () => {
+        expect(room1.bidet).to.equal("queen");
+        expect(room2.bidet).to.equal("full");
+        expect(room3.bidet).to.equal("king");
+    });
 });
