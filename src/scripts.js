@@ -6,31 +6,34 @@ import './images/calendar-icon.png';
 import './images/one-bed-icon.png';
 import './images/two-bed-icon.png';
 import apiCalls from './apiCalls';
-import { showElement, hideElement, clearView  } from './domUpdates';
+import { showElement, hideElement, clearView } from './domUpdates';
 
 // Globals
 
 // Query Selectors
-const navHomeBtn = document.querySelector("navHomeBtn");
-const navDashboardBtn = document.querySelector("navDashboardBtn");
-const navBookBtn = document.querySelector("navBookBtn");
+const navHomeBtn = document.querySelector("#navHomeBtn");
+const navDashboardBtn = document.querySelector("#navDashboardBtn");
+const navBookBtn = document.querySelector("#navBookBtn");
 
-const homeView = document.querySelector("homeView");
-const dashboardView = document.querySelector("dashboardView");
-const bookView = document.querySelector("bookView");
+const homeView = document.querySelector("#homeView");
+const dashboardView = document.querySelector("#dashboardView");
+const bookView = document.querySelector("#bookView");
 
-const head = document.querySelector("head");
-const subHead = document.querySelector("subHead");
-const footer = document.querySelector("footer");
+const head = document.querySelector("#head");
+const subHead = document.querySelector("#subHead");
+const footer = document.querySelector("#footer");
+
+// Card Containers
+const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
+const bookCardsContainer = document.querySelector("#bookCardsContainer");
 
 // Event Listeners 
-
-navHomeBtn.addEventListener("click", loadHomeView);
-navDashboardBtn.addEventListener("click", loadDashboardView);
-navBookBtn.addEventListener("click", loadBookView);
+navHomeBtn.addEventListener("click", () => loadHomeView());
+navDashboardBtn.addEventListener("click", () => loadDashboardView());
+navBookBtn.addEventListener("click", () => loadBookView());
 
 // Functions
-const hideAllElements = () => {
+var hideAllElements = () => {
     hideElement(homeView);
     hideElement(dashboardView);
     hideElement(bookView);
@@ -40,12 +43,14 @@ const hideAllElements = () => {
 }
 
 // Load Views
-const loadHomeView = () => {
+var loadHomeView = () => {
+    console.log('HOME')
     hideAllElements();
     showElement(homeView);
 }
 
-const loadDashboardView = () => {
+var loadDashboardView = () => {
+    console.log('DB')
     hideAllElements();
     showElement(dashboardView);
     showElement(head);
@@ -53,7 +58,8 @@ const loadDashboardView = () => {
     // load dashboard head details + corresponding icon
 }
 
-const loadBookView = () => {
+var loadBookView = () => {
+    console.log('BOOK')
     hideAllElements();
     showElement(bookView);
     showElement(head);
