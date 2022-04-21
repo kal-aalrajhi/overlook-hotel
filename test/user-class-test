@@ -37,4 +37,8 @@ describe('User', () => {
         expect(user1).to.be.an.instanceof(User);
     });
 
+    it('should have a user id', () => {
+        expect(user1.id).to.equal(1);
+        expect(user2.id).to.equal(2);
+    });
 });
