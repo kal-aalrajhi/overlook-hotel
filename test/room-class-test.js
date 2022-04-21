@@ -47,9 +47,15 @@ describe('Room', () => {
         expect(room3.numBeds).to.equal(1);
     });
 
-    it('should tell use how much it costs per night', () => {
+    it('should have a cost per night', () => {
         expect(room1.costPerNight).to.equal(358.4);
         expect(room2.costPerNight).to.equal(477.38);
         expect(room3.costPerNight).to.equal(491.14);
+    });
+
+    it('should be able to tell us the cost per night', () => {
+        expect(room1.getCost()).to.equal(358.4);
+        expect(room2.getCost()).to.equal(477.38);
+        expect(room3.getCost()).to.equal(491.14);
     });
 });
