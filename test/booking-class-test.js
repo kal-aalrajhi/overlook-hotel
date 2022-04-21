@@ -28,9 +28,21 @@ describe('Room', () => {
     });
 
     it('should have a booking id', () => {
-        expect(room1.number).to.equal("5fwrgu4i7k55hl6sz");
-        expect(room2.number).to.equal("5fwrgu4i7k55hl6t5");
-        expect(room3.number).to.equal("5fwrgu4i7k55hl6t6");
+        expect(booking1.id).to.equal("5fwrgu4i7k55hl6sz");
+        expect(booking2.id).to.equal("5fwrgu4i7k55hl6t5");
+        expect(booking3.id).to.equal("5fwrgu4i7k55hl6t6");
+    });
+
+    it('should have an associated user who made the booking', () => {
+        expect(booking1.userId).to.equal(9);
+        expect(booking2.userId).to.equal(43);
+        expect(booking3.userId).to.equal(13);
+    });
+
+    it('should have a date that the booking was made', () => {
+        expect(booking1.date).to.equal("2022/04/22");
+        expect(booking2.date).to.equal("2022/01/24");
+        expect(booking3.date).to.equal("2022/01/10");
     });
 
 });
