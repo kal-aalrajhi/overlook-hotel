@@ -154,8 +154,12 @@ img {
   justify-self: center;
 }
 
-/* Booking Options */ 
-.booking-options-view img {
+/* Book View */ 
+.book-view .grid {
+  overflow: visible;
+}
+
+.book-view img {
   width: 15rem;
   margin-right: 1rem;
   /* justify-self: center; */
@@ -192,28 +196,28 @@ img {
   overflow: visible;
 }
 
-.booking-filter-options li {
+.booking-history-options li {
   margin-top: 2rem;
 }
 
-.booking-filter-options li:hover {
+.booking-history-options li:hover {
   border-bottom: 0.2rem #b4becb solid;
   color: var(--primary-color);
   cursor: pointer;
 }
 
-.booking-view .grid {
+.booking-history .grid {
   grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
 }
 
-.booking-view img {
+.booking-history img {
   width: 8rem;
   margin-right: 1rem;
   /* justify-self: center; */
 }
 
-.booking-view .booking-card-text h3 {
+.booking-history .booking-card-text h3 {
   font-size: 1.5rem;
 }
 

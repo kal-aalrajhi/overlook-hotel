@@ -36,4 +36,4 @@ What steps have you taken to ensure the code is effective?
 - [] My code follows the style guidelines of this project.
 - [] My commit messages are consistent, descriptive, concise and begin with a verb and capital letter.
 - [] I have performed a self-review of my own code.
-- [] I have added @kal-aalrajhi @lourdesbnts @K-howard  as reviewers.
+- [] I have added reviewers.
