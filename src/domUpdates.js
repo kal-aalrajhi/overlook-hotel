@@ -46,20 +46,26 @@ const displayCards = (container) => {
 
 // Header Content
 export const displayDashboardHeader = () => {
-    textDetail1 = "Welcome back user!";
-    textDetail2 = "This is your space to view all the wonderful places you've explored or will explore soon.";
-    altText = "hotel room icon with double bed, desk lamp, and check mark";
-    displayHeaderContent("dashboard", textDetail1, textDetail2, altText);
+    const viewName = "Your Dashboard";
+    const textDetail1 = "Welcome back user!";
+    const textDetail2 = "This is your space to view all the wonderful places you've explored or will explore soon.";
+    const iconName = "dashboard";
+    const altText = "hotel room icon with double bed, desk lamp, and check mark";
+    
+    displayHeaderContent(viewName, iconName, textDetail1, textDetail2, altText);
 }
 
 export const displayBookHeader = () => {
-    textDetail1 = "Book something new!";
-    textDetail2 = "There are so many wonderful stays for you to book. Whether you're on a budget or looking for luxury, it's all right here.";
-    altText = "hotel room icon with double bed, desk lamp, and check mark";
-    displayHeaderContent("book", textDetail1, textDetail2);
+    const viewName = "Book a Stay";
+    const textDetail1 = "Book something new!";
+    const textDetail2 = "There are so many wonderful stays for you to book. Whether you're on a budget or looking for luxury, it's all right here.";
+    const iconName = "book";
+    const altText = "hotel cart icon luggage on the cart";
+    
+    displayHeaderContent(viewName, iconName, textDetail1, textDetail2, altText);
 }
 
-const displayHeaderContent = (viewName, textDetail1, textDetail2, altText) => {
+const displayHeaderContent = (viewName, iconName, textDetail1, textDetail2, altText) => {
     const headerContainer = document.querySelector("#headerContainer");
     
     headerContainer.innerHTML = `
@@ -70,7 +76,6 @@ const displayHeaderContent = (viewName, textDetail1, textDetail2, altText) => {
                 ${textDetail2}
             </p>
         </article>
-        <img class="head-icon" src="./images/${viewName}-icon.png" alt=${altText}>`
-        
+        <img class="head-icon" src="./images/${iconName}-icon.png" alt=${altText}>`    
 }
 

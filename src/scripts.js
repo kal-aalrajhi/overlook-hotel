@@ -7,7 +7,8 @@ import './images/calendar-icon.png';
 import './images/one-bed-icon.png';
 import './images/two-bed-icon.png';
 import apiCalls from './apiCalls';
-import { showElement, hideElement, clearView, displayDashboardCards, displayBookCards } from './domUpdates';
+import { showElement, hideElement, clearView, displayDashboardCards, displayBookCards,
+    displayDashboardHeader, displayBookHeader } from './domUpdates';
 
 // Globals
 
@@ -51,7 +52,7 @@ const loadDashboardView = () => {
     showElement(head);
     showElement(footer);
     displayDashboardCards();
-    // load dashboard head details + corresponding icon | need to dynamically change
+    displayDashboardHeader();
 }
 
 const loadBookView = () => {
@@ -61,7 +62,7 @@ const loadBookView = () => {
     showElement(subHead);
     showElement(footer);
     displayBookCards();
-    // load book head details + corresponding icon | need to dynamically change
+    displayBookHeader();
 }
 
 
