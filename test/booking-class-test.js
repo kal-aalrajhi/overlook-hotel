@@ -4,7 +4,7 @@ import { roomsSampleData } from '../src/data/rooms-sample-data';
 import { Booking } from '../src/classes/Booking';
 import { bookingsSampleData } from '../src/data/bookings-sample-data';
 
-describe('Room', () => {
+describe('Booking', () => {
     let room1, room2, room3;
     let roomData;
 
@@ -45,11 +45,13 @@ describe('Room', () => {
         expect(booking3.date).to.equal("2022/01/10");
     });
 
-    it('should have a room number associate with the booking', () => {
-        expect(booking1.date).to.equal(15);
-        expect(booking2.date).to.equal(24);
-        expect(booking3.date).to.equal(12);
+    it('should have a room number associated with the booking', () => {
+        expect(booking1.roomNumber).to.equal(15);
+        expect(booking2.roomNumber).to.equal(24);
+        expect(booking3.roomNumber).to.equal(12);
     });
 
-    
+
+
+
 });
