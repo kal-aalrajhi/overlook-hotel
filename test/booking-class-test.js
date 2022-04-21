@@ -23,5 +23,14 @@ describe('Room', () => {
         booking3 = new Booking(bookingsSampleData[2]);
     });
 
+    it('should be an instance of Booking', () => {
+        expect(booking1).to.be.an.instanceof(Booking);
+    });
+
+    it('should have a booking id', () => {
+        expect(room1.number).to.equal("5fwrgu4i7k55hl6sz");
+        expect(room2.number).to.equal("5fwrgu4i7k55hl6t5");
+        expect(room3.number).to.equal("5fwrgu4i7k55hl6t6");
+    });
 
 });
