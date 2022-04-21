@@ -56,8 +56,9 @@
 
   <!-- Head -->
   <section class="head bg-primary padding-y3 hidden" id="head">   
-    <div class="container grid head-dashboard">  <!-- make dynamic for booking head -->
-      <article class="head-text">
+    <div class="container grid head-dashboard" id="headerContainer">  <!-- make dynamic for booking head -->
+      <!-- display either dashboard header or book header -->
+      <!-- <article class="head-text">
         <h1 class="large">Dashboard</h1>
         <p class="txt-primary">Welcome User!</p>
         <p class="txt-primary">
@@ -65,7 +66,7 @@
           praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.
         </p>
       </article>
-      <img class="head-icon icon-dashboard" src="./images/hotel-room-icon.png" alt="hotel room icon with double bed, desk lamp, and check mark">
+      <img class="head-icon icon-dashboard" src="./images/hotel-room-icon.png" alt="hotel room icon with double bed, desk lamp, and check mark"> -->
     </div>
   </section>
 
@@ -100,22 +101,8 @@
         </ul>
       </nav>
       <!-- Dashboard Booking Cards Container-->
-      <div class="dashboard-cards-container container grid padding-1 hidden" id="dashboardCardsContainer"> 
-        <!-- CARD START -->
-        <div class="booking-card card flex">
-          <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
-          <summary class="booking-card-text">
-            <h3>One Bedroom Suite</h3>
-            <ul>
-              <li class="small"><span>Beds:</span> 1</li>
-              <li class="small"><span>Bed Size:</span> Queen</li>
-              <li class="small"><span>Bidet:</span> Yes</li>
-              <li class="small"><span>Date:</span> 2022/01/13</li>
-              <li class="small"><span>Cost/Night:</span> $480.12</li>
-            </ul>
-          </summary>
-        </div>
-        <!-- CARD END -->
+      <div class="dashboard-cards-container container grid padding-1" id="dashboardCardsContainer"> 
+        <!-- display dashboard cards here -->
       </div>
     </div>
   </section>
@@ -124,21 +111,7 @@
   <section class="book-view margin-y2 hidden" id="bookView"> 
     <!-- Book Options Booking Cards Container-->
     <div class="book-cards-container container grid" id="bookCardsContainer">
-      <!-- CARD START -->
-      <div class="booking-card card flex">
-        <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
-        <summary class="booking-card-text">
-          <h3>One Bedroom Suite</h3>
-          <ul>
-            <li class="small"><span>Beds:</span> 1</li>
-            <li class="small"><span>Bed Size:</span> Queen</li>
-            <li class="small"><span>Bidet:</span> Yes</li>
-            <li class="small"><span>Date:</span> 2022/01/13</li>
-            <li class="small"><span>Cost/Night:</span> $480.12</li>
-          </ul>
-        </summary>
-      </div>
-      <!-- CARD END -->
+      <!-- display book cards here -->
     </div>
   </section>
 

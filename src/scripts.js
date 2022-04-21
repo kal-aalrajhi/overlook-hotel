@@ -1,12 +1,13 @@
 import './css/styles.css';
 import './css/utilities.css';
 import './images/hotel-main.jpg';
-import './images/hotel-room-icon.png';
+import './images/dashboard-icon.png';
+import './images/book-icon.png';
 import './images/calendar-icon.png';
 import './images/one-bed-icon.png';
 import './images/two-bed-icon.png';
 import apiCalls from './apiCalls';
-import { showElement, hideElement, clearView } from './domUpdates';
+import { showElement, hideElement, clearView, displayDashboardCards, displayBookCards } from './domUpdates';
 
 // Globals
 
@@ -23,17 +24,13 @@ const head = document.querySelector("#head");
 const subHead = document.querySelector("#subHead");
 const footer = document.querySelector("#footer");
 
-// Card Containers
-const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
-const bookCardsContainer = document.querySelector("#bookCardsContainer");
-
 // Event Listeners 
 navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
 
 // Functions
-var hideAllElements = () => {
+const hideAllElements = () => {
     hideElement(homeView);
     hideElement(dashboardView);
     hideElement(bookView);
@@ -43,29 +40,28 @@ var hideAllElements = () => {
 }
 
 // Load Views
-var loadHomeView = () => {
-    console.log('HOME')
+const loadHomeView = () => {
     hideAllElements();
     showElement(homeView);
 }
 
-var loadDashboardView = () => {
-    console.log('DB')
+const loadDashboardView = () => {
     hideAllElements();
     showElement(dashboardView);
     showElement(head);
     showElement(footer);
-    // load dashboard head details + corresponding icon
+    displayDashboardCards();
+    // load dashboard head details + corresponding icon | need to dynamically change
 }
 
-var loadBookView = () => {
-    console.log('BOOK')
+const loadBookView = () => {
     hideAllElements();
     showElement(bookView);
     showElement(head);
     showElement(subHead);
     showElement(footer);
-    // load book head details + corresponding icon
+    displayBookCards();
+    // load book head details + corresponding icon | need to dynamically change
 }
 
 
