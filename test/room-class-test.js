@@ -36,8 +36,20 @@ describe('Room', () => {
     });
 
     it('should tell us which bedsize it includes', () => {
-        expect(room1.bidet).to.equal("queen");
-        expect(room2.bidet).to.equal("full");
-        expect(room3.bidet).to.equal("king");
+        expect(room1.bedSize).to.equal("queen");
+        expect(room2.bedSize).to.equal("full");
+        expect(room3.bedSize).to.equal("king");
+    });
+
+    it('should tell us how many beds it has', () => {
+        expect(room1.numBeds).to.equal(1);
+        expect(room2.numBeds).to.equal(2);
+        expect(room3.numBeds).to.equal(1);
+    });
+
+    it('should tell use how much it costs per night', () => {
+        expect(room1.costPerNight).to.equal(358.4);
+        expect(room2.costPerNight).to.equal(477.38);
+        expect(room3.costPerNight).to.equal(491.14);
     });
 });
