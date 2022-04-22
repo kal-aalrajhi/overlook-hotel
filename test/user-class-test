@@ -42,7 +42,7 @@ describe('User', () => {
         expect(user2.id).to.equal(2);
     });
 
-    it('should have a user name', () => {
+    it('should have a full name', () => {
         expect(user1.id).to.equal("Leatha Ullrich");
         expect(user2.id).to.equal("Rocio Schuster");
     });
