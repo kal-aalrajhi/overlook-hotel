@@ -61,8 +61,6 @@ const loadData = () => {
             allUsersData.push(new User(userData));
         });
 
-        currentUser = allUsersData[0];
-        console.log("Current User: ", currentUser);
         // console.log("users", allUsersData);
 
         tempData = data[1].bookings; 
@@ -112,6 +110,14 @@ const loadBookView = () => {
     showElement(footer);
     displayBookCards();
     displayBookHeader();
+}
+
+// Needs to be more robust
+const loginUser = () => {
+    currentUser = allUsersData[0]; // Temporarily assign a user
+    console.log("Current User: ", currentUser);
+    currentUser.addAllBookings(allBookingsData);
+    console.log("User's bookings: ", currentUser.allBookings);
 }
 
 

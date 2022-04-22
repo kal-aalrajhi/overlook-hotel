@@ -17,7 +17,13 @@ export class User {
     }
 
     addAllBookings(allBookingsData) {
-        // Add all bookings that have the current user
-        // Check by using booking.isBookedByCurrentUser
+        // allBookingsData.forEach(booking => {
+        //     if (booking.userID === this.id) {
+        //         this.allBookings.
+        //     }
+        // });
+
+        this.allBookings = allBookingsData.filter(booking => booking.userID === this.id);
+        
     }
 }
