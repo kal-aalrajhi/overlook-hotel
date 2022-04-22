@@ -11,8 +11,8 @@ import { fetchResponse } from './apiCalls';
 import { User } from './classes/User';
 import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
-import { showElement, hideElement, clearView, displayDashboardCards, displayBookCards,
-    displayDashboardHeader, displayBookHeader } from './domUpdates';
+import { showElement, hideElement, displayDashboardCards, displayBookCards,
+    displayDashboardHeader, displayBookHeader, getCurrentDate } from './domUpdates';
 
 
 // Globals
@@ -34,13 +34,31 @@ const head = document.querySelector("#head");
 const subHead = document.querySelector("#subHead");
 const footer = document.querySelector("#footer");
 
+const bookingHistoryOptions = document.querySelector("#bookingHistoryOptions");
+
 // Event Listeners 
 window.addEventListener("load", () => loadData());
 
 navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
+bookingHistoryOptions.addEventListener("click", (event) => { viewBookingsBy(event)});
 
+const viewBookingsBy = (event) => {
+    if(event.target.id === "allBookings") {
+        // display all bookings
+        console.log("ALL")
+    } else if (event.target.id === "pastBookings") {
+        // filter by past
+        console.log("PAST")
+    } else if (event.target.id === "todaysBookings") {
+        // filter by today
+        console.log("TODAY")
+    } else if (event.target.id === "futureBookings") {
+        // filter by future
+        console.log("FUTURE")
+    }
+}
 
 // Functions
 const loadData = () => {
@@ -104,7 +122,7 @@ const loadDashboardView = () => {
     showElement(dashboardView);
     showElement(head);
     showElement(footer);
-    displayDashboardCards(currentUser);
+    displayAllDashboardCards(currentUser);
     displayDashboardHeader(currentUser);
 }
 
