@@ -12,10 +12,10 @@ export const clearView = (view) => {
 }
 
 // Display Cards
-export const displayDashboardCards = () => {
+export const displayDashboardCards = (currentUser) => {
     const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
     clearView(dashboardCardsContainer);  
-    displayCards(dashboardCardsContainer);
+    displayCards(dashboardCardsContainer, currentUser);
 }
 
 export const displayBookCards = () => {
@@ -24,8 +24,8 @@ export const displayBookCards = () => {
     displayCards(bookCardsContainer);
 }
 
-const displayCards = (container) => {
-    const cards = ['card1', 'card2', 'card3', 'card4', 'card5', 'card6']
+const displayCards = (container, currentUser) => {
+    const cards = currentUser.allBookings;
     cards.forEach(card => {
         container.innerHTML += `
             <div class="booking-card card flex">
@@ -36,7 +36,7 @@ const displayCards = (container) => {
                         <li class="small"><span>Beds:</span> 1</li>
                         <li class="small"><span>Bed Size:</span> Queen</li>
                         <li class="small"><span>Bidet:</span> Yes</li>
-                        <li class="small"><span>Date:</span> 2022/01/13</li>
+                        <li class="small"><span>Date:</span> ${card.date}</li>
                         <li class="small"><span>Cost/Night:</span> $480.12</li>
                     </ul>
                 </summary>
@@ -45,9 +45,9 @@ const displayCards = (container) => {
 }
 
 // Header Content
-export const displayDashboardHeader = () => {
-    const viewName = "Your Dashboard";
-    const textDetail1 = "Welcome back user!";
+export const displayDashboardHeader = (currentUser) => {
+    const viewName = `${currentUser.name}`;
+    const textDetail1 = `Welcome back!`;
     const textDetail2 = "This is your space to view all the wonderful places you've explored or will explore soon.";
     const iconName = "dashboard";
     const altText = "hotel room icon with double bed, desk lamp, and check mark";

@@ -99,8 +99,8 @@ const loadDashboardView = () => {
     showElement(dashboardView);
     showElement(head);
     showElement(footer);
-    displayDashboardCards();
-    displayDashboardHeader();
+    displayDashboardCards(currentUser);
+    displayDashboardHeader(currentUser);
 }
 
 const loadBookView = () => {
@@ -116,9 +116,10 @@ const loadBookView = () => {
 // Needs to be more robust
 const loginUser = () => {
     currentUser = allUsersData[12]; // Temporarily assign a user
-    console.log("Current User: ", currentUser);
     currentUser.addAllBookings(allBookingsData);
-    // console.log("User's bookings: ", currentUser.allBookings);
+    console.log("Current User: ", currentUser);
 }
+
+
 
 

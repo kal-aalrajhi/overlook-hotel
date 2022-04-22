@@ -18,7 +18,6 @@ export class User {
 
     // Test w/ sample data | When a user logs in, add all there booking data to display
     addAllBookings(allBookingsData) {
-        let userBookings = allBookingsData.filter(booking => booking.userId === this.id);
-        console.log("booking: ", userBookings);
+        this.allBookings = allBookingsData.filter(booking => booking.userId === this.id);
     }
 }
