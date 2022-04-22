@@ -60,6 +60,9 @@ const loadData = () => {
         tempData.forEach(userData => {
             allUsersData.push(new User(userData));
         });
+
+        currentUser = allUsersData[0];
+        console.log("Current User: ", currentUser);
         // console.log("users", allUsersData);
 
         tempData = data[1].bookings; 
