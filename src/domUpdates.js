@@ -12,11 +12,11 @@ const clearView = (view) => {
 }
 
 // Display Cards
-export const displayDashboardCards = (currentUser, bookings) => {
+export const displayDashboardCards = (bookings) => {
     const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
     clearView(dashboardCardsContainer);  
     displayCards(dashboardCardsContainer, bookings);
-    displayTotalCost(currentUser);
+    displayBookingsCost(bookings);
 }
 
 export const displayBookCards = () => {
@@ -26,29 +26,32 @@ export const displayBookCards = () => {
 }
 
 const displayCards = (container, bookings) => {
-    const cards = bookings;
-    cards.forEach(card => {
+    bookings.forEach(booking => {
         container.innerHTML += `
             <div class="booking-card card flex">
                 <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
                 <summary class="booking-card-text">
-                    <h3>room ${card.roomDetails.number}</h3>
-                    <h3>${card.roomDetails.roomType}</h3>
+                    <h3>room ${booking.roomDetails.number}</h3>
+                    <h3>${booking.roomDetails.roomType}</h3>
                     <ul>
-                        <li class="small"><span>beds:</span> ${card.roomDetails.numBeds}</li>
-                        <li class="small"><span>bed size:</span> ${card.roomDetails.bedSize}</li>
-                        <li class="small"><span>bidet:</span> ${card.roomDetails.bidet}</li>
-                        <li class="small"><span>date:</span> ${card.date}</li>
-                        <li class="small"><span>cost/night:</span> $${card.roomDetails.costPerNight.toFixed(2)}</li>
+                        <li class="small"><span>beds:</span> ${booking.roomDetails.numBeds}</li>
+                        <li class="small"><span>bed size:</span> ${booking.roomDetails.bedSize}</li>
+                        <li class="small"><span>bidet:</span> ${booking.roomDetails.bidet}</li>
+                        <li class="small"><span>date:</span> ${booking.date}</li>
+                        <li class="small"><span>cost/night:</span> $${booking.roomDetails.costPerNight.toFixed(2)}</li>
                     </ul>
                 </summary>
             </div>`
     });
 }
 
-const displayTotalCost = (currentUser) => {
+const displayBookingsCost = (bookings) => {
+    const bookingTotalCost = bookings.reduce((acc, booking) => {
+        acc += booking.roomDetails.costPerNight;
+        return acc;
+    }, 0);
     const totalCost = document.querySelector("#totalCost");
-    totalCost.innerText = `$${currentUser.totalCost.toFixed(2)}`;
+    totalCost.innerText = `$${bookingTotalCost.toFixed(2)}`;
 }
 
 // Header Content

@@ -42,20 +42,20 @@ window.addEventListener("load", () => loadData());
 navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
-bookingHistoryOptions.addEventListener("click", (event) => { viewBookingsBy(event)});
+bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
 
 const viewBookingsBy = (event) => {
     if(event.target.id === "allBookings") {
-        displayDashboardCards(currentUser, currentUser.allBookings);
+        displayDashboardCards(currentUser.allBookings);
     } else if (event.target.id === "pastBookings") {
         const pastBookings = currentUser.allBookings.filter(booking => booking.date < getCurrentDate());
-        displayDashboardCards(currentUser, pastBookings);
+        displayDashboardCards(pastBookings);
     } else if (event.target.id === "todaysBookings") {
         const todaysBookings = currentUser.allBookings.filter(booking => booking.date === getCurrentDate());
-        displayDashboardCards(currentUser, todaysBookings);
+        displayDashboardCards(todaysBookings);
     } else if (event.target.id === "futureBookings") {
         const futureBookings = currentUser.allBookings.filter(booking => booking.date > getCurrentDate());
-        displayDashboardCards(currentUser, futureBookings);
+        displayDashboardCards(futureBookings);
     }
 }
 
@@ -121,7 +121,7 @@ const loadDashboardView = () => {
     showElement(dashboardView);
     showElement(head);
     showElement(footer);
-    displayDashboardCards(currentUser, currentUser.allBookings);
+    displayDashboardCards(currentUser.allBookings);
     displayDashboardHeader(currentUser);
 }
 
