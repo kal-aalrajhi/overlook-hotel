@@ -24,7 +24,7 @@ export const displayBookCards = () => {
     displayCards(bookCardsContainer);
 }
 
-const displayCards = (container, currentUser) => {
+const displayCards = (container, currentUser, allRoomsData) => {
     const cards = currentUser.allBookings;
     cards.forEach(card => {
         container.innerHTML += `

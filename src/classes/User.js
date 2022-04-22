@@ -1,3 +1,5 @@
+import { Room } from "./Room";
+
 export class User {
     constructor(userData) {
         this.id = userData.id;
@@ -19,5 +21,8 @@ export class User {
     // Test w/ sample data | When a user logs in, add all there booking data to display
     addAllBookings(allBookingsData) {
         this.allBookings = allBookingsData.filter(booking => booking.userId === this.id);
+        this.allBookings.forEach(booking => {
+            booking.roomDetails = booking.getRoom();
+        });
     }
 }

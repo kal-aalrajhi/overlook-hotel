@@ -7,12 +7,18 @@ export class Booking {
         this.userId = bookingData.userID; 
         this.date = bookingData.date;
         this.roomNumber = bookingData.roomNumber;
+        this.roomDetails = ""; // Gets set as a room object from setRoom method
     }
 
     // Test w/ sample data | search room details associate with this booking
-    getRoom(allRoomsData) { 
+    // getRoom(allRoomsData) { 
+    //     const roomToFind = allRoomsData.find(room => room.number === this.roomNumber);
+    //     return new Room(roomToFind);
+    // }
+
+    setRoom(allRoomsData) { 
         const roomToFind = allRoomsData.find(room => room.number === this.roomNumber);
-        return new Room(roomToFind);
+        roomDetails = roomToFind;
     }
 
     // Test w/ sample data | search for which user made this booking
