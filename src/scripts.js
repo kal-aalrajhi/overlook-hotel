@@ -11,8 +11,8 @@ import { fetchResponse } from './apiCalls';
 import { User } from './classes/User';
 import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
-import { showElement, hideElement, clearView, displayDashboardCards, displayBookCards,
-    displayDashboardHeader, displayBookHeader } from './domUpdates';
+import { showElement, hideElement, displayDashboardCards, displayBookCards,
+    displayDashboardHeader, displayBookHeader, getCurrentDate } from './domUpdates';
 
 
 // Globals
@@ -34,13 +34,30 @@ const head = document.querySelector("#head");
 const subHead = document.querySelector("#subHead");
 const footer = document.querySelector("#footer");
 
+const bookingHistoryOptions = document.querySelector("#bookingHistoryOptions");
+
 // Event Listeners 
 window.addEventListener("load", () => loadData());
 
 navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
+bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
 
+const viewBookingsBy = (event) => {
+    if(event.target.id === "allBookings") {
+        displayDashboardCards(currentUser.allBookings);
+    } else if (event.target.id === "pastBookings") {
+        const pastBookings = currentUser.allBookings.filter(booking => booking.date < getCurrentDate());
+        displayDashboardCards(pastBookings);
+    } else if (event.target.id === "todaysBookings") {
+        const todaysBookings = currentUser.allBookings.filter(booking => booking.date === getCurrentDate());
+        displayDashboardCards(todaysBookings);
+    } else if (event.target.id === "futureBookings") {
+        const futureBookings = currentUser.allBookings.filter(booking => booking.date > getCurrentDate());
+        displayDashboardCards(futureBookings);
+    }
+}
 
 // Functions
 const loadData = () => {
@@ -60,22 +77,26 @@ const loadData = () => {
         tempData.forEach(userData => {
             allUsersData.push(new User(userData));
         });
-
-        currentUser = allUsersData[0];
-        console.log("Current User: ", currentUser);
         // console.log("users", allUsersData);
 
         tempData = data[1].bookings; 
         tempData.forEach(bookingData => {
             allBookingsData.push(new Booking(bookingData));
         });
-        // console.log("booking", allBookingsData);
         
         tempData = data[2].rooms; 
         tempData.forEach(roomData => {
             allRoomsData.push(new Room(roomData));
         });
         // console.log("rooms", allRoomsData);
+
+        // Populate each booking with roomDetails property with room objects
+        allBookingsData.forEach(booking => {
+            booking.setRoom(allRoomsData);
+        });
+        // console.log(allBookingsData);
+
+        loginUser(); // Need to move when implementing login feature
     })
     .catch((err) => console.log(err));
 }
@@ -100,8 +121,8 @@ const loadDashboardView = () => {
     showElement(dashboardView);
     showElement(head);
     showElement(footer);
-    displayDashboardCards();
-    displayDashboardHeader();
+    displayDashboardCards(currentUser.allBookings);
+    displayDashboardHeader(currentUser);
 }
 
 const loadBookView = () => {
@@ -113,5 +134,14 @@ const loadBookView = () => {
     displayBookCards();
     displayBookHeader();
 }
+
+// Needs to be more robust
+const loginUser = () => {
+    currentUser = allUsersData[12]; // Temporarily assign a user
+    currentUser.addAllBookings(allBookingsData);
+    console.log("Current User: ", currentUser);
+}
+
+
 
 
