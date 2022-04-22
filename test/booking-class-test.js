@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 import { Room } from '../src/classes/Room';
 import { roomsSampleData } from '../src/data/rooms-sample-data';
+// import { User } from '../src/classes/User';
+// import { usersSampleData } from '../src/data/users-sample-data';
 import { Booking } from '../src/classes/Booking';
 import { bookingsSampleData } from '../src/data/bookings-sample-data';
 
@@ -51,6 +53,9 @@ describe('Booking', () => {
         expect(booking3.roomNumber).to.equal(12);
     });
 
+    it('should get a room details based off the room number', () => {
+        console.log(booking1.getRoom(roomData));
+    });
 
 
 
