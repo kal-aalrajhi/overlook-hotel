@@ -90,6 +90,6 @@ export const getCurrentDate = () => {
     let mm = today.getMonth() + 1;
     let yyyy = today.getFullYear();
     // return `${yyyy}/${mm}/${dd}`;
-    return `2022/01/21`; // PAST TEST
+    return `2022/01/21`; // Test past, present, today
 }
 

@@ -48,19 +48,14 @@ const viewBookingsBy = (event) => {
     if(event.target.id === "allBookings") {
         displayDashboardCards(currentUser, currentUser.allBookings);
     } else if (event.target.id === "pastBookings") {
-        console.log("here1")
         const pastBookings = currentUser.allBookings.filter(booking => booking.date < getCurrentDate());
-        console.log("here2")
         displayDashboardCards(currentUser, pastBookings);
-        // console.log("all bookings: ", currentUser.allBookings);
-        // console.log("past bookings: ", pastBookings);
-        console.log("PAST")
     } else if (event.target.id === "todaysBookings") {
-        // filter by today
-        console.log("TODAY")
+        const todaysBookings = currentUser.allBookings.filter(booking => booking.date === getCurrentDate());
+        displayDashboardCards(currentUser, todaysBookings);
     } else if (event.target.id === "futureBookings") {
-        // filter by future
-        console.log("FUTURE")
+        const futureBookings = currentUser.allBookings.filter(booking => booking.date > getCurrentDate());
+        displayDashboardCards(currentUser, futureBookings);
     }
 }
 
