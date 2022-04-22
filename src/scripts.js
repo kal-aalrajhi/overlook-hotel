@@ -11,6 +11,10 @@ import { showElement, hideElement, clearView, displayDashboardCards, displayBook
     displayDashboardHeader, displayBookHeader } from './domUpdates';
 
 // Globals
+let allUsersData = [];
+let allBookingsData = [];
+let allRoomsData = [];
+let currentUser = {}; // determine by login
 
 // Query Selectors
 const navHomeBtn = document.querySelector("#navHomeBtn");
@@ -26,11 +30,30 @@ const subHead = document.querySelector("#subHead");
 const footer = document.querySelector("#footer");
 
 // Event Listeners 
+window.addEventListener("load", loadData);
+
 navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
 
+
 // Functions
+const loadData = () => {
+    const fetchUsers = fetchResponse("http://localhost:3001/api/v1/customers");
+    const fetchBookings = fetchResponse("http://localhost:3001/api/v1/bookings");
+    const fetchRooms = fetchResponse("http://localhost:3001/api/v1/rooms");
+  
+    Promise.all([fetchUsers, fetchBookings, fetchRooms]).then((data) => {
+        usersData = data[0]; // convert to users objects
+        
+        allBookingsData = data[1]; // convert to bookings objects
+        // allBookingsStorage.addBookingss(allBookingsData); 
+    
+        allRoomsData = data[2]; // convert to room objects
+    })
+    .catch((err) => console.log(err));
+}
+
 const hideAllElements = () => {
     hideElement(homeView);
     hideElement(dashboardView);
