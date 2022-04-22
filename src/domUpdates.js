@@ -12,7 +12,7 @@ const clearView = (view) => {
 }
 
 // Display Cards
-export const displayAllDashboardCards = (currentUser) => {
+export const displayDashboardCards = (currentUser) => {
     const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
     clearView(dashboardCardsContainer);  
     displayCards(dashboardCardsContainer, currentUser);
@@ -22,7 +22,9 @@ export const displayAllDashboardCards = (currentUser) => {
 export const displayPastDashboardCards = (currentUser) => {
     const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
     clearView(dashboardCardsContainer);  
-    currentUser.allBookings.filter(booking => booking.date < getCurrentDate());
+    const pastBookings = currentUser.allBookings.filter(booking => booking.date < getCurrentDate());
+    console.log("past bookings", pastBookings);
+    console.log("all bookings", currentUser.allBookings);
     displayCards(dashboardCardsContainer, currentUser);
     displayTotalCost(currentUser);
 }
@@ -92,11 +94,12 @@ const displayHeaderContent = (viewName, iconName, textDetail, altText) => {
         <img class="head-icon" src="./images/${iconName}-icon.png" alt=${altText}>`    
 }
 
-export const getCurrentDate = () => {
+const getCurrentDate = () => {
     let today = new Date();
     let dd = today.getDate();
     let mm = today.getMonth() + 1;
     let yyyy = today.getFullYear();
-    return `${yyyy}/${mm}/${dd}`;
+    // return `${yyyy}/${mm}/${dd}`;
+    return `2022/01/21`; // PAST TEST
 }
 
