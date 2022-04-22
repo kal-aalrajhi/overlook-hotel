@@ -35,6 +35,7 @@ const subHead = document.querySelector("#subHead");
 const footer = document.querySelector("#footer");
 
 const bookingHistoryOptions = document.querySelector("#bookingHistoryOptions");
+const startDate = document.querySelector("#startDate");
 
 // Event Listeners 
 window.addEventListener("load", () => loadData());
@@ -43,21 +44,10 @@ navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
 bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
-
-const viewBookingsBy = (event) => {
-    if(event.target.id === "allBookings") {
-        displayDashboardCards(currentUser.allBookings);
-    } else if (event.target.id === "pastBookings") {
-        const pastBookings = currentUser.allBookings.filter(booking => booking.date < getCurrentDate());
-        displayDashboardCards(pastBookings);
-    } else if (event.target.id === "todaysBookings") {
-        const todaysBookings = currentUser.allBookings.filter(booking => booking.date === getCurrentDate());
-        displayDashboardCards(todaysBookings);
-    } else if (event.target.id === "futureBookings") {
-        const futureBookings = currentUser.allBookings.filter(booking => booking.date > getCurrentDate());
-        displayDashboardCards(futureBookings);
-    }
-}
+startDate.addEventListener("change", () => {
+    let startDateValue = startDate.value;
+    console.log(startDateValue);
+});
 
 // Functions
 const loadData = () => {
@@ -131,8 +121,15 @@ const loadBookView = () => {
     showElement(head);
     showElement(subHead);
     showElement(footer);
-    displayBookCards();
+    console.log(getAvailableBookings());
+    // displayBookCards();
     displayBookHeader();
+}
+
+const getAvailableBookings = () => {
+    console.log(allBookingsData)
+    // Get bookings for given date use that to eliminate rooms and display what's left.
+    
 }
 
 // Needs to be more robust
@@ -142,6 +139,17 @@ const loginUser = () => {
     console.log("Current User: ", currentUser);
 }
 
-
-
-
+const viewBookingsBy = (event) => {
+    if(event.target.id === "allBookings") {
+        displayDashboardCards(currentUser.allBookings);
+    } else if (event.target.id === "pastBookings") {
+        const pastBookings = currentUser.allBookings.filter(booking => booking.date < getCurrentDate());
+        displayDashboardCards(pastBookings);
+    } else if (event.target.id === "todaysBookings") {
+        const todaysBookings = currentUser.allBookings.filter(booking => booking.date === getCurrentDate());
+        displayDashboardCards(todaysBookings);
+    } else if (event.target.id === "futureBookings") {
+        const futureBookings = currentUser.allBookings.filter(booking => booking.date > getCurrentDate());
+        displayDashboardCards(futureBookings);
+    }
+}
