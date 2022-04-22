@@ -16,6 +16,7 @@ export const displayDashboardCards = (currentUser) => {
     const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
     clearView(dashboardCardsContainer);  
     displayCards(dashboardCardsContainer, currentUser);
+    displayTotalCost(currentUser);
 }
 
 export const displayBookCards = () => {
@@ -43,6 +44,11 @@ const displayCards = (container, currentUser) => {
                 </summary>
             </div>`
     });
+}
+
+const displayTotalCost = (currentUser) => {
+    const totalCost = document.querySelector("totalCost");
+    totalCost.innerText = `$${currentUser.totalCost.toFixed(2)}`;
 }
 
 // Header Content
