@@ -7,8 +7,12 @@ import './images/calendar-icon.png';
 import './images/one-bed-icon.png';
 import './images/two-bed-icon.png';
 import apiCalls from './apiCalls';
+import { User } from './classes/User';
+import { Booking } from './classes/Booking';
+import { Room } from './classes/Room';
 import { showElement, hideElement, clearView, displayDashboardCards, displayBookCards,
     displayDashboardHeader, displayBookHeader } from './domUpdates';
+
 
 // Globals
 let allUsersData = [];
@@ -44,11 +48,14 @@ const loadData = () => {
     const fetchRooms = fetchResponse("http://localhost:3001/api/v1/rooms");
   
     Promise.all([fetchUsers, fetchBookings, fetchRooms]).then((data) => {
-        usersData = data[0]; // convert to users objects
-        
+        let tempData = [];
+        tempData = data[0]; // convert to users objects
+        tempData.forEach(data => {
+            data = new 
+        })
+
         allBookingsData = data[1]; // convert to bookings objects
-        // allBookingsStorage.addBookingss(allBookingsData); 
-    
+        
         allRoomsData = data[2]; // convert to room objects
     })
     .catch((err) => console.log(err));
