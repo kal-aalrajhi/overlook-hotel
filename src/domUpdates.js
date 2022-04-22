@@ -24,20 +24,21 @@ export const displayBookCards = () => {
     displayCards(bookCardsContainer);
 }
 
-const displayCards = (container, currentUser, allRoomsData) => {
+const displayCards = (container, currentUser) => {
     const cards = currentUser.allBookings;
     cards.forEach(card => {
         container.innerHTML += `
             <div class="booking-card card flex">
                 <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
                 <summary class="booking-card-text">
-                    <h3>Suite ${card}</h3>
+                    <h3>room ${card.roomDetails.number}</h3>
+                    <h3>${card.roomDetails.roomType}</h3>
                     <ul>
-                        <li class="small"><span>Beds:</span> 1</li>
-                        <li class="small"><span>Bed Size:</span> Queen</li>
-                        <li class="small"><span>Bidet:</span> Yes</li>
-                        <li class="small"><span>Date:</span> ${card.date}</li>
-                        <li class="small"><span>Cost/Night:</span> $480.12</li>
+                        <li class="small"><span>beds:</span> ${card.roomDetails.numBeds}</li>
+                        <li class="small"><span>bed size:</span> ${card.roomDetails.bedSize}</li>
+                        <li class="small"><span>bidet:</span> ${card.roomDetails.bidet}</li>
+                        <li class="small"><span>date:</span> ${card.date}</li>
+                        <li class="small"><span>cost/night:</span> $${card.roomDetails.costPerNight.toFixed(2)}</li>
                     </ul>
                 </summary>
             </div>`

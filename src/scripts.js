@@ -66,13 +66,18 @@ const loadData = () => {
         tempData.forEach(bookingData => {
             allBookingsData.push(new Booking(bookingData));
         });
-        // console.log("booking", allBookingsData);
         
         tempData = data[2].rooms; 
         tempData.forEach(roomData => {
             allRoomsData.push(new Room(roomData));
         });
         // console.log("rooms", allRoomsData);
+
+        // Populate each booking with roomDetails property with room objects
+        allBookingsData.forEach(booking => {
+            booking.setRoom(allRoomsData);
+        });
+        // console.log(allBookingsData);
 
         loginUser(); // Need to move when implementing login feature
     })
