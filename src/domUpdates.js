@@ -12,20 +12,10 @@ const clearView = (view) => {
 }
 
 // Display Cards
-export const displayDashboardCards = (currentUser) => {
+export const displayDashboardCards = (currentUser, bookings) => {
     const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
     clearView(dashboardCardsContainer);  
-    displayCards(dashboardCardsContainer, currentUser);
-    displayTotalCost(currentUser);
-}
-
-export const displayPastDashboardCards = (currentUser) => {
-    const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
-    clearView(dashboardCardsContainer);  
-    const pastBookings = currentUser.allBookings.filter(booking => booking.date < getCurrentDate());
-    console.log("past bookings", pastBookings);
-    console.log("all bookings", currentUser.allBookings);
-    displayCards(dashboardCardsContainer, currentUser);
+    displayCards(dashboardCardsContainer, bookings);
     displayTotalCost(currentUser);
 }
 
@@ -35,8 +25,8 @@ export const displayBookCards = () => {
     displayCards(bookCardsContainer); // MUST DISPLAY ALL AVAILABLE BOOKINGS (and bookings you haven't booked)
 }
 
-const displayCards = (container, currentUser) => {
-    const cards = currentUser.allBookings;
+const displayCards = (container, bookings) => {
+    const cards = bookings;
     cards.forEach(card => {
         container.innerHTML += `
             <div class="booking-card card flex">
@@ -94,7 +84,7 @@ const displayHeaderContent = (viewName, iconName, textDetail, altText) => {
         <img class="head-icon" src="./images/${iconName}-icon.png" alt=${altText}>`    
 }
 
-const getCurrentDate = () => {
+export const getCurrentDate = () => {
     let today = new Date();
     let dd = today.getDate();
     let mm = today.getMonth() + 1;

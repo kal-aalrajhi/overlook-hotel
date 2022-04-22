@@ -12,7 +12,7 @@ import { User } from './classes/User';
 import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
 import { showElement, hideElement, displayDashboardCards, displayBookCards,
-    displayDashboardHeader, displayBookHeader, displayPastDashboardCards } from './domUpdates';
+    displayDashboardHeader, displayBookHeader, getCurrentDate } from './domUpdates';
 
 
 // Globals
@@ -46,9 +46,14 @@ bookingHistoryOptions.addEventListener("click", (event) => { viewBookingsBy(even
 
 const viewBookingsBy = (event) => {
     if(event.target.id === "allBookings") {
-        displayDashboardCards(currentUser);
+        displayDashboardCards(currentUser, currentUser.allBookings);
     } else if (event.target.id === "pastBookings") {
-        displayPastDashboardCards(currentUser);
+        console.log("here1")
+        const pastBookings = currentUser.allBookings.filter(booking => booking.date < getCurrentDate());
+        console.log("here2")
+        displayDashboardCards(currentUser, pastBookings);
+        // console.log("all bookings: ", currentUser.allBookings);
+        // console.log("past bookings: ", pastBookings);
         console.log("PAST")
     } else if (event.target.id === "todaysBookings") {
         // filter by today
@@ -121,7 +126,7 @@ const loadDashboardView = () => {
     showElement(dashboardView);
     showElement(head);
     showElement(footer);
-    displayDashboardCards(currentUser);
+    displayDashboardCards(currentUser, currentUser.allBookings);
     displayDashboardHeader(currentUser);
 }
 
