@@ -46,7 +46,12 @@ navBookBtn.addEventListener("click", () => loadBookView());
 bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
 startDate.addEventListener("change", () => {
     let startDateValue = startDate.value;
-    console.log(startDateValue);
+    let startDateValueSplit = startDateValue.split('-')
+    let yyyy = startDateValueSplit[0];
+    let mm = startDateValueSplit[1];
+    let dd = startDateValueSplit[2];
+    let startDateValueFormatted = `${yyyy}/${mm}/${dd}`;
+    console.log(startDateValueFormatted);
 });
 
 // Functions
