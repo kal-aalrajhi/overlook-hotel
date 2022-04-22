@@ -15,7 +15,11 @@ const clearView = (view) => {
 export const displayDashboardCards = (bookings) => {
     const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
     clearView(dashboardCardsContainer);  
-    displayCards(dashboardCardsContainer, bookings);
+    if (!bookings.length) {
+        dashboardCardsContainer.innerHTML = `<h1>Sorry, no bookings of this type are available.</h1>`
+    } else {
+        displayCards(dashboardCardsContainer, bookings);
+    }
     displayBookingsCost(bookings);
 }
 
@@ -92,7 +96,7 @@ export const getCurrentDate = () => {
     let dd = today.getDate();
     let mm = today.getMonth() + 1;
     let yyyy = today.getFullYear();
-    // return `${yyyy}/${mm}/${dd}`;
-    return `2022/01/21`; // Test past, present, today
+    return `${yyyy}/${mm}/${dd}`;
+    // return `2022/01/21`; // Test past, present, today
 }
 
