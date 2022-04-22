@@ -7,6 +7,7 @@ import './images/calendar-icon.png';
 import './images/one-bed-icon.png';
 import './images/two-bed-icon.png';
 import apiCalls from './apiCalls';
+import { fetchResponse } from './apiCalls';
 import { User } from './classes/User';
 import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
@@ -34,7 +35,7 @@ const subHead = document.querySelector("#subHead");
 const footer = document.querySelector("#footer");
 
 // Event Listeners 
-window.addEventListener("load", loadData);
+window.addEventListener("load", () => loadData());
 
 navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
@@ -49,14 +50,29 @@ const loadData = () => {
   
     Promise.all([fetchUsers, fetchBookings, fetchRooms]).then((data) => {
         let tempData = [];
-        tempData = data[0]; // convert to users objects
-        tempData.forEach(data => {
-            data = new 
-        })
 
-        allBookingsData = data[1]; // convert to bookings objects
+        // Clear out data incase you need to reload data that has been POSTed
+        // allUsersData = []; 
+        // allBookingsData = [];
+        // allRoomsData = [];
+
+        tempData = data[0].customers; 
+        tempData.forEach(userData => {
+            allUsersData.push(new User(userData));
+        });
+        // console.log("users", allUsersData);
+
+        tempData = data[1].bookings; 
+        tempData.forEach(bookingData => {
+            allBookingsData.push(new Booking(bookingData));
+        });
+        // console.log("booking", allBookingsData);
         
-        allRoomsData = data[2]; // convert to room objects
+        tempData = data[2].rooms; 
+        tempData.forEach(roomData => {
+            allRoomsData.push(new Room(roomData));
+        });
+        // console.log("rooms", allRoomsData);
     })
     .catch((err) => console.log(err));
 }
