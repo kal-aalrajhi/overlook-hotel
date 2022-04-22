@@ -16,14 +16,9 @@ export class User {
         this.allBookings.splice() // find the booking to splice
     }
 
+    // Test w/ sample data | When a user logs in, add all there booking data to display
     addAllBookings(allBookingsData) {
-        // allBookingsData.forEach(booking => {
-        //     if (booking.userID === this.id) {
-        //         this.allBookings.
-        //     }
-        // });
-
-        this.allBookings = allBookingsData.filter(booking => booking.userID === this.id);
-        
+        let userBookings = allBookingsData.filter(booking => booking.userId === this.id);
+        console.log("booking: ", userBookings);
     }
 }

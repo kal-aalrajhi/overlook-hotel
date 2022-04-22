@@ -60,7 +60,6 @@ const loadData = () => {
         tempData.forEach(userData => {
             allUsersData.push(new User(userData));
         });
-
         // console.log("users", allUsersData);
 
         tempData = data[1].bookings; 
@@ -74,6 +73,8 @@ const loadData = () => {
             allRoomsData.push(new Room(roomData));
         });
         // console.log("rooms", allRoomsData);
+
+        loginUser(); // Need to move when implementing login feature
     })
     .catch((err) => console.log(err));
 }
@@ -114,10 +115,10 @@ const loadBookView = () => {
 
 // Needs to be more robust
 const loginUser = () => {
-    currentUser = allUsersData[0]; // Temporarily assign a user
+    currentUser = allUsersData[12]; // Temporarily assign a user
     console.log("Current User: ", currentUser);
     currentUser.addAllBookings(allBookingsData);
-    console.log("User's bookings: ", currentUser.allBookings);
+    // console.log("User's bookings: ", currentUser.allBookings);
 }
 
 
