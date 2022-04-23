@@ -53,13 +53,13 @@ const displayBookingsCost = (bookings) => {
 }
 
 // Display Available Booking Cards
-export const displayAvailableBookingCards = (availableRooms) => {
+export const displayAvailableBookingCards = (startDate, availableRooms) => {
     const bookCardsContainer = document.querySelector("#bookCardsContainer");
     clearView(bookCardsContainer);
-    displayAvailableRoomCards(bookCardsContainer, availableRooms); 
+    displayAvailableRoomCards(bookCardsContainer, startDate, availableRooms); 
 }
 
-const displayAvailableRoomCards = (container, availableRooms) => {
+const displayAvailableRoomCards = (container, startDate, availableRooms) => {
     availableRooms.forEach(room => {
         container.innerHTML += `
             <div class="booking-card card flex">
@@ -71,7 +71,7 @@ const displayAvailableRoomCards = (container, availableRooms) => {
                         <li class="small"><span>beds:</span> ${room.numBeds}</li>
                         <li class="small"><span>bed size:</span> ${room.bedSize}</li>
                         <li class="small"><span>bidet:</span> ${room.bidet}</li>
-                        <li class="small"><span>date available:</span> ${getStartDateValue()}</li>
+                        <li class="small"><span>date available:</span> ${startDate}</li>
                         <li class="small"><span>cost/night:</span> $${room.costPerNight.toFixed(2)}</li>
                     </ul>
                 </summary>

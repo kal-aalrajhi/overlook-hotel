@@ -44,13 +44,10 @@ navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
 bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
-startDate.addEventListener("change", () => displayAvailableBookings());
-
-const displayAvailableBookings = () => {
+startDate.addEventListener("change", () => {
     let startDate = getStartDateValue();
-    let availableBookings = getAvailableRooms(startDate, allBookingsData, allRoomsData);
-    displayAvailableBookingCards(availableBookings);
-}
+    displayAvailableBookings(startDate);
+});
 
 // Functions
 const loadData = () => {
@@ -124,6 +121,7 @@ const loadBookView = () => {
     showElement(head);
     showElement(subHead);
     showElement(footer);
+    displayAvailableBookings(getCurrentDate());
     displayBookHeader();
 }
 
@@ -147,4 +145,10 @@ const viewBookingsBy = (event) => {
         const futureBookings = currentUser.allBookings.filter(booking => booking.date > getCurrentDate());
         displayDashboardCards(futureBookings);
     }
+}
+
+const displayAvailableBookings = (startDate) => {
+    console.log("startDate ", startDate);
+    let availableBookings = getAvailableRooms(startDate, allBookingsData, allRoomsData);
+    displayAvailableBookingCards(startDate, availableBookings);
 }
