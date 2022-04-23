@@ -23,10 +23,10 @@ export const displayDashboardCards = (bookings) => {
     displayBookingsCost(bookings);
 }
 
-export const displayBookCards = () => {
+export const displayBookCards = (availableBookings) => {
     const bookCardsContainer = document.querySelector("#bookCardsContainer");
     clearView(bookCardsContainer);
-    displayCards(bookCardsContainer); // MUST DISPLAY ALL AVAILABLE BOOKINGS (and bookings you haven't booked)
+    displayCards(bookCardsContainer, availableBookings); // SHOULD NOT HAVE BOOKING DATE
 }
 
 const displayCards = (container, bookings) => {
@@ -100,3 +100,26 @@ export const getCurrentDate = () => {
     // return `2022/01/21`; // Test past, present, today
 }
 
+export const getStartDateValue = () => {
+    let startDateValue = startDate.value;
+    let startDateValueSplit = startDateValue.split('-')
+    let yyyy = startDateValueSplit[0];
+    let mm = startDateValueSplit[1];
+    let dd = startDateValueSplit[2];
+    
+    let startDateValueFormatted = `${yyyy}/${mm}/${dd}`;
+    return startDateValueFormatted;
+}
+    
+
+// We just display available rooms - NOT bookings...when user clicks THEN we 'add' a booking...turn a room into
+// a booking via API?
+
+
+export const getAvailableRooms = (startDate, allBookingsData, allRoomsData) => {
+    let bookedRoomNumbers = allBookingsData.filter(booking => booking.date === startDate)
+                            .map(bookedBookings => bookedBookings.roomNumber);
+    let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number) )
+    console.log(availableRooms);
+    return availableRooms;
+}
