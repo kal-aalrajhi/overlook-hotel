@@ -57,7 +57,7 @@ export const displayAvailableBookingCards = (startDate, availableRooms) => {
     const bookCardsContainer = document.querySelector("#bookCardsContainer");
     clearView(bookCardsContainer);
     if (!availableRooms.length) {
-        bookCardsContainer.innerHTML = `<h1>We're so sorry, but we're fully booked on ${startDate}. Please look for other possible booking dates.</h1>`
+        bookCardsContainer.innerHTML = `<h1>We're so sorry, but we don't have any available bookings of that kind right now. Please look for other possible booking dates or rooms.</h1>`
     }
     displayAvailableRoomCards(bookCardsContainer, startDate, availableRooms); 
 }

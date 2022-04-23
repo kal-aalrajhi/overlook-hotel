@@ -37,7 +37,7 @@ const footer = document.querySelector("#footer");
 const bookingHistoryOptions = document.querySelector("#bookingHistoryOptions");
 const startDate = document.querySelector("#startDate");
 const roomTypes = document.querySelector("#roomTypes");
-const bookSearch = document.querySelector("#bookSearch");
+const bookSearchBtn = document.querySelector("#bookSearchBtn");
 
 // Event Listeners 
 window.addEventListener("load", () => loadData());
@@ -46,7 +46,7 @@ navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
 bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
-bookSearch.addEventListener("click", (event) => {
+bookSearchBtn.addEventListener("click", (event) => {
     event.preventDefault();
     displayAvailableBookings(getStartDateValue(), roomTypes.value);
 });
