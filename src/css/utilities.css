@@ -15,6 +15,10 @@
     margin: 2rem;
 }
 
+.card-no-pad {
+    padding: 0rem;
+}
+
 /* Backgrounds & Buttons */
 .btn {
     display: inline-block;

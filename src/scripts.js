@@ -3,6 +3,7 @@ import './css/utilities.css';
 import './images/hotel-main.jpg';
 import './images/dashboard-icon.png';
 import './images/book-icon.png';
+import './images/add-icon.png';
 import './images/calendar-icon.png';
 import './images/one-bed-icon.png';
 import './images/two-bed-icon.png';
@@ -53,6 +54,9 @@ bookSearchBtn.addEventListener("click", (event) => {
     event.preventDefault();
     displayAvailableBookings(getStartDateValue(), roomTypes.value);
 });
+bookCardsContainer.addEventListener("click", (event) => {
+    console.log(event.target.id);
+})
 
 // Functions
 const loadData = () => {

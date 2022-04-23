@@ -63,7 +63,7 @@ export const displayAvailableBookingCards = (startDate, availableRooms) => {
 const displayAvailableRoomCards = (container, startDate, availableRooms) => {
     availableRooms.forEach(room => { // **** THESE ARE ROOM OBJECTS ****
         container.innerHTML += `
-            <div class="booking-card card flex" id="${room.number}">
+            <div class="booking-card card card-no-pad flex" id="${room.number}">
                 <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
                 <summary class="booking-card-text">
                     <h3>room ${room.number}</h3>
@@ -76,6 +76,7 @@ const displayAvailableRoomCards = (container, startDate, availableRooms) => {
                         <li class="small"><span>cost/night:</span> $${room.costPerNight.toFixed(2)}</li>
                     </ul>
                 </summary>
+                <img class="add-icon" id="${room.number}" src="./images/add-icon.png" alt="blue plus book room icon">
             </div>`
     });
 }
