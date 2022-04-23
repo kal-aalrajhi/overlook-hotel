@@ -126,12 +126,48 @@ const loadBookView = () => {
     resetBookViewValues();
     displayAvailableBookings(getCurrentDate(), roomTypes.value);
     displayBookHeader();
+
+    var url = 'http://localhost:3001/api/v1/bookings';
+    var requestType = 'POST';
+    var data = { 'userID': 48, 'date': '2019/09/23', 'roomNumber': 4 }
+    custFetch(url, requestType, data);
 }
 
 const resetBookViewValues = () => {
     roomTypes.value = "all rooms";
     startDate.value = new Date().toISOString().slice(0, 10); // get todays date as default
 }
+
+
+const custFetch = (url, requestType, data) => { // data is optional param, it's just for POST and PUT requests
+    fetch(url, {
+        method: requestType,
+        headers: {
+            'Content-Type' : 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        if (!response.ok) {
+            console.log('HTTP request unsuccessful');
+            throw new Error(`status ${response.status} at URL: ${response.url}`);
+        } else {
+            console.log('HTTP request successful');
+        }
+        return response;
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.log(error));
+}
+
+
+
+
+
+
+
+
 
 // Needs to be more robust
 const loginUser = () => {
