@@ -141,14 +141,4 @@ export const getCurrentDate = () => {
     // return `2022/01/21`; // Test past, present, today
 }
 
-export const getStartDateValue = () => {
-    let startDateValue = startDate.value;
-    let startDateValueSplit = startDateValue.split('-')
-    let yyyy = startDateValueSplit[0];
-    let mm = startDateValueSplit[1];
-    let dd = startDateValueSplit[2];
-    
-    let startDateValueFormatted = `${yyyy}/${mm}/${dd}`;
-    return startDateValueFormatted;
-}
 

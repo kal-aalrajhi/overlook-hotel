@@ -48,8 +48,7 @@ navBookBtn.addEventListener("click", () => loadBookView());
 bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
 bookSearch.addEventListener("click", (event) => {
     event.preventDefault();
-    let roomType = roomTypes.value;
-    displayAvailableBookings(getStartDateValue(), roomType);
+    displayAvailableBookings(getStartDateValue(), roomTypes.value);
 });
 // startDate.addEventListener("change", () => {
 //     let startDate = getStartDateValue();
@@ -131,8 +130,15 @@ const loadBookView = () => {
     showElement(head);
     showElement(subHead);
     showElement(footer);
+    resetBookViewValues();
     displayAvailableBookings(getCurrentDate(), "all rooms");
     displayBookHeader();
+}
+
+const resetBookViewValues = () => {
+    roomTypes.value = "all rooms";
+    startDate.value = new Date().toISOString().slice(0, 10); // get todays date as default
+    console.log(startDate.value);
 }
 
 // Needs to be more robust
