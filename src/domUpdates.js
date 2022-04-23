@@ -13,7 +13,6 @@ const clearView = (view) => {
 
 // Display Dashboard
 export const displayDashboardCards = (bookings) => {
-    const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
     clearView(dashboardCardsContainer);  
     if (!bookings.length) {
         dashboardCardsContainer.innerHTML = `<h1>Sorry, no bookings of this type are available.</h1>`
@@ -26,7 +25,7 @@ export const displayDashboardCards = (bookings) => {
 const displayBookedCards = (container, bookings) => {
     bookings.forEach(booking => { // **** THESE ARE BOOKING OBJECTS ****
         container.innerHTML += `
-            <div class="booking-card card flex">
+            <div class="booking-card card flex" id="${booking.id}">
                 <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
                 <summary class="booking-card-text">
                     <h3>room ${booking.roomDetails.number}</h3>
@@ -54,7 +53,6 @@ const displayBookingsCost = (bookings) => {
 
 // Display Available Booking Cards
 export const displayAvailableBookingCards = (startDate, availableRooms) => {
-    const bookCardsContainer = document.querySelector("#bookCardsContainer");
     clearView(bookCardsContainer);
     if (!availableRooms.length) {
         bookCardsContainer.innerHTML = `<h1>We're so sorry, but we don't have any available bookings of that kind right now. Please look for other possible booking dates or rooms.</h1>`
@@ -65,7 +63,7 @@ export const displayAvailableBookingCards = (startDate, availableRooms) => {
 const displayAvailableRoomCards = (container, startDate, availableRooms) => {
     availableRooms.forEach(room => { // **** THESE ARE ROOM OBJECTS ****
         container.innerHTML += `
-            <div class="booking-card card flex">
+            <div class="booking-card card flex" id="${room.number}">
                 <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
                 <summary class="booking-card-text">
                     <h3>room ${room.number}</h3>

@@ -34,6 +34,9 @@ const head = document.querySelector("#head");
 const subHead = document.querySelector("#subHead");
 const footer = document.querySelector("#footer");
 
+const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
+const bookCardsContainer = document.querySelector("#bookCardsContainer");
+
 const bookingHistoryOptions = document.querySelector("#bookingHistoryOptions");
 const startDate = document.querySelector("#startDate");
 const roomTypes = document.querySelector("#roomTypes");
@@ -126,11 +129,17 @@ const loadBookView = () => {
     resetBookViewValues();
     displayAvailableBookings(getCurrentDate(), roomTypes.value);
     displayBookHeader();
+    
+    // What happens when a card is selected?
+    // Card should disappear, booking confirmation message, POST booking
+    
 
+    
+    
     var url = 'http://localhost:3001/api/v1/bookings';
     var requestType = 'POST';
     var data = { 'userID': 48, 'date': '2019/09/23', 'roomNumber': 4 }
-    custFetch(url, requestType, data);
+    // custFetch(url, requestType, data);
 }
 
 const resetBookViewValues = () => {

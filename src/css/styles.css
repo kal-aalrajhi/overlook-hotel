@@ -184,6 +184,7 @@ img {
 
 .booking-card {
   transition: all 500ms;
+  cursor: pointer;
 }
 
 .booking-card:hover {
