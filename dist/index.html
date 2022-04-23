@@ -68,11 +68,17 @@
         <h2 class="medium">Choose Dates</h2>
         <form>
           <fieldset>
-            <legend>Choose Your Dates</legend>
-            <label class="small" for="startDate">Start Date</label>
+            <legend>Customize Your Search</legend>
+            <label class="small" for="startDate">Date: </label>
             <input type="date" id="startDate">
-            <!-- <label class="small" for="endDate">End Date</label>
-            <input type="date" id="endDate"> -->
+
+            <label for="roomTypes">Room Type: </label>
+            <select name="roomTypes" id="roomTypes">
+              <option value="suite">Suite</option>
+              <option value="residential suite">Residential Suite</option>
+              <option value="junior suite">Junior Suite</option>
+              <option value="single room" selected>Single Room</option>
+            </select>
           </fieldset>
       </form>
       </article>

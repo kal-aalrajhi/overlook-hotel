@@ -148,7 +148,6 @@ const viewBookingsBy = (event) => {
 }
 
 const displayAvailableBookings = (startDate) => {
-    console.log("startDate ", startDate);
     let availableBookings = getAvailableRooms(startDate, allBookingsData, allRoomsData);
     displayAvailableBookingCards(startDate, availableBookings);
 }

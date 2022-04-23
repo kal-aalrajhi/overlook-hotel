@@ -24,7 +24,7 @@ export const displayDashboardCards = (bookings) => {
 }
 
 const displayBookedCards = (container, bookings) => {
-    bookings.forEach(booking => {
+    bookings.forEach(booking => { // **** THESE ARE BOOKING OBJECTS ****
         container.innerHTML += `
             <div class="booking-card card flex">
                 <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
@@ -56,11 +56,14 @@ const displayBookingsCost = (bookings) => {
 export const displayAvailableBookingCards = (startDate, availableRooms) => {
     const bookCardsContainer = document.querySelector("#bookCardsContainer");
     clearView(bookCardsContainer);
+    if (!availableRooms.length) {
+        bookCardsContainer.innerHTML = `<h1>We're so sorry, but we're fully booked on ${startDate}. Please look for other possible booking dates.</h1>`
+    }
     displayAvailableRoomCards(bookCardsContainer, startDate, availableRooms); 
 }
 
 const displayAvailableRoomCards = (container, startDate, availableRooms) => {
-    availableRooms.forEach(room => {
+    availableRooms.forEach(room => { // **** THESE ARE ROOM OBJECTS ****
         container.innerHTML += `
             <div class="booking-card card flex">
                 <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
@@ -81,9 +84,8 @@ const displayAvailableRoomCards = (container, startDate, availableRooms) => {
 
 export const getAvailableRooms = (startDate, allBookingsData, allRoomsData) => {
     let bookedRoomNumbers = allBookingsData.filter(booking => booking.date === startDate)
-                            .map(bookedBookings => bookedBookings.roomNumber);
-    let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number) )
-    console.log(availableRooms);
+                                           .map(bookedBookings => bookedBookings.roomNumber);
+    let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number));
     return availableRooms;
 }
 
@@ -139,8 +141,4 @@ export const getStartDateValue = () => {
     let startDateValueFormatted = `${yyyy}/${mm}/${dd}`;
     return startDateValueFormatted;
 }
-    
-
-// We just display available rooms - NOT bookings...when user clicks THEN we 'add' a booking...turn a room into
-// a booking via API?
 
