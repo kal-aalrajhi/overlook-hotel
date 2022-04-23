@@ -44,7 +44,9 @@ navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
 bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
-startDate.addEventListener("change", () => {
+startDate.addEventListener("change", () => getStartDateValue());
+
+const getStartDateValue = () => {
     let startDateValue = startDate.value;
     let startDateValueSplit = startDateValue.split('-')
     let yyyy = startDateValueSplit[0];
@@ -52,7 +54,14 @@ startDate.addEventListener("change", () => {
     let dd = startDateValueSplit[2];
     let startDateValueFormatted = `${yyyy}/${mm}/${dd}`;
     console.log(startDateValueFormatted);
-});
+    return startDateValueFormatted;
+}
+
+const getAvailableBookings = () => {
+    let startDate = getStartDateValue;
+    bookingsAvailable = allBookingsData.filter(booking => booking.date !== startDate);
+    return bookingsAvailable;
+}
 
 // Functions
 const loadData = () => {
@@ -131,11 +140,6 @@ const loadBookView = () => {
     displayBookHeader();
 }
 
-const getAvailableBookings = () => {
-    console.log(allBookingsData)
-    // Get bookings for given date use that to eliminate rooms and display what's left.
-    
-}
 
 // Needs to be more robust
 const loginUser = () => {
