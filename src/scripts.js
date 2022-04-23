@@ -12,7 +12,7 @@ import { User } from './classes/User';
 import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
 import { showElement, hideElement, displayDashboardCards, displayAvailableBookingCards,
-    displayDashboardHeader, displayBookHeader, getCurrentDate, getStartDateValue, getAvailableRooms } from './domUpdates';
+    displayDashboardHeader, displayBookHeader, getCurrentDate, getAvailableRooms } from './domUpdates';
 
 
 // Globals
@@ -20,7 +20,6 @@ let allUsersData = [];
 let allBookingsData = [];
 let allRoomsData = [];
 let currentUser = {}; // determine by login
-let roomType = "all rooms"; // can we avoid making this global during refactor?
 
 // Query Selectors
 const navHomeBtn = document.querySelector("#navHomeBtn");
@@ -38,6 +37,7 @@ const footer = document.querySelector("#footer");
 const bookingHistoryOptions = document.querySelector("#bookingHistoryOptions");
 const startDate = document.querySelector("#startDate");
 const roomTypes = document.querySelector("#roomTypes");
+const bookSearch = document.querySelector("#bookSearch");
 
 // Event Listeners 
 window.addEventListener("load", () => loadData());
@@ -46,13 +46,18 @@ navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
 bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
-startDate.addEventListener("change", () => {
-    let startDate = getStartDateValue();
-    displayAvailableBookings(startDate);
+bookSearch.addEventListener("click", (event) => {
+    event.preventDefault();
+    let roomType = roomTypes.value;
+    displayAvailableBookings(getStartDateValue(), roomType);
 });
-roomTypes.addEventListener("change", () => {
-    roomType = roomTypes.value;
-})
+// startDate.addEventListener("change", () => {
+//     let startDate = getStartDateValue();
+//     displayAvailableBookings(startDate);
+// });
+// roomTypes.addEventListener("change", () => {
+//     roomType = roomTypes.value;
+// })
 
 // Functions
 const loadData = () => {
@@ -126,7 +131,7 @@ const loadBookView = () => {
     showElement(head);
     showElement(subHead);
     showElement(footer);
-    displayAvailableBookings(getCurrentDate());
+    displayAvailableBookings(getCurrentDate(), "all rooms");
     displayBookHeader();
 }
 
@@ -152,7 +157,20 @@ const viewBookingsBy = (event) => {
     }
 }
 
-const displayAvailableBookings = (startDate) => {
+const displayAvailableBookings = (startDate, roomType) => {
     let availableBookings = getAvailableRooms(startDate, allBookingsData, allRoomsData, roomType);
     displayAvailableBookingCards(startDate, availableBookings);
+}
+
+const getStartDateValue = () => {
+    if (!startDate.value) {
+        return getCurrentDate();
+    }
+    let startDateValueSplit = startDate.value.split('-');
+    let yyyy = startDateValueSplit[0];
+    let mm = startDateValueSplit[1];
+    let dd = startDateValueSplit[2];
+    
+    let startDateValueFormatted = `${yyyy}/${mm}/${dd}`;
+    return startDateValueFormatted;
 }
