@@ -82,11 +82,21 @@ const displayAvailableRoomCards = (container, startDate, availableRooms) => {
     });
 }
 
-export const getAvailableRooms = (startDate, allBookingsData, allRoomsData) => {
+export const getAvailableRooms = (startDate, allBookingsData, allRoomsData, roomType) => {
     let bookedRoomNumbers = allBookingsData.filter(booking => booking.date === startDate)
                                            .map(bookedBookings => bookedBookings.roomNumber);
     let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number));
-    return availableRooms;
+    let filteredAvailableRooms = filterByRoomType(availableRooms, roomType)
+    console.log("# of available rooms: ", availableRooms.length);
+    return filteredAvailableRooms;
+}
+
+const filterByRoomType = (rooms, roomType) => {
+    if (roomType === "all rooms") {
+        return rooms;
+    }
+    let filteredRooms = rooms.filter(room => room.roomType === roomType);
+    return filteredRooms;
 }
 
 // Header Content

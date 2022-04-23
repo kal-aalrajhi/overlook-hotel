@@ -20,6 +20,7 @@ let allUsersData = [];
 let allBookingsData = [];
 let allRoomsData = [];
 let currentUser = {}; // determine by login
+let roomType = "all rooms"; // can we avoid making this global during refactor?
 
 // Query Selectors
 const navHomeBtn = document.querySelector("#navHomeBtn");
@@ -36,6 +37,7 @@ const footer = document.querySelector("#footer");
 
 const bookingHistoryOptions = document.querySelector("#bookingHistoryOptions");
 const startDate = document.querySelector("#startDate");
+const roomTypes = document.querySelector("#roomTypes");
 
 // Event Listeners 
 window.addEventListener("load", () => loadData());
@@ -48,6 +50,9 @@ startDate.addEventListener("change", () => {
     let startDate = getStartDateValue();
     displayAvailableBookings(startDate);
 });
+roomTypes.addEventListener("change", () => {
+    roomType = roomTypes.value;
+})
 
 // Functions
 const loadData = () => {
@@ -129,7 +134,7 @@ const loadBookView = () => {
 const loginUser = () => {
     currentUser = allUsersData[12]; // Temporarily assign a user
     currentUser.addAllBookings(allBookingsData);
-    console.log("Current User: ", currentUser);
+    // console.log("Current User: ", currentUser);
 }
 
 const viewBookingsBy = (event) => {
@@ -148,6 +153,6 @@ const viewBookingsBy = (event) => {
 }
 
 const displayAvailableBookings = (startDate) => {
-    let availableBookings = getAvailableRooms(startDate, allBookingsData, allRoomsData);
+    let availableBookings = getAvailableRooms(startDate, allBookingsData, allRoomsData, roomType);
     displayAvailableBookingCards(startDate, availableBookings);
 }
