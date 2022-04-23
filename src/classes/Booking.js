@@ -15,12 +15,6 @@ export class Booking {
         this.roomDetails = roomToFind;
     }
 
-    // Test w/ sample data | search room details associate with this booking
-    // getRoom(allRoomsData) { 
-    //     const roomToFind = allRoomsData.find(room => room.number === this.roomNumber);
-    //     return new Room(roomToFind);
-    // }
-
     // Test w/ sample data | search for which user made this booking
     getUser(allUsersData) { 
         const userToFind = allUsersData.find(user => user.id === this.userId);
