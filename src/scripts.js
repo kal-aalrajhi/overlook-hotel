@@ -11,8 +11,8 @@ import { fetchResponse } from './apiCalls';
 import { User } from './classes/User';
 import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
-import { showElement, hideElement, displayDashboardCards, displayBookCards,
-    displayDashboardHeader, displayBookHeader, getCurrentDate, getStartDateValue, getAvailableBookings } from './domUpdates';
+import { showElement, hideElement, displayDashboardCards, displayAvailableBookingCards,
+    displayDashboardHeader, displayBookHeader, getCurrentDate, getStartDateValue, getAvailableRooms } from './domUpdates';
 
 
 // Globals
@@ -49,7 +49,7 @@ startDate.addEventListener("change", () => displayAvailableBookings());
 const displayAvailableBookings = () => {
     let startDate = getStartDateValue();
     let availableBookings = getAvailableRooms(startDate, allBookingsData, allRoomsData);
-    displayBookCards(availableBookings);
+    displayAvailableBookingCards(availableBookings);
 }
 
 // Functions
@@ -124,7 +124,6 @@ const loadBookView = () => {
     showElement(head);
     showElement(subHead);
     showElement(footer);
-    // displayBookCards(); // should display all AVAILABLE dates 
     displayBookHeader();
 }
 

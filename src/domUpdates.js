@@ -11,25 +11,19 @@ const clearView = (view) => {
     view.innerHTML = "";
 }
 
-// Display Cards
+// Display Dashboard
 export const displayDashboardCards = (bookings) => {
     const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
     clearView(dashboardCardsContainer);  
     if (!bookings.length) {
         dashboardCardsContainer.innerHTML = `<h1>Sorry, no bookings of this type are available.</h1>`
     } else {
-        displayCards(dashboardCardsContainer, bookings);
+        displayBookedCards(dashboardCardsContainer, bookings);
     }
     displayBookingsCost(bookings);
 }
 
-export const displayBookCards = (availableBookings) => {
-    const bookCardsContainer = document.querySelector("#bookCardsContainer");
-    clearView(bookCardsContainer);
-    displayCards(bookCardsContainer, availableBookings); // SHOULD NOT HAVE BOOKING DATE
-}
-
-const displayCards = (container, bookings) => {
+const displayBookedCards = (container, bookings) => {
     bookings.forEach(booking => {
         container.innerHTML += `
             <div class="booking-card card flex">
@@ -56,6 +50,41 @@ const displayBookingsCost = (bookings) => {
     }, 0);
     const totalCost = document.querySelector("#totalCost");
     totalCost.innerText = `$${bookingTotalCost.toFixed(2)}`;
+}
+
+// Display Available Booking Cards
+export const displayAvailableBookingCards = (availableRooms) => {
+    const bookCardsContainer = document.querySelector("#bookCardsContainer");
+    clearView(bookCardsContainer);
+    displayAvailableRoomCards(bookCardsContainer, availableRooms); 
+}
+
+const displayAvailableRoomCards = (container, availableRooms) => {
+    availableRooms.forEach(room => {
+        container.innerHTML += `
+            <div class="booking-card card flex">
+                <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
+                <summary class="booking-card-text">
+                    <h3>room ${room.number}</h3>
+                    <h3>${room.roomType}</h3>
+                    <ul>
+                        <li class="small"><span>beds:</span> ${room.numBeds}</li>
+                        <li class="small"><span>bed size:</span> ${room.bedSize}</li>
+                        <li class="small"><span>bidet:</span> ${room.bidet}</li>
+                        <li class="small"><span>date available:</span> ${getStartDateValue()}</li>
+                        <li class="small"><span>cost/night:</span> $${room.costPerNight.toFixed(2)}</li>
+                    </ul>
+                </summary>
+            </div>`
+    });
+}
+
+export const getAvailableRooms = (startDate, allBookingsData, allRoomsData) => {
+    let bookedRoomNumbers = allBookingsData.filter(booking => booking.date === startDate)
+                            .map(bookedBookings => bookedBookings.roomNumber);
+    let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number) )
+    console.log(availableRooms);
+    return availableRooms;
 }
 
 // Header Content
@@ -115,11 +144,3 @@ export const getStartDateValue = () => {
 // We just display available rooms - NOT bookings...when user clicks THEN we 'add' a booking...turn a room into
 // a booking via API?
 
-
-export const getAvailableRooms = (startDate, allBookingsData, allRoomsData) => {
-    let bookedRoomNumbers = allBookingsData.filter(booking => booking.date === startDate)
-                            .map(bookedBookings => bookedBookings.roomNumber);
-    let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number) )
-    console.log(availableRooms);
-    return availableRooms;
-}
