@@ -87,7 +87,6 @@ export const getAvailableRooms = (startDate, allBookingsData, allRoomsData, room
                                            .map(bookedBookings => bookedBookings.roomNumber);
     let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number));
     let filteredAvailableRooms = filterByRoomType(availableRooms, roomType)
-    console.log("# of available rooms: ", availableRooms.length);
     return filteredAvailableRooms;
 }
 
