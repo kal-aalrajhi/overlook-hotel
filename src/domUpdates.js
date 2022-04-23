@@ -11,26 +11,20 @@ const clearView = (view) => {
     view.innerHTML = "";
 }
 
-// Display Cards
+// Display Dashboard
 export const displayDashboardCards = (bookings) => {
     const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
     clearView(dashboardCardsContainer);  
     if (!bookings.length) {
         dashboardCardsContainer.innerHTML = `<h1>Sorry, no bookings of this type are available.</h1>`
     } else {
-        displayCards(dashboardCardsContainer, bookings);
+        displayBookedCards(dashboardCardsContainer, bookings);
     }
     displayBookingsCost(bookings);
 }
 
-export const displayBookCards = () => {
-    const bookCardsContainer = document.querySelector("#bookCardsContainer");
-    clearView(bookCardsContainer);
-    displayCards(bookCardsContainer); // MUST DISPLAY ALL AVAILABLE BOOKINGS (and bookings you haven't booked)
-}
-
-const displayCards = (container, bookings) => {
-    bookings.forEach(booking => {
+const displayBookedCards = (container, bookings) => {
+    bookings.forEach(booking => { // **** THESE ARE BOOKING OBJECTS ****
         container.innerHTML += `
             <div class="booking-card card flex">
                 <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
@@ -56,6 +50,52 @@ const displayBookingsCost = (bookings) => {
     }, 0);
     const totalCost = document.querySelector("#totalCost");
     totalCost.innerText = `$${bookingTotalCost.toFixed(2)}`;
+}
+
+// Display Available Booking Cards
+export const displayAvailableBookingCards = (startDate, availableRooms) => {
+    const bookCardsContainer = document.querySelector("#bookCardsContainer");
+    clearView(bookCardsContainer);
+    if (!availableRooms.length) {
+        bookCardsContainer.innerHTML = `<h1>We're so sorry, but we don't have any available bookings of that kind right now. Please look for other possible booking dates or rooms.</h1>`
+    }
+    displayAvailableRoomCards(bookCardsContainer, startDate, availableRooms); 
+}
+
+const displayAvailableRoomCards = (container, startDate, availableRooms) => {
+    availableRooms.forEach(room => { // **** THESE ARE ROOM OBJECTS ****
+        container.innerHTML += `
+            <div class="booking-card card flex">
+                <img class="bed-icon" src="./images/one-bed-icon.png" alt="front facing single bed icon">
+                <summary class="booking-card-text">
+                    <h3>room ${room.number}</h3>
+                    <h3>${room.roomType}</h3>
+                    <ul>
+                        <li class="small"><span>beds:</span> ${room.numBeds}</li>
+                        <li class="small"><span>bed size:</span> ${room.bedSize}</li>
+                        <li class="small"><span>bidet:</span> ${room.bidet}</li>
+                        <li class="small"><span>date available:</span> ${startDate}</li>
+                        <li class="small"><span>cost/night:</span> $${room.costPerNight.toFixed(2)}</li>
+                    </ul>
+                </summary>
+            </div>`
+    });
+}
+
+export const getAvailableRooms = (startDate, allBookingsData, allRoomsData, roomType) => {
+    let bookedRoomNumbers = allBookingsData.filter(booking => booking.date === startDate)
+                                           .map(bookedBookings => bookedBookings.roomNumber);
+    let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number));
+    let filteredAvailableRooms = filterByRoomType(availableRooms, roomType)
+    return filteredAvailableRooms;
+}
+
+const filterByRoomType = (rooms, roomType) => {
+    if (roomType === "all rooms") {
+        return rooms;
+    }
+    let filteredRooms = rooms.filter(room => room.roomType === roomType);
+    return filteredRooms;
 }
 
 // Header Content
@@ -99,4 +139,5 @@ export const getCurrentDate = () => {
     return `${yyyy}/${mm}/${dd}`;
     // return `2022/01/21`; // Test past, present, today
 }
+
 

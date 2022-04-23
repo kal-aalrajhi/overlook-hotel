@@ -16,6 +16,25 @@
 }
 
 /* Backgrounds & Buttons */
+.btn {
+    display: inline-block;
+    padding: 1rem 3rem;
+    cursor: pointer;
+    background: var(--primary-color);
+    color: #ffffff;
+    border-radius: 0.5rem;
+    border: none;
+}
+
+.btn:hover {
+    transform: scale(.97);
+}
+
+.book-search-btn {
+    margin-left: 2rem;
+    padding: 0.75rem 1.5rem;
+  }
+
 .bg-primary,
 .btn-primary {
     background-color: var(--primary-color);
@@ -38,20 +57,6 @@
 .btn-light {
     background-color: var(--light-grey);
     color: #333333;
-}
-
-.btn {
-    display: inline-block;
-    padding: 1rem 3rem;
-    cursor: pointer;
-    background: var(--primary-color);
-    color: #ffffff;
-    border-radius: 0.5rem;
-    border: none;
-}
-
-.btn:hover {
-    transform: scale(.98);
 }
 
 /* Text sizes */

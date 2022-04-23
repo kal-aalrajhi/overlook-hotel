@@ -149,9 +149,26 @@ img {
 }
 
 /* Sub-head */
+.sub-head .grid {
+  grid-template-columns: 2fr 1fr;
+}
+
 .sub-head img {
   width: 10rem;
   justify-self: center;
+}
+
+.custom-search-form fieldset {
+ padding: 2rem; 
+}
+
+.custom-search-form label {
+  margin: 0 1rem 0 2rem;
+}
+
+.custom-search-form input,
+.custom-search-form select {
+  padding: 0.75rem;
 }
 
 /* Book View */ 
@@ -226,9 +243,6 @@ img {
   font-size: 1.3rem;
   padding: 1rem;
 }
-
-
-
 
 /* Footer
 .footer {

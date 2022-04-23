@@ -11,8 +11,8 @@ import { fetchResponse } from './apiCalls';
 import { User } from './classes/User';
 import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
-import { showElement, hideElement, displayDashboardCards, displayBookCards,
-    displayDashboardHeader, displayBookHeader, getCurrentDate } from './domUpdates';
+import { showElement, hideElement, displayDashboardCards, displayAvailableBookingCards,
+    displayDashboardHeader, displayBookHeader, getCurrentDate, getAvailableRooms } from './domUpdates';
 
 
 // Globals
@@ -35,6 +35,9 @@ const subHead = document.querySelector("#subHead");
 const footer = document.querySelector("#footer");
 
 const bookingHistoryOptions = document.querySelector("#bookingHistoryOptions");
+const startDate = document.querySelector("#startDate");
+const roomTypes = document.querySelector("#roomTypes");
+const bookSearchBtn = document.querySelector("#bookSearchBtn");
 
 // Event Listeners 
 window.addEventListener("load", () => loadData());
@@ -43,21 +46,10 @@ navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
 bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
-
-const viewBookingsBy = (event) => {
-    if(event.target.id === "allBookings") {
-        displayDashboardCards(currentUser.allBookings);
-    } else if (event.target.id === "pastBookings") {
-        const pastBookings = currentUser.allBookings.filter(booking => booking.date < getCurrentDate());
-        displayDashboardCards(pastBookings);
-    } else if (event.target.id === "todaysBookings") {
-        const todaysBookings = currentUser.allBookings.filter(booking => booking.date === getCurrentDate());
-        displayDashboardCards(todaysBookings);
-    } else if (event.target.id === "futureBookings") {
-        const futureBookings = currentUser.allBookings.filter(booking => booking.date > getCurrentDate());
-        displayDashboardCards(futureBookings);
-    }
-}
+bookSearchBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    displayAvailableBookings(getStartDateValue(), roomTypes.value);
+});
 
 // Functions
 const loadData = () => {
@@ -131,17 +123,52 @@ const loadBookView = () => {
     showElement(head);
     showElement(subHead);
     showElement(footer);
-    displayBookCards();
+    resetBookViewValues();
+    displayAvailableBookings(getCurrentDate(), roomTypes.value);
     displayBookHeader();
+}
+
+const resetBookViewValues = () => {
+    roomTypes.value = "all rooms";
+    startDate.value = new Date().toISOString().slice(0, 10); // get todays date as default
 }
 
 // Needs to be more robust
 const loginUser = () => {
     currentUser = allUsersData[12]; // Temporarily assign a user
     currentUser.addAllBookings(allBookingsData);
-    console.log("Current User: ", currentUser);
+    // console.log("Current User: ", currentUser);
 }
 
+const viewBookingsBy = (event) => {
+    if(event.target.id === "allBookings") {
+        displayDashboardCards(currentUser.allBookings);
+    } else if (event.target.id === "pastBookings") {
+        const pastBookings = currentUser.allBookings.filter(booking => booking.date < getCurrentDate());
+        displayDashboardCards(pastBookings);
+    } else if (event.target.id === "todaysBookings") {
+        const todaysBookings = currentUser.allBookings.filter(booking => booking.date === getCurrentDate());
+        displayDashboardCards(todaysBookings);
+    } else if (event.target.id === "futureBookings") {
+        const futureBookings = currentUser.allBookings.filter(booking => booking.date > getCurrentDate());
+        displayDashboardCards(futureBookings);
+    }
+}
 
+const displayAvailableBookings = (startDate, roomType) => {
+    let availableBookings = getAvailableRooms(startDate, allBookingsData, allRoomsData, roomType);
+    displayAvailableBookingCards(startDate, availableBookings);
+}
 
-
+const getStartDateValue = () => {
+    if (!startDate.value) {
+        return getCurrentDate();
+    }
+    let startDateValueSplit = startDate.value.split('-');
+    let yyyy = startDateValueSplit[0];
+    let mm = startDateValueSplit[1];
+    let dd = startDateValueSplit[2];
+    
+    let startDateValueFormatted = `${yyyy}/${mm}/${dd}`;
+    return startDateValueFormatted;
+}

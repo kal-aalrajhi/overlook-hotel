@@ -65,10 +65,24 @@
   <section class="sub-head bg-light padding-y3 hidden" id="subHead"> 
     <div class="container grid">
       <article class="head-text">
-        <h2 class="medium">Choose Dates</h2>
-        <p class="small">
-          Dates and calendar form here
-        </p>
+        <h2 class="medium">Choose a Date and Room</h2>
+        <form class="custom-search-form">
+          <fieldset class="small">
+            <legend>Customize Your Search</legend>
+            <label for="startDate">Date: </label>
+            <input type="date" value="2022-05-22" id="startDate">
+
+            <label for="roomTypes">Room Type: </label>
+            <select name="roomTypes" id="roomTypes">
+              <option value="all rooms" selected>All Rooms</option>
+              <option value="suite">Suite</option>
+              <option value="residential suite">Residential Suite</option>
+              <option value="junior suite">Junior Suite</option>
+              <option value="single room">Single Room</option>
+            </select>
+            <button class="book-search-btn btn btn-secondary" id="bookSearchBtn">Search</button>
+          </fieldset>
+      </form>
       </article>
       <img class="sub-head-icon" src="./images/calendar-icon.png" alt="hanging calendar icon with check mark">
     </div>
