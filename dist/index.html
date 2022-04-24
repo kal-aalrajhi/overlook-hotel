@@ -40,14 +40,14 @@
         <h2>Please login</h2>
         <form class="home-view-login">
           <div class="form-control">
-            <input type="text" name="name" placeholder="Username" required>
+            <input type="text" name="name" placeholder="Username" id="currentUsername" required>
           </div>
           <div class="form-control">
-            <input type="text" name="password" placeholder="Password" required>
+            <input type="text" name="password" placeholder="Password" id="currentPassword" required>
           </div>
-            <button class="btn btn-primary" id="loginBtn">Login</button>
+            <button class="btn btn-primary" id="loginBtn" type="submit">Login</button>
         </form>
-        <p>Invalid Username or Password<p>
+        <p id="validationMsg"><p>
       </section>
     </div>
     <section class="home-bottom">

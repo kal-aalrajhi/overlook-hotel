@@ -71,25 +71,23 @@ const loadData = () => {
         let tempData = [];
 
         tempData = data[0].customers; 
-        tempData.forEach(userData => {
+        tempData.forEach(userData => { // MAP
             allUsersData.push(new User(userData));
         });
 
         tempData = data[1].bookings; 
-        tempData.forEach(bookingData => {
+        tempData.forEach(bookingData => { // MAP
             allBookingsData.push(new Booking(bookingData));
         });
         
         tempData = data[2].rooms; 
-        tempData.forEach(roomData => {
+        tempData.forEach(roomData => { // MAP
             allRoomsData.push(new Room(roomData));
         });
 
-        allBookingsData.forEach(booking => {
+        allBookingsData.forEach(booking => { // MAP
             booking.setRoom(allRoomsData);
         });
-
-        loginUser(); // Need to move when implementing login feature
     })
     .catch((err) => console.log(err));
 }
@@ -177,8 +175,46 @@ const resetBookViewValues = () => {
     startDate.value = getCurrentDate().replaceAll("/", "-");
 }
 
+const loginBtn = document.querySelector("#loginBtn");
+const currentUsername = document.querySelector("#currentUsername");
+const currentPassword = document.querySelector("#currentPassword");
+
+loginBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    console.log(currentUsername.value);
+    // console.log(currentPassword.value);
+    validateUser(currentUsername.value, currentPassword.value);
+});
+
+const validateUser = (username, password) => {
+    const validationMsg = document.querySelector("#validationMsg");
+    let userId = Number(username.substring(8));
+    console.log(username.substring(0, 8));
+    // console.log(username.Includes("customer"))
+
+    if ((username.length > 10)  
+        || (userId < 1 || userId > 50)
+        || (userId === NaN)
+        || (username.substring(0, 8) !== "customer")) {
+        validationMsg.innerText = "Invalid username";
+        return false;
+    } else if (password !== "overlook2021") {
+        validationMsg.innerText = "Invalid password";
+        return false;
+    }
+    console.log("Valid!")
+    
+
+    // Invalid username FIRST then invalid PASSWORD
+    // if (currentPassword !== "overlook2021") {
+    //     validationMsg = "Invalid password";
+    //     return false;
+    // } else if (currentUsername !==)
+}
+
 // Needs to be more robust
 const loginUser = () => {
+    
     currentUser = allUsersData[10]; // Temporarily assign a user
     currentUser.addAllBookings(allBookingsData);
     console.log("Current User: ", currentUser);
