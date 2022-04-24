@@ -182,7 +182,7 @@ const loginUser = () => {
     currentUser = allUsersData[10]; // Temporarily assign a user
     currentUser.addAllBookings(allBookingsData);
     console.log("Current User: ", currentUser);
-    loadDashboardView();
+    // loadDashboardView();
     // loadBookView();
 
 }
