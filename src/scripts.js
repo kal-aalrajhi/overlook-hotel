@@ -181,46 +181,43 @@ const currentPassword = document.querySelector("#currentPassword");
 
 loginBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    console.log(currentUsername.value);
-    // console.log(currentPassword.value);
-    validateUser(currentUsername.value, currentPassword.value);
+    if(validateUser(currentUsername.value, currentPassword.value)) {
+        loginUser();
+    }
 });
 
 const validateUser = (username, password) => {
     const validationMsg = document.querySelector("#validationMsg");
+    validationMsg.innerText = "";
     let userId = Number(username.substring(8));
-    console.log(username.substring(0, 8));
-    // console.log(username.Includes("customer"))
 
+    // Validate username and password
     if ((username.length > 10)  
         || (userId < 1 || userId > 50)
         || (userId === NaN)
         || (username.substring(0, 8) !== "customer")) {
-        validationMsg.innerText = "Invalid username";
+        validationMsg.innerText = "Invalid username.";
         return false;
     } else if (password !== "overlook2021") {
-        validationMsg.innerText = "Invalid password";
+        validationMsg.innerText = "Invalid password.";
         return false;
     }
-    console.log("Valid!")
-    
 
-    // Invalid username FIRST then invalid PASSWORD
-    // if (currentPassword !== "overlook2021") {
-    //     validationMsg = "Invalid password";
-    //     return false;
-    // } else if (currentUsername !==)
+    validationMsg.innerText = "You've successfully logged in!" // Now blockout login and put 'logout'
+    assignCurrentUser(userId);
+    return true; 
+}
+
+const assignCurrentUser = (userId) => {
+    currentUser = allUsersData.find(user => user.id === userId);
+    currentUser.addAllBookings(allBookingsData);
+    console.log("current user ", currentUser);
 }
 
 // Needs to be more robust
 const loginUser = () => {
-    
-    currentUser = allUsersData[10]; // Temporarily assign a user
-    currentUser.addAllBookings(allBookingsData);
-    console.log("Current User: ", currentUser);
-    // loadDashboardView();
-    // loadBookView();
-
+    // Modify home view to have 'logout' feature
+    loadDashboardView();
 }
 
 const viewBookingsBy = (event) => {

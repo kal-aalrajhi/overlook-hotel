@@ -94,6 +94,13 @@
     margin-top: 1rem;
     padding: 0.5rem 1rem;
     background-color: var(--primary-color);
+    transition: all 200ms ease-in;
+}
+
+.booking-card .sub-link:hover {
+    transform: scale(.97);
+    color: var(--primary-color);
+    background-color: var(--light-grey);;
 }
 
 /* Text sizes */
