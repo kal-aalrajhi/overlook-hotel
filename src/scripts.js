@@ -181,7 +181,10 @@ const resetBookViewValues = () => {
 const loginUser = () => {
     currentUser = allUsersData[10]; // Temporarily assign a user
     currentUser.addAllBookings(allBookingsData);
-    // console.log("Current User: ", currentUser);
+    console.log("Current User: ", currentUser);
+    loadDashboardView();
+    // loadBookView();
+
 }
 
 const viewBookingsBy = (event) => {

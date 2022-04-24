@@ -93,14 +93,14 @@
     <!-- Dashboard Nav Container-->
     <div class="booking-history container grid">
       <nav class="booking-history-card card bg-light padding-3" id="bookingHistoryCard">
-        <h3 class="margin-y2">View Bookings</h3>
-        <ul class="booking-history-options" id="bookingHistoryOptions">
-          <li id="allBookings">All Bookings</li>
-          <li id="pastBookings">Past Bookings</li>
-          <li id="todaysBookings">Todays Bookings</li>
-          <li id="futureBookings">Future Bookings</li>
+        <h2 class="margin-y2 underline">View Bookings</h2>
+        <ul class="booking-history-options" id="bookingHistoryOptions" role="toolbar">
+          <li><button class="sub-link" id="allBookings" aria-setsize="4" aria-posinset="1">All Bookings</button></li>
+          <li><button class="sub-link" id="pastBookings" aria-setsize="4" aria-posinset="2">Past Bookings</button></li>
+          <li><button class="sub-link" id="todaysBookings" aria-setsize="4" aria-posinset="3">Todays Bookings</button></li>
+          <li><button class="sub-link" id="futureBookings" aria-setsize="4" aria-posinset="4">Future Bookings</button></li>
         </ul>
-        <h3 class="margin-y2">Total Cost</h3>
+        <h2 class="margin-y2 underline">Total Cost</h2>
         <ul class="total-cost">
           <li id="totalCost"></li>
         </ul>
