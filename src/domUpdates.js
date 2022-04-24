@@ -76,9 +76,10 @@ const displayAvailableRoomCards = (container, startDate, availableRooms) => {
                         <li class="small"><span>cost/night:</span> $${room.costPerNight.toFixed(2)}</li>
                     </ul>
                 </summary>
-                <img class="add-icon" id="${room.number}" src="./images/add-icon.png" alt="blue plus book room icon">
+                <button class="add-icon sub-link" id="${room.number}">book</button>
             </div>`
     });
+    // <img class="add-icon" id="${room.number}" src="./images/add-icon.png" alt="blue plus book room icon"></img>
 }
 
 // Header Content

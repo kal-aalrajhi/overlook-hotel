@@ -223,7 +223,7 @@ img {
   font-weight: normal;
 }
 
-.add-icon {
+/* .add-icon {
   margin-top: 1rem;
   width: 3rem;
   height: 3rem;
@@ -232,7 +232,7 @@ img {
 
 .add-icon:hover {
   filter: hue-rotate(180deg);
-}
+} */
 
 
 /* Dashboard View */
