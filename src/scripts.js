@@ -8,12 +8,12 @@ import './images/calendar-icon.png';
 import './images/one-bed-icon.png';
 import './images/two-bed-icon.png';
 import apiCalls from './apiCalls';
-import { fetchResponse, custFetchResponse } from './apiCalls';
+import { custFetchResponse } from './apiCalls';
 import { User } from './classes/User';
 import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
 import { showElement, hideElement, displayDashboardCards, displayAvailableBookingCards,
-    displayDashboardHeader, displayBookHeader, getCurrentDate, getAvailableRooms } from './domUpdates';
+    displayDashboardHeader, displayBookHeader, getCurrentDate } from './domUpdates';
 
 
 // Globals
@@ -57,6 +57,7 @@ bookSearchBtn.addEventListener("click", (event) => {
 bookCardsContainer.addEventListener("click", (event) => {
     let roomNumberToBook = Number(event.target.id);  // returns a string and number is '0' if it's not an actual string number
     if (roomNumberToBook) {
+        console.log(roomNumberToBook);
         addNewBooking(roomNumberToBook);
     }
 });
@@ -110,27 +111,32 @@ const getAllBookingsFromAPI = () => {
 }
 
 const addNewBooking = (roomNumberToBook) => {
-    const postNewBookingResponse = postNewBookingToAPI(roomNumberToBook);
-    const getUpdatedBookingsResponse = getAllBookingsFromAPI();
-    Promise.all([postNewBookingResponse, getUpdatedBookingsResponse]).then((data) => {
-        console.log(data[0]); // Hope for success message
-
-        let tempData = [];
-        allBookingsData = []; // reset
-        
-        // update all bookings data
-        tempData = data[1].bookings; 
-        tempData.forEach(bookingData => {
-            allBookingsData.push(new Booking(bookingData));
-        });
-
-        // update every bookings 'this.roomDetails' property
-        allBookingsData.forEach(booking => {
-            booking.setRoom(allRoomsData);
-        });
-
-        // update user's bookings
-        currentUser.addAllBookings(allBookingsData);
+    Promise.all([postNewBookingToAPI(roomNumberToBook)]).then((postResponseData) => {
+        console.log(postResponseData[0]); // Hope for success message
+        console.log("\n\n\n\n\nold all bookings: ", allBookingsData.length);
+        Promise.all([getAllBookingsFromAPI()]).then((getResponseData) => {
+            let tempData = [];
+            allBookingsData = []; 
+            
+            // update all bookings data
+            tempData = getResponseData[0].bookings;
+            tempData.forEach(bookingData => {
+                allBookingsData.push(new Booking(bookingData));
+            });
+            console.log("new all bookings: ", allBookingsData.length);
+    
+            // update every bookings 'this.roomDetails' property
+            allBookingsData.forEach(booking => {
+                booking.setRoom(allRoomsData);
+            });
+    
+            console.log("old user bookings: ", currentUser.allBookings.length);
+            // update user's bookings
+            currentUser.addAllBookings(allBookingsData);
+            console.log("new user bookings: ", currentUser.allBookings.length);
+    
+            displayAvailableBookings(getStartDateValue(), roomTypes.value);
+        }).catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
 }
@@ -173,12 +179,12 @@ const loadBookView = () => {
 
 const resetBookViewValues = () => {
     roomTypes.value = "all rooms";
-    startDate.value = new Date().toISOString().slice(0, 10); // get todays date as default
+    startDate.value = getCurrentDate().replaceAll("/", "-");
 }
 
 // Needs to be more robust
 const loginUser = () => {
-    currentUser = allUsersData[12]; // Temporarily assign a user
+    currentUser = allUsersData[10]; // Temporarily assign a user
     currentUser.addAllBookings(allBookingsData);
     // console.log("Current User: ", currentUser);
 }
@@ -190,7 +196,10 @@ const viewBookingsBy = (event) => {
         const pastBookings = currentUser.allBookings.filter(booking => booking.date < getCurrentDate());
         displayDashboardCards(pastBookings);
     } else if (event.target.id === "todaysBookings") {
-        const todaysBookings = currentUser.allBookings.filter(booking => booking.date === getCurrentDate());
+        const todaysBookings = currentUser.allBookings.filter(booking => {
+            console.log(booking.date, getCurrentDate());
+            return booking.date === getCurrentDate()
+        });
         displayDashboardCards(todaysBookings);
     } else if (event.target.id === "futureBookings") {
         const futureBookings = currentUser.allBookings.filter(booking => booking.date > getCurrentDate());
@@ -200,18 +209,30 @@ const viewBookingsBy = (event) => {
 
 const displayAvailableBookings = (startDate, roomType) => {
     let availableBookings = getAvailableRooms(startDate, allBookingsData, allRoomsData, roomType);
+    console.log(`availbookings for ${startDate}: `, availableBookings)
     displayAvailableBookingCards(startDate, availableBookings);
+}
+
+const getAvailableRooms = (startDate, allBookingsData, allRoomsData, roomType) => {
+    let bookedRoomNumbers = allBookingsData.filter(booking => booking.date === startDate)
+                                           .map(bookedBookings => bookedBookings.roomNumber);
+    console.log("booked room numbers: ", bookedRoomNumbers);
+    let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number));
+    let filteredAvailableRooms = filterByRoomType(availableRooms, roomType)
+    return filteredAvailableRooms;
+}
+
+const filterByRoomType = (rooms, roomType) => {
+    if (roomType === "all rooms") {
+        return rooms;
+    }
+    let filteredRooms = rooms.filter(room => room.roomType === roomType);
+    return filteredRooms;
 }
 
 const getStartDateValue = () => {
     if (!startDate.value) {
         return getCurrentDate();
     }
-    let startDateValueSplit = startDate.value.split('-');
-    let yyyy = startDateValueSplit[0];
-    let mm = startDateValueSplit[1];
-    let dd = startDateValueSplit[2];
-    
-    let startDateValueFormatted = `${yyyy}/${mm}/${dd}`;
-    return startDateValueFormatted;
+    return startDate.value.replaceAll("-", "/");
 }

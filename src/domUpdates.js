@@ -81,22 +81,6 @@ const displayAvailableRoomCards = (container, startDate, availableRooms) => {
     });
 }
 
-export const getAvailableRooms = (startDate, allBookingsData, allRoomsData, roomType) => {
-    let bookedRoomNumbers = allBookingsData.filter(booking => booking.date === startDate)
-                                           .map(bookedBookings => bookedBookings.roomNumber);
-    let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number));
-    let filteredAvailableRooms = filterByRoomType(availableRooms, roomType)
-    return filteredAvailableRooms;
-}
-
-const filterByRoomType = (rooms, roomType) => {
-    if (roomType === "all rooms") {
-        return rooms;
-    }
-    let filteredRooms = rooms.filter(room => room.roomType === roomType);
-    return filteredRooms;
-}
-
 // Header Content
 export const displayDashboardHeader = (currentUser) => {
     const viewName = `${currentUser.name}`;
@@ -135,6 +119,13 @@ export const getCurrentDate = () => {
     let dd = today.getDate();
     let mm = today.getMonth() + 1;
     let yyyy = today.getFullYear();
+
+    if(dd < 10) {
+        mm = `0${mm}`
+    }
+    if(mm < 10) {
+        mm = `0${mm}`
+    }
     return `${yyyy}/${mm}/${dd}`;
     // return `2022/01/21`; // Test past, present, today
 }
