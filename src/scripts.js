@@ -3,16 +3,17 @@ import './css/utilities.css';
 import './images/hotel-main.jpg';
 import './images/dashboard-icon.png';
 import './images/book-icon.png';
+import './images/add-icon.png';
 import './images/calendar-icon.png';
 import './images/one-bed-icon.png';
 import './images/two-bed-icon.png';
 import apiCalls from './apiCalls';
-import { fetchResponse } from './apiCalls';
+import { custFetchResponse } from './apiCalls';
 import { User } from './classes/User';
 import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
 import { showElement, hideElement, displayDashboardCards, displayAvailableBookingCards,
-    displayDashboardHeader, displayBookHeader, getCurrentDate, getAvailableRooms } from './domUpdates';
+    displayDashboardHeader, displayBookHeader, getCurrentDate } from './domUpdates';
 
 
 // Globals
@@ -34,6 +35,9 @@ const head = document.querySelector("#head");
 const subHead = document.querySelector("#subHead");
 const footer = document.querySelector("#footer");
 
+const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
+const bookCardsContainer = document.querySelector("#bookCardsContainer");
+
 const bookingHistoryOptions = document.querySelector("#bookingHistoryOptions");
 const startDate = document.querySelector("#startDate");
 const roomTypes = document.querySelector("#roomTypes");
@@ -50,26 +54,26 @@ bookSearchBtn.addEventListener("click", (event) => {
     event.preventDefault();
     displayAvailableBookings(getStartDateValue(), roomTypes.value);
 });
+bookCardsContainer.addEventListener("click", (event) => {
+    let roomNumberToBook = Number(event.target.id);  // returns a string and number is '0' if it's not an actual string number
+    if (roomNumberToBook) {
+        addNewBooking(roomNumberToBook);
+    }
+});
 
-// Functions
+// API Functions
 const loadData = () => {
-    const fetchUsers = fetchResponse("http://localhost:3001/api/v1/customers");
-    const fetchBookings = fetchResponse("http://localhost:3001/api/v1/bookings");
-    const fetchRooms = fetchResponse("http://localhost:3001/api/v1/rooms");
+    const getUsersResponse = custFetchResponse('http://localhost:3001/api/v1/customers', 'GET');
+    const getBookingsResponse = custFetchResponse('http://localhost:3001/api/v1/bookings', 'GET');
+    const getRoomsResponse = custFetchResponse('http://localhost:3001/api/v1/rooms', 'GET');
   
-    Promise.all([fetchUsers, fetchBookings, fetchRooms]).then((data) => {
+    Promise.all([getUsersResponse, getBookingsResponse, getRoomsResponse]).then((data) => {
         let tempData = [];
-
-        // Clear out data incase you need to reload data that has been POSTed
-        // allUsersData = []; 
-        // allBookingsData = [];
-        // allRoomsData = [];
 
         tempData = data[0].customers; 
         tempData.forEach(userData => {
             allUsersData.push(new User(userData));
         });
-        // console.log("users", allUsersData);
 
         tempData = data[1].bookings; 
         tempData.forEach(bookingData => {
@@ -80,19 +84,59 @@ const loadData = () => {
         tempData.forEach(roomData => {
             allRoomsData.push(new Room(roomData));
         });
-        // console.log("rooms", allRoomsData);
 
-        // Populate each booking with roomDetails property with room objects
         allBookingsData.forEach(booking => {
             booking.setRoom(allRoomsData);
         });
-        // console.log(allBookingsData);
 
         loginUser(); // Need to move when implementing login feature
     })
     .catch((err) => console.log(err));
 }
 
+const postNewBookingToAPI = (roomNumberToBook) => {
+    let url = 'http://localhost:3001/api/v1/bookings'; 
+    let requestType = 'POST';
+    let date = getStartDateValue();
+    let data = { 'userID': currentUser.id, 'date': date, 'roomNumber': roomNumberToBook }
+    return custFetchResponse(url, requestType, data);
+}
+
+const getAllBookingsFromAPI = () => {
+    let url = 'http://localhost:3001/api/v1/bookings';
+    let requestType = 'GET';
+    return custFetchResponse(url, requestType);
+}
+
+const addNewBooking = (roomNumberToBook) => {
+    Promise.all([postNewBookingToAPI(roomNumberToBook)]).then((postResponseData) => {
+        console.log(postResponseData[0]); // Hope for success message
+        
+        Promise.all([getAllBookingsFromAPI()]).then((getResponseData) => {
+            let tempData = [];
+            allBookingsData = []; 
+            
+            // update all bookings data
+            tempData = getResponseData[0].bookings;
+            tempData.forEach(bookingData => {
+                allBookingsData.push(new Booking(bookingData));
+            });
+    
+            // update every bookings 'this.roomDetails' property
+            allBookingsData.forEach(booking => {
+                booking.setRoom(allRoomsData);
+            });
+    
+            // update user's bookings
+            currentUser.addAllBookings(allBookingsData);
+    
+            displayAvailableBookings(getStartDateValue(), roomTypes.value);
+        }).catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+}
+
+// Functions
 const hideAllElements = () => {
     hideElement(homeView);
     hideElement(dashboardView);
@@ -130,12 +174,12 @@ const loadBookView = () => {
 
 const resetBookViewValues = () => {
     roomTypes.value = "all rooms";
-    startDate.value = new Date().toISOString().slice(0, 10); // get todays date as default
+    startDate.value = getCurrentDate().replaceAll("/", "-");
 }
 
 // Needs to be more robust
 const loginUser = () => {
-    currentUser = allUsersData[12]; // Temporarily assign a user
+    currentUser = allUsersData[10]; // Temporarily assign a user
     currentUser.addAllBookings(allBookingsData);
     // console.log("Current User: ", currentUser);
 }
@@ -147,7 +191,9 @@ const viewBookingsBy = (event) => {
         const pastBookings = currentUser.allBookings.filter(booking => booking.date < getCurrentDate());
         displayDashboardCards(pastBookings);
     } else if (event.target.id === "todaysBookings") {
-        const todaysBookings = currentUser.allBookings.filter(booking => booking.date === getCurrentDate());
+        const todaysBookings = currentUser.allBookings.filter(booking => {
+            return booking.date === getCurrentDate()
+        });
         displayDashboardCards(todaysBookings);
     } else if (event.target.id === "futureBookings") {
         const futureBookings = currentUser.allBookings.filter(booking => booking.date > getCurrentDate());
@@ -160,15 +206,25 @@ const displayAvailableBookings = (startDate, roomType) => {
     displayAvailableBookingCards(startDate, availableBookings);
 }
 
+const getAvailableRooms = (startDate, allBookingsData, allRoomsData, roomType) => {
+    let bookedRoomNumbers = allBookingsData.filter(booking => booking.date === startDate)
+                                           .map(bookedBookings => bookedBookings.roomNumber);
+    let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number));
+    let filteredAvailableRooms = filterByRoomType(availableRooms, roomType)
+    return filteredAvailableRooms;
+}
+
+const filterByRoomType = (rooms, roomType) => {
+    if (roomType === "all rooms") {
+        return rooms;
+    }
+    let filteredRooms = rooms.filter(room => room.roomType === roomType);
+    return filteredRooms;
+}
+
 const getStartDateValue = () => {
     if (!startDate.value) {
         return getCurrentDate();
     }
-    let startDateValueSplit = startDate.value.split('-');
-    let yyyy = startDateValueSplit[0];
-    let mm = startDateValueSplit[1];
-    let dd = startDateValueSplit[2];
-    
-    let startDateValueFormatted = `${yyyy}/${mm}/${dd}`;
-    return startDateValueFormatted;
+    return startDate.value.replaceAll("-", "/");
 }
