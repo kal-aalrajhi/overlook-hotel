@@ -61,38 +61,13 @@ bookCardsContainer.addEventListener("click", (event) => {
     }
 });
 
-const addNewBooking = (roomNumberToBook) => {
-    Promise.all([postNewBookingToAPI(roomNumberToBook), getAllBookingsFromAPI()]).then((data) => {
-        console.log(data[0]); // Hope for success message
-
-        let tempData = [];
-        allBookingsData = []; // reset
-        
-        // update all bookings data
-        tempData = data[1].bookings; 
-        tempData.forEach(bookingData => {
-            allBookingsData.push(new Booking(bookingData));
-        });
-
-        // update every bookings 'this.roomDetails' property
-        allBookingsData.forEach(booking => {
-            booking.setRoom(allRoomsData);
-        });
-
-        // update user's bookings
-        currentUser.addAllBookings(allBookingsData);
-    })
-    .catch((err) => console.log(err));
-}
-
-// Functions
 // API Functions
 const loadData = () => {
-    const fetchUsers = custFetchResponse('http://localhost:3001/api/v1/customers', 'GET');
-    const fetchBookings = custFetchResponse('http://localhost:3001/api/v1/bookings', 'GET');
-    const fetchRooms = custFetchResponse('http://localhost:3001/api/v1/rooms', 'GET');
+    const getUsersResponse = custFetchResponse('http://localhost:3001/api/v1/customers', 'GET');
+    const getBookingsResponse = custFetchResponse('http://localhost:3001/api/v1/bookings', 'GET');
+    const getRoomsResponse = custFetchResponse('http://localhost:3001/api/v1/rooms', 'GET');
   
-    Promise.all([fetchUsers, fetchBookings, fetchRooms]).then((data) => {
+    Promise.all([getUsersResponse, getBookingsResponse, getRoomsResponse]).then((data) => {
         let tempData = [];
 
         tempData = data[0].customers; 
@@ -120,18 +95,47 @@ const loadData = () => {
 }
 
 const postNewBookingToAPI = (roomNumberToBook) => {
-    var url = 'http://localhost:3001/api/v1/bookings';
-    var requestType = 'POST';
-    var data = { 'userID': currentUser.id, 'date': startDate.value, 'roomNumber': roomNumberToBook }
+    let url = 'http://localhost:3001/api/v1/bookings'; 
+    let requestType = 'POST';
+    let date = getStartDateValue();
+    let data = { 'userID': currentUser.id, 'date': date, 'roomNumber': roomNumberToBook }
+    console.log(data);
     return custFetchResponse(url, requestType, data);
 }
 
 const getAllBookingsFromAPI = () => {
-    var url = 'http://localhost:3001/api/v1/bookings';
-    var requestType = 'GET';
+    let url = 'http://localhost:3001/api/v1/bookings';
+    let requestType = 'GET';
     return custFetchResponse(url, requestType);
 }
 
+const addNewBooking = (roomNumberToBook) => {
+    const postNewBookingResponse = postNewBookingToAPI(roomNumberToBook);
+    const getUpdatedBookingsResponse = getAllBookingsFromAPI();
+    Promise.all([postNewBookingResponse, getUpdatedBookingsResponse]).then((data) => {
+        console.log(data[0]); // Hope for success message
+
+        let tempData = [];
+        allBookingsData = []; // reset
+        
+        // update all bookings data
+        tempData = data[1].bookings; 
+        tempData.forEach(bookingData => {
+            allBookingsData.push(new Booking(bookingData));
+        });
+
+        // update every bookings 'this.roomDetails' property
+        allBookingsData.forEach(booking => {
+            booking.setRoom(allRoomsData);
+        });
+
+        // update user's bookings
+        currentUser.addAllBookings(allBookingsData);
+    })
+    .catch((err) => console.log(err));
+}
+
+// Functions
 const hideAllElements = () => {
     hideElement(homeView);
     hideElement(dashboardView);
