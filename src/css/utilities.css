@@ -63,6 +63,39 @@
     color: #333333;
 }
 
+.main-link {
+    display: inline-block;
+    font-size: 2.2rem;
+    padding: 1rem;
+    cursor: pointer;
+    background: none;
+    color: #ffffff;
+    border: none;
+}
+
+.main-link:hover {
+    color: rgb(204, 197, 228);
+}
+
+.sub-link {
+    display: inline-block;
+    font-size: 2rem;
+    padding: 1rem 1rem 0.1rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    background: none;
+    color: #333333;
+    border-radius: 0.5rem;
+    border: none;
+}
+
+.booking-card .sub-link {
+    color: #ffffff;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+}
+
 /* Text sizes */
 .txt-primary {
     font-size: 1.8rem;
@@ -82,6 +115,11 @@
 
 .text-center {
     text-align: center;
+}
+
+.underline {
+    padding-bottom: 0.5rem;
+    border-bottom: 0.5rem #b4becb solid;
 }
 
 .flex {

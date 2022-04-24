@@ -5,8 +5,8 @@ import './images/dashboard-icon.png';
 import './images/book-icon.png';
 import './images/add-icon.png';
 import './images/calendar-icon.png';
-import './images/one-bed-icon.png';
-import './images/two-bed-icon.png';
+import './images/bed-1-icon.png';
+import './images/bed-2-icon.png';
 import apiCalls from './apiCalls';
 import { custFetchResponse } from './apiCalls';
 import { User } from './classes/User';
@@ -181,7 +181,10 @@ const resetBookViewValues = () => {
 const loginUser = () => {
     currentUser = allUsersData[10]; // Temporarily assign a user
     currentUser.addAllBookings(allBookingsData);
-    // console.log("Current User: ", currentUser);
+    console.log("Current User: ", currentUser);
+    loadDashboardView();
+    // loadBookView();
+
 }
 
 const viewBookingsBy = (event) => {

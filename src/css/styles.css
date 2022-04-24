@@ -1,10 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
 
-:root {
-  font-size: 62.5%;
+/* Alternative Color Pallette
   --primary-color: #047aed;
   --secondary-color: #013a73;
   --dark-blue: #002240;
+  --light-grey: #f4f4f4;
+*/
+
+:root {
+  font-size: 62.5%;
+  --primary-color: #21295C;
+  --secondary-color: #065A82;
+  --dark-blue: #1B3B6F;
   --light-grey: #f4f4f4;
 }
 
@@ -65,6 +72,7 @@ img {
 }
 
 .navbar li:hover {
+  padding-bottom: 0;
   border-bottom: 0.2rem #ffffff solid;
   cursor: pointer;
 }
@@ -153,8 +161,9 @@ img {
   grid-template-columns: 2fr 1fr;
 }
 
-.sub-head img {
+.sub-head-icon {
   width: 10rem;
+  margin-top: 7rem;
   justify-self: center;
 }
 
@@ -214,7 +223,7 @@ img {
   font-weight: normal;
 }
 
-.add-icon {
+/* .add-icon {
   margin-top: 1rem;
   width: 3rem;
   height: 3rem;
@@ -223,7 +232,7 @@ img {
 
 .add-icon:hover {
   filter: hue-rotate(180deg);
-}
+} */
 
 
 /* Dashboard View */
@@ -232,6 +241,7 @@ img {
   gap: 0;
   align-items: start;
   overflow: visible;
+  width: 100%;
 }
 
 .booking-history-options li {
@@ -239,8 +249,8 @@ img {
 }
 
 .booking-history-options li:hover {
-  border-bottom: 0.2rem #b4becb solid;
-  color: var(--primary-color);
+  border-bottom: 0.2rem var(--dark-blue) solid;
+  color: var(--dark-blue);
   cursor: pointer;
 }
 

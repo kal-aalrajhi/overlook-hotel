@@ -10,14 +10,17 @@
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar">
+  <nav class="main-nav navbar" aria-label="Main">
     <div class="container flex">
       <h1 class="logo">Overlook Hotel</h1>
       <nav>
         <ul>
-          <li id="navHomeBtn">Home</li>
+          <li aria-setsize="3" aria-posinset="1"><button class="main-link" id="navHomeBtn">Home</button></li>
+          <li aria-setsize="3" aria-posinset="2"><button class="main-link" id="navDashboardBtn">Dashboard</button></li>
+          <li aria-setsize="3" aria-posinset="3"><button class="main-link" id="navBookBtn">Book</button></li>
+          <!-- <li id="navHomeBtn">Home</li>
           <li id="navDashboardBtn">Dashboard</li>
-          <li id="navBookBtn">Book</li>
+          <li id="navBookBtn">Book</li> -->
         </ul>
       </nav>
     </div>
@@ -45,7 +48,8 @@
           <div class="form-control">
             <input type="text" name="password" placeholder="Password" required>
           </div>
-          <input type="submit" value="Login" class="btn btn-primary">
+            <button class="btn btn-primary" id="loginBtn">Login</button>
+            <!-- <input class="btn btn-primary" type="submit" value="Login"> -->
         </form>
       </section>
     </div>
@@ -66,7 +70,7 @@
     <div class="container grid">
       <article class="head-text">
         <h2 class="medium">Choose a Date and Room</h2>
-        <form class="custom-search-form">
+        <form class="custom-search-form" role="search">
           <fieldset class="small">
             <legend>Customize Your Search</legend>
             <label for="startDate">Date: </label>
@@ -93,14 +97,14 @@
     <!-- Dashboard Nav Container-->
     <div class="booking-history container grid">
       <nav class="booking-history-card card bg-light padding-3" id="bookingHistoryCard">
-        <h3 class="margin-y2">View Bookings</h3>
+        <h2 class="margin-y2 underline">View Bookings</h2>
         <ul class="booking-history-options" id="bookingHistoryOptions">
-          <li id="allBookings">All Bookings</li>
-          <li id="pastBookings">Past Bookings</li>
-          <li id="todaysBookings">Todays Bookings</li>
-          <li id="futureBookings">Future Bookings</li>
+          <li aria-setsize="4" aria-posinset="1"><button class="sub-link" id="allBookings">All Bookings</button></li>
+          <li aria-setsize="4" aria-posinset="2"><button class="sub-link" id="pastBookings">Past Bookings</button></li>
+          <li aria-setsize="4" aria-posinset="3"><button class="sub-link" id="todaysBookings">Todays Bookings</button></li>
+          <li aria-setsize="4" aria-posinset="4"><button class="sub-link" id="futureBookings">Future Bookings</button></li>
         </ul>
-        <h3 class="margin-y2">Total Cost</h3>
+        <h2 class="margin-y2 underline">Total Cost</h2>
         <ul class="total-cost">
           <li id="totalCost"></li>
         </ul>
