@@ -25,8 +25,8 @@ export const displayDashboardCards = (bookings) => {
 const displayBookedCards = (container, bookings) => {
     bookings.forEach(booking => { 
         container.innerHTML += `
-            <div class="booking-card card flex" id="${booking.id}">
-                <img class="bed-icon" src="./images/bed-${booking.roomDetails.numBeds}-icon.png" alt="front facing single bed icon">
+            <div class="booking-card card flex" tabindex="0" id="${booking.id}">
+                <img class="bed-icon" src="./images/bed-${booking.roomDetails.numBeds}-icon.png" alt="front facing ${booking.roomDetails.numBeds}-bed icon">
                 <summary class="booking-card-text">
                     <h3>room ${booking.roomDetails.number}</h3>
                     <h3>${booking.roomDetails.roomType}</h3>
@@ -64,7 +64,7 @@ const displayAvailableRoomCards = (container, startDate, availableRooms) => {
     availableRooms.forEach(room => { 
         container.innerHTML += `
             <div class="booking-card card card-no-pad flex">
-                <img class="bed-icon" src="./images/bed-${room.numBeds}-icon.png" alt="front facing single bed icon">
+                <img class="bed-icon" src="./images/bed-${room.numBeds}-icon.png" alt="front facing ${room.numBeds}-bed icon">
                 <summary class="booking-card-text">
                     <h3>room ${room.number}</h3>
                     <h3>${room.roomType}</h3>
