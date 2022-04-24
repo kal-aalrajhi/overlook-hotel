@@ -4,10 +4,11 @@ import { User } from './User';
 export class Booking {
     constructor(bookingData) {
         this.id = bookingData.id;
+        // *** WATCH OUT for userId vs userID **
         this.userId = bookingData.userID; 
         this.date = bookingData.date;
         this.roomNumber = bookingData.roomNumber;
-        this.roomDetails = ""; // Gets set as a room object from setRoom method
+        this.roomDetails = ""; 
     }
 
     setRoom(allRoomsData) { 
@@ -15,14 +16,16 @@ export class Booking {
         this.roomDetails = roomToFind;
     }
 
-    // Test w/ sample data | search for which user made this booking
+    getRoomDetails() {
+        return this.roomDetails;
+    }
+
     getUser(allUsersData) { 
         const userToFind = allUsersData.find(user => user.id === this.userId);
         return new User(userToFind);
     }
 
-    // Test | check if current user made this booking
     isBookedByCurrentUser(currentUser, allUsersData) {
-        return getUser(allUsersData) === currentUser;
+        return this.getUser(allUsersData).id === currentUser.id;
     }
 }

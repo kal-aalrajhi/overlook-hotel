@@ -55,7 +55,7 @@ const displayBookingsCost = (bookings) => {
 export const displayAvailableBookingCards = (startDate, availableRooms) => {
     clearView(bookCardsContainer);
     if (!availableRooms.length) {
-        bookCardsContainer.innerHTML = `<h1>We're so sorry, but we don't have any available bookings of that kind right now. Please look for other possible booking dates or rooms.</h1>`
+        bookCardsContainer.innerHTML = `<h1>We're so sorry, but we don't have any available bookings of that kind right now.</h1>`
     }
     displayAvailableRoomCards(bookCardsContainer, startDate, availableRooms); 
 }

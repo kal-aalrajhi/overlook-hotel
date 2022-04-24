@@ -57,7 +57,6 @@ bookSearchBtn.addEventListener("click", (event) => {
 bookCardsContainer.addEventListener("click", (event) => {
     let roomNumberToBook = Number(event.target.id);  // returns a string and number is '0' if it's not an actual string number
     if (roomNumberToBook) {
-        console.log(roomNumberToBook);
         addNewBooking(roomNumberToBook);
     }
 });
@@ -100,7 +99,6 @@ const postNewBookingToAPI = (roomNumberToBook) => {
     let requestType = 'POST';
     let date = getStartDateValue();
     let data = { 'userID': currentUser.id, 'date': date, 'roomNumber': roomNumberToBook }
-    console.log(data);
     return custFetchResponse(url, requestType, data);
 }
 
@@ -113,7 +111,7 @@ const getAllBookingsFromAPI = () => {
 const addNewBooking = (roomNumberToBook) => {
     Promise.all([postNewBookingToAPI(roomNumberToBook)]).then((postResponseData) => {
         console.log(postResponseData[0]); // Hope for success message
-        console.log("\n\n\n\n\nold all bookings: ", allBookingsData.length);
+        
         Promise.all([getAllBookingsFromAPI()]).then((getResponseData) => {
             let tempData = [];
             allBookingsData = []; 
@@ -123,17 +121,14 @@ const addNewBooking = (roomNumberToBook) => {
             tempData.forEach(bookingData => {
                 allBookingsData.push(new Booking(bookingData));
             });
-            console.log("new all bookings: ", allBookingsData.length);
     
             // update every bookings 'this.roomDetails' property
             allBookingsData.forEach(booking => {
                 booking.setRoom(allRoomsData);
             });
     
-            console.log("old user bookings: ", currentUser.allBookings.length);
             // update user's bookings
             currentUser.addAllBookings(allBookingsData);
-            console.log("new user bookings: ", currentUser.allBookings.length);
     
             displayAvailableBookings(getStartDateValue(), roomTypes.value);
         }).catch((err) => console.log(err));
@@ -197,7 +192,6 @@ const viewBookingsBy = (event) => {
         displayDashboardCards(pastBookings);
     } else if (event.target.id === "todaysBookings") {
         const todaysBookings = currentUser.allBookings.filter(booking => {
-            console.log(booking.date, getCurrentDate());
             return booking.date === getCurrentDate()
         });
         displayDashboardCards(todaysBookings);
@@ -209,14 +203,12 @@ const viewBookingsBy = (event) => {
 
 const displayAvailableBookings = (startDate, roomType) => {
     let availableBookings = getAvailableRooms(startDate, allBookingsData, allRoomsData, roomType);
-    console.log(`availbookings for ${startDate}: `, availableBookings)
     displayAvailableBookingCards(startDate, availableBookings);
 }
 
 const getAvailableRooms = (startDate, allBookingsData, allRoomsData, roomType) => {
     let bookedRoomNumbers = allBookingsData.filter(booking => booking.date === startDate)
                                            .map(bookedBookings => bookedBookings.roomNumber);
-    console.log("booked room numbers: ", bookedRoomNumbers);
     let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number));
     let filteredAvailableRooms = filterByRoomType(availableRooms, roomType)
     return filteredAvailableRooms;
