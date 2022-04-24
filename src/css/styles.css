@@ -72,6 +72,7 @@ img {
 }
 
 .navbar li:hover {
+  padding-bottom: 0;
   border-bottom: 0.2rem #ffffff solid;
   cursor: pointer;
 }

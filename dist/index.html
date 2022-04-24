@@ -10,14 +10,17 @@
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar">
+  <nav class="main-nav navbar" aria-label="Main">
     <div class="container flex">
       <h1 class="logo">Overlook Hotel</h1>
       <nav>
-        <ul>
-          <li id="navHomeBtn">Home</li>
+        <ul role="toolbar">
+          <li><button class="main-link" id="navHomeBtn" aria-setsize="3" aria-posinset="1">Home</button></li>
+          <li><button class="main-link" id="navDashboardBtn" aria-setsize="3" aria-posinset="2">Dashboard</button></li>
+          <li><button class="main-link" id="navBookBtn" aria-setsize="3" aria-posinset="3">Book</button></li>
+          <!-- <li id="navHomeBtn">Home</li>
           <li id="navDashboardBtn">Dashboard</li>
-          <li id="navBookBtn">Book</li>
+          <li id="navBookBtn">Book</li> -->
         </ul>
       </nav>
     </div>
