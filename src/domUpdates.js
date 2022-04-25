@@ -135,4 +135,21 @@ export const getCurrentDate = () => {
     return `${yyyy}/${mm}/${dd}`;
 }
 
+// Manager
+const export displayManagerDashboard = () => {
+    const managerBookingHistoryCard = document.querySelector("managerBookingHistoryCard");
+    managerBookingHistoryCard.innerHTML = `
+    <h2 class="margin-y3 text-center">${getCurrentDate} Stats</h2>
+    <h2 class="margin-y2 underline">Rooms Available</h2>
+    <p>${}</p>
+    <h2 class="margin-y2 underline">Rooms Occupied</h2>
+    <p>${}</p>
+    <h2 class="margin-y2 underline">Total Revenue</h2>
+    <p>${}</p>
+    <ul class="booking-history-options" id="bookingHistoryOptions">
+      <li aria-setsize="1" aria-posinset="1"><button class="sub-link" id="searchUser">Search User</button></li>
+    </ul>`
+}
+
+// I can use viewBookingsBy to display dashboard cards of todays bookings
 

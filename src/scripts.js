@@ -14,7 +14,8 @@ import { User } from './classes/User';
 import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
 import { showElement, hideElement, displayDashboardCards, displayAvailableBookingCards,
-    displayDashboardHeader, displayBookHeader, getCurrentDate, displayValidationMessage } from './domUpdates';
+    displayDashboardHeader, displayBookHeader, getCurrentDate, displayValidationMessage,
+    displayManagerDashboard } from './domUpdates';
 
 
 // Globals
@@ -22,6 +23,10 @@ let allUsersData = [];
 let allBookingsData = [];
 let allRoomsData = [];
 let currentUser = "";
+let manager = new User({
+    id: 0,
+    name: "Space Cowboy"
+});
 
 // Query Selectors
 const navHomeBtn = document.querySelector("#navHomeBtn");
@@ -92,6 +97,12 @@ const loginAlert = () => {
 
 const validateUser = (username, password) => {
     let userId = Number(username.substring(8));
+
+    if(username === "manager" && password === "overlook2021") {
+        currentUser = manager;
+        displayValidationMessage(`You've successfully logged in, ${currentUser.name}.`);
+        return true; 
+    }
 
     if ((username.length > 10)  
         || (userId < 1 || userId > 50)
@@ -226,7 +237,15 @@ const loadHomeView = () => {
 const loadDashboardView = () => {
     if (currentUser === "") {
         loginAlert();
-    } else {
+    } else if (currentUser === manager) {
+        hideAllElements();
+        showElement(dashboardView);
+        showElement(head);
+        showElement(footer);
+        displayManagerDashboard();
+        displayDashboardHeader(currentUser);
+    } 
+    else {
         hideAllElements();
         showElement(dashboardView);
         showElement(head);
