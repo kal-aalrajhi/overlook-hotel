@@ -248,7 +248,7 @@ const loadDashboardView = () => {
         showElement(head);
         showElement(footer);
         getAvailableRooms();
-        displayManagerDashboard(getAvailableRooms(getCurrentDate(), "All rooms"), getBookedRooms(), getTotalRevenue(date));
+        displayManagerDashboard(getAvailableRooms(getCurrentDate(), "all rooms"), getBookedRooms(), getTotalRevenue());
         displayDashboardHeader(currentUser);
     } 
     else {
@@ -322,18 +322,18 @@ const filterByRoomType = (rooms, roomType) => {
 }
 
 // Manager Dashboard Utilities (put into manager class?)
-const getBookedRooms = (startDate) => { // returns a booking object
+const getBookedRooms = (startDate = getCurrentDate()) => { // returns a booking object
     let todaysBookings = allBookingsData.filter(booking => booking.date === startDate)
     return todaysBookings;
 }
 
-const getTotalRevenue = (startDate) => {
+const getTotalRevenue = (startDate = getCurrentDate()) => {
     let bookedRooms = getBookedRooms(startDate, allBookingsData);
     let totalRev = bookedRooms.reduce((sum, booking) => {
         sum += booking.roomDetails.costPerNight;
         return sum;
     }, 0);
-    return totalRev;
+    return totalRev.toFixed(2);
 }
 
 // Other

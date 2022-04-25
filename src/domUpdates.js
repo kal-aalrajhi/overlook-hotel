@@ -138,19 +138,16 @@ export const getCurrentDate = () => {
 // Manager
 export const displayManagerDashboard = (roomsAvailable, bookedRooms, totalRev) => {
     let roomsAvailableCount = roomsAvailable.length;
-    let roomsOccupiedPercent = (bookedRooms.length / 25) * 100;
+    let roomsOccupiedPercent = Math.round((bookedRooms.length / 25) * 100);
 
     managerBookingHistoryCard.innerHTML = `
-        <h2 class="margin-y3 text-center">${getCurrentDate} Stats</h2>
+        <h2 class="margin-y3 text-center medium">Stats for ${getCurrentDate()}</h2>
         <h2 class="margin-y2 underline">Rooms Available</h2>
-        <p>${roomsAvailableCount}</p>
+        <p class="small">${roomsAvailableCount}</p>
         <h2 class="margin-y2 underline">Rooms Occupied</h2>
-        <p>${roomsOccupiedPercent}%</p>
+        <p class="small">${roomsOccupiedPercent}%</p>
         <h2 class="margin-y2 underline">Total Revenue</h2>
-        <p>${totalRev}</p>
-        <ul class="booking-history-options" id="bookingHistoryOptions">
-            <li aria-setsize="1" aria-posinset="1"><button class="sub-link" id="searchUser">Search User</button></li>
-        </ul>`
+        <p class="small">$${totalRev}</p>`
 }
 
 // I can use viewBookingsBy to display dashboard cards of todays bookings

@@ -114,8 +114,16 @@
         </ul>
       </nav>
       <!-- Manager Dashboard -->
-      <nav class="manager-booking-history-card card bg-light padding-3" id="managerBookingHistoryCard">
-        <!--Display hotel stats-->
+      <nav class="manager-booking-history-card card bg-light padding-3">
+        <section id="managerBookingHistoryCard">
+          <!--load stats here-->
+        </section>
+        <h2 class="margin-y2 underline">Find Customer</h2>
+        <form class="customer-search" role="search">
+          <label class="small" for="customerSearchInput">Customer Name: </label> <br>
+          <input class="customer-search-input" aria-description="Customer Name Search Input" id="customerSearchInput"/>
+          <button class="customer-search-btn btn btn-secondary" id="customerSearchBtn">Search</button>
+        </form>
       </nav>
       <!-- Dashboard Booking Cards Container-->
       <div class="dashboard-cards-container container grid padding-1" id="dashboardCardsContainer"> 

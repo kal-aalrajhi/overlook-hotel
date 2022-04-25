@@ -223,18 +223,6 @@ img {
   font-weight: normal;
 }
 
-/* .add-icon {
-  margin-top: 1rem;
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-}
-
-.add-icon:hover {
-  filter: hue-rotate(180deg);
-} */
-
-
 /* Dashboard View */
 .dashboard-view .grid {
   grid-template-columns: 1fr 2fr;
@@ -275,12 +263,15 @@ img {
   padding: 1rem;
 }
 
-/* Footer
-.footer {
-} */
+.manager-booking-history-card label {
+  display: block;
+}
 
-
-
-
-
-
+.customer-search-input {
+  font-size: 1.5rem;
+  height: 3rem;
+  padding: 0.5rem 0.5rem;
+  width: 25rem;
+  margin-bottom: 2rem;
+  display: block;
+}
