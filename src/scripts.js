@@ -38,6 +38,7 @@ const subHead = document.querySelector("#subHead");
 const footer = document.querySelector("#footer");
 
 const loginBtn = document.querySelector("#loginBtn");
+const logoutBtn = document.querySelector("#logoutBtn");
 const currentUsername = document.querySelector("#currentUsername");
 const currentPassword = document.querySelector("#currentPassword");
 
@@ -71,7 +72,53 @@ loginBtn.addEventListener("click", (event) => {
     if(validateUser(currentUsername.value, currentPassword.value)) {
         loginUser();
     }
+    loginView.reset();
 });
+logoutBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    logoutUser();
+});
+
+// Login/Logout Functions
+const validateUser = (username, password) => {
+    let userId = Number(username.substring(8));
+
+    if ((username.length > 10)  
+        || (userId < 1 || userId > 50)
+        || (userId === NaN)
+        || (username.substring(0, 8) !== "customer")) {
+        displayValidationMessage("Invalid username.");
+        return false;
+    } else if (password !== "overlook2021") {
+        displayValidationMessage("Invalid password.");
+        return false;
+    }
+
+    assignCurrentUser(userId);
+    displayValidationMessage(`You've successfully logged in as ${currentUser.name}.`);
+    return true; 
+}
+
+const assignCurrentUser = (userId) => {
+    currentUser = allUsersData.find(user => user.id === userId);
+    currentUser.addAllBookings(allBookingsData);
+    console.log("current user ", currentUser);
+}
+
+const loginUser = () => {
+    hideElement(loginView);
+    showElement(logoutView);
+    loadDashboardView();
+}
+
+const logoutUser = () => {
+    currentUser = "";
+    hideElement(logoutView);
+    showElement(loginView);
+    displayValidationMessage("You're successfully logged out.");
+}
+
+
 
 // API Functions
 const loadData = () => {
@@ -192,38 +239,6 @@ const loadBookView = () => {
 const resetBookViewValues = () => {
     roomTypes.value = "all rooms";
     startDate.value = getCurrentDate().replaceAll("/", "-");
-}
-
-
-const validateUser = (username, password) => {
-    let userId = Number(username.substring(8));
-
-    if ((username.length > 10)  
-        || (userId < 1 || userId > 50)
-        || (userId === NaN)
-        || (username.substring(0, 8) !== "customer")) {
-        displayValidationMessage("Invalid username.");
-        return false;
-    } else if (password !== "overlook2021") {
-        displayValidationMessage("Invalid password.");
-        return false;
-    }
-
-    assignCurrentUser(userId);
-    displayValidationMessage(`You've successfully logged in as ${currentUser.name}.`);
-    return true; 
-}
-
-const assignCurrentUser = (userId) => {
-    currentUser = allUsersData.find(user => user.id === userId);
-    currentUser.addAllBookings(allBookingsData);
-    console.log("current user ", currentUser);
-}
-
-const loginUser = () => {
-    hideElement(loginView);
-    showElement(logoutView);
-    loadDashboardView();
 }
 
 const viewBookingsBy = (event) => {

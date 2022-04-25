@@ -37,8 +37,9 @@
         <p class="txt-primary">Just login to get started.</p>
       </article>
       <section class="home-view-card card">
-        <h2>Please login</h2>
-        <form class="home-view-login hidden" id="loginView">
+        <!-- Login View -->
+        <form class="home-view-login" id="loginView">
+          <h2>Please login</h2>
           <div class="form-control">
             <input type="text" name="name" placeholder="Username" id="currentUsername" required>
           </div>
@@ -47,11 +48,12 @@
           </div>
             <button class="btn btn-primary" id="loginBtn" type="submit">Login</button>
         </form>
-        <section class="home-view-logout" id="logoutView">
-          <h2>You're already logged in, would you like to logout?</h2>
-          <button class="btn btn-primary" id="logoutBtn" type="submit">Logout</button>
+        <!-- Logout View -->
+        <section class="home-view-logout hidden" id="logoutView">
+          <h2 class="text-center">You're already logged in, would you like to logout?</h2>
+          <button class="btn btn-primary button-center" id="logoutBtn" type="submit">Logout</button>
         </section>
-        <p id="validationMsg"><p>
+        <p class="text-center" id="validationMsg"><p>
       </section>
     </div>
     <section class="home-bottom">

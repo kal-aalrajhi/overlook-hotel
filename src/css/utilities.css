@@ -124,6 +124,10 @@
     text-align: center;
 }
 
+.button-center { 
+    margin: 2rem 0 1.5rem 12rem;
+}
+
 .underline {
     padding-bottom: 0.5rem;
     border-bottom: 0.5rem #b4becb solid;
