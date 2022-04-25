@@ -116,14 +116,15 @@
       <!-- Manager Dashboard -->
       <nav class="manager-booking-history-card card bg-light padding-3">
         <section id="managerBookingHistoryCard">
-          <!--load stats here-->
+          <!-- load stats here -->
         </section>
         <h2 class="margin-y2 underline">Find Customer</h2>
-        <form class="customer-search" role="search">
+        <form class="customer-search" role="search" id="customerSearchForm">
           <label class="small" for="customerSearchInput">Customer Name: </label> <br>
           <input class="customer-search-input" aria-description="Customer Name Search Input" id="customerSearchInput"/>
           <button class="customer-search-btn btn btn-secondary" id="customerSearchBtn">Search</button>
         </form>
+        <h2 class="small" id="searchMsg"></h2>
       </nav>
       <!-- Dashboard Booking Cards Container-->
       <div class="dashboard-cards-container container grid padding-1" id="dashboardCardsContainer"> 

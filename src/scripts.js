@@ -15,7 +15,7 @@ import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
 import { showElement, hideElement, displayDashboardCards, displayAvailableBookingCards,
     displayDashboardHeader, displayBookHeader, getCurrentDate, displayValidationMessage,
-    displayManagerDashboard } from './domUpdates';
+    displayManagerDashboard, displaySearchMessage } from './domUpdates';
 
 
 // Globals
@@ -57,6 +57,8 @@ const bookingHistoryOptions = document.querySelector("#bookingHistoryOptions");
 const startDate = document.querySelector("#startDate");
 const roomTypes = document.querySelector("#roomTypes");
 const bookSearchBtn = document.querySelector("#bookSearchBtn");
+const customerSearchInput = document.querySelector("#customerSearchInput");
+const customerSearchBtn = document.querySelector("#customerSearchBtn");
 
 // Event Listeners 
 window.addEventListener("load", () => loadData());
@@ -95,6 +97,28 @@ const loginAlert = () => {
         icon: 'warning',
         confirmButtonText: 'Go to login page'
     });
+}
+
+// Customer Search
+customerSearchBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    let customerUserData = getCustomerUserData(customerSearchInput.value);
+    if(customerUserData) {
+        displaySearchMessage(`Now viewing bookings for${customerUserData.name}.`);
+        console.log(customerUserData);
+    } else {
+        displaySearchMessage("Not a valid customer name.");
+    }
+    customerSearchInput.value = "";
+})
+
+const getCustomerUserData = (customerName) => {
+    let customerUser = allUsersData.find(user => user.name === customerName);
+    if(!customerUser){
+        return false;
+    }
+    customerUser.addAllBookings(allBookingsData);
+    return customerUser;
 }
 
 const validateUser = (username, password) => {

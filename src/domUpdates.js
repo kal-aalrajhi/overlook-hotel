@@ -16,6 +16,10 @@ export const displayValidationMessage = (message) => {
     const validationMsg = document.querySelector("#validationMsg");
     validationMsg.innerText = message;
 }
+export const displaySearchMessage = (message) => {
+    const searchMsg = document.querySelector("#searchMsg");
+    searchMsg.innerText = message;
+}
 
 // Display Dashboard
 export const displayDashboardCards = (bookings) => {
