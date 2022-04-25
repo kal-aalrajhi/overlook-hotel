@@ -102,7 +102,8 @@ customerSearchBtn.addEventListener("click", (event) => {
     currentUser = getCustomerUserData(customerSearchInput.value);
     console.log(currentUser);
     if(currentUser) {
-        displaySearchMessage(`Now viewing bookings for ${currentUser.name}.`);
+        displaySearchMessage(`Now viewing bookings for ${currentUser.name}. 
+                             \n They've spent $${(currentUser.totalCost).toFixed(2)} in bookings.`);
     } else {
         displaySearchMessage("Not a valid customer name.");
         currentUser = "";
