@@ -50,6 +50,8 @@ const currentPassword = document.querySelector("#currentPassword");
 
 const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
 const bookCardsContainer = document.querySelector("#bookCardsContainer");
+const customerBookingHistoryCard = document.querySelector("customerBookingHistoryCard");
+const managerBookingHistoryCard = document.querySelector("managerBookingHistoryCard");
 
 const bookingHistoryOptions = document.querySelector("#bookingHistoryOptions");
 const startDate = document.querySelector("#startDate");
@@ -215,6 +217,8 @@ const addNewBooking = (roomNumberToBook) => {
 const hideAllElements = () => {
     hideElement(homeView);
     hideElement(dashboardView);
+    hideElement(customerBookingHistoryCard)
+    hideElement(managerBookingHistoryCard)
     hideElement(bookView);
     hideElement(loginView);
     hideElement(logoutView);
@@ -240,6 +244,7 @@ const loadDashboardView = () => {
     } else if (currentUser === manager) {
         hideAllElements();
         showElement(dashboardView);
+        showElement(managerBookingHistoryCard)
         showElement(head);
         showElement(footer);
         displayManagerDashboard();
@@ -248,6 +253,7 @@ const loadDashboardView = () => {
     else {
         hideAllElements();
         showElement(dashboardView);
+        showElement(customerBookingHistoryCard);
         showElement(head);
         showElement(footer);
         displayDashboardCards(currentUser.allBookings);

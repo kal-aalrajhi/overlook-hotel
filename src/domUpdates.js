@@ -136,19 +136,36 @@ export const getCurrentDate = () => {
 }
 
 // Manager
-const export displayManagerDashboard = () => {
-    const managerBookingHistoryCard = document.querySelector("managerBookingHistoryCard");
+export const displayManagerDashboard = () => {
+    let roomsAvailableCount = getAvailableRooms().length;
+    let roomsOccupiedPercent = (getBookedRooms().length / 25) * 100;
+    let totalRev = getTodaysTotalRevenue();
+
     managerBookingHistoryCard.innerHTML = `
-    <h2 class="margin-y3 text-center">${getCurrentDate} Stats</h2>
-    <h2 class="margin-y2 underline">Rooms Available</h2>
-    <p>${}</p>
-    <h2 class="margin-y2 underline">Rooms Occupied</h2>
-    <p>${}</p>
-    <h2 class="margin-y2 underline">Total Revenue</h2>
-    <p>${}</p>
-    <ul class="booking-history-options" id="bookingHistoryOptions">
-      <li aria-setsize="1" aria-posinset="1"><button class="sub-link" id="searchUser">Search User</button></li>
-    </ul>`
+        <h2 class="margin-y3 text-center">${getCurrentDate} Stats</h2>
+        <h2 class="margin-y2 underline">Rooms Available</h2>
+        <p>${roomsAvailableCount}</p>
+        <h2 class="margin-y2 underline">Rooms Occupied</h2>
+        <p>${roomsOccupiedPercent}%</p>
+        <h2 class="margin-y2 underline">Total Revenue</h2>
+        <p>${totalRev}</p>
+        <ul class="booking-history-options" id="bookingHistoryOptions">
+            <li aria-setsize="1" aria-posinset="1"><button class="sub-link" id="searchUser">Search User</button></li>
+        </ul>`
+}
+
+const getBookedRooms = (startDate, allBookingsData) => { // returns a booking object
+    let todaysBookings = allBookingsData.filter(booking => booking.date === startDate)
+    return todaysBookings;
+}
+
+const getTodaysTotalRevenue = () => {
+    let bookedRooms = getBookedRooms(getCurrentDate(), allBookingsData);
+    let totalRev = bookedRooms.reduce((sum, booking) => {
+        sum += booking.roomDetails.costPerNight;
+        return sum;
+    }, 0);
+    return totalRev;
 }
 
 // I can use viewBookingsBy to display dashboard cards of todays bookings
