@@ -23,10 +23,7 @@ let allUsersData = [];
 let allBookingsData = [];
 let allRoomsData = [];
 let currentUser = "";
-let manager = new User({
-    id: 0,
-    name: "Space Cowboy"
-});
+let currentManager = "";
 
 // Query Selectors
 const navHomeBtn = document.querySelector("#navHomeBtn");
@@ -90,12 +87,12 @@ logoutBtn.addEventListener("click", (event) => {
 });
 
 // Login/Logout Functions
-const loginAlert = () => {
+const loginAlert = (title, text, buttonText) => {
     Swal.fire({
-        title: 'Please login to view this page.',
-        text: 'We can\'t book it without knowing who you are first!',
+        title: title,
+        text: text,
         icon: 'warning',
-        confirmButtonText: 'Go to login page'
+        confirmButtonText: buttonText
     });
 }
 
@@ -125,8 +122,11 @@ const validateUser = (username, password) => {
     let userId = Number(username.substring(8));
 
     if(username === "manager" && password === "overlook2021") {
-        currentUser = manager;
-        displayValidationMessage(`You've successfully logged in, ${currentUser.name}.`);
+        currentManager = new User({
+            id: 0,
+            name: "Space Cowboy"
+        });
+        displayValidationMessage(`You've successfully logged in, ${currentManager.name}.`);
         return true; 
     }
 
@@ -159,6 +159,7 @@ const loginUser = () => {
 
 const logoutUser = () => {
     currentUser = "";
+    currentManager = "";
     hideElement(logoutView);
     showElement(loginView);
     displayValidationMessage("You're successfully logged out.");
@@ -255,7 +256,7 @@ const hideAllElements = () => {
 const loadHomeView = () => {
     hideAllElements();
     showElement(homeView);
-    if(currentUser === "") {
+    if(currentUser === "" || currentManager === "") {
         showElement(loginView);
     } else {
         showElement(logoutView);
@@ -263,17 +264,17 @@ const loadHomeView = () => {
 }
 
 const loadDashboardView = () => {
-    if (currentUser === "") {
-        loginAlert();
-    } else if (currentUser === manager) {
+    if (currentUser === "" && currentManager === "") {
+        loginAlert("Please login to view this page.", "We can't book without knowing who you are first!", "Go to login");
+    } else if (currentManager !== "") {
         hideAllElements();
         showElement(dashboardView);
         showElement(managerBookingHistoryCard);
         showElement(head);
         showElement(footer);
-        getAvailableRooms();
         displayManagerDashboard(getAvailableRooms(getCurrentDate(), "all rooms"), getBookedRooms(), getTotalRevenue());
-        displayDashboardHeader(currentUser);
+        displayDashboardHeader(currentManager);
+        // displayDashboardCards(currentUser.allBookings);
     } 
     else {
         hideAllElements();
@@ -281,14 +282,16 @@ const loadDashboardView = () => {
         showElement(customerBookingHistoryCard);
         showElement(head);
         showElement(footer);
-        displayDashboardCards(currentUser.allBookings);
         displayDashboardHeader(currentUser);
+        displayDashboardCards(currentUser.allBookings);
     }
 }
 
 const loadBookView = () => {
-    if (currentUser === "") {
-        loginAlert();
+    if (currentUser === "" && currentManager === "") {
+        loginAlert("Please login to view this page.", "We can't book without knowing who you are first!", "Go to login");
+    } else if (currentUser === "") {
+        loginAlert("Please search a customer first", "We need to know which customer you want to book for", "Back to dashboard");
     } else {
         hideAllElements();
         showElement(bookView);
