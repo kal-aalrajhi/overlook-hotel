@@ -8,6 +8,7 @@ import './images/calendar-icon.png';
 import './images/bed-1-icon.png';
 import './images/bed-2-icon.png';
 import apiCalls from './apiCalls';
+import Swal from 'sweetalert2';
 import { custFetchResponse } from './apiCalls';
 import { User } from './classes/User';
 import { Booking } from './classes/Booking';
@@ -20,7 +21,7 @@ import { showElement, hideElement, displayDashboardCards, displayAvailableBookin
 let allUsersData = [];
 let allBookingsData = [];
 let allRoomsData = [];
-let currentUser = {}; // determine by login
+let currentUser = "";
 
 // Query Selectors
 const navHomeBtn = document.querySelector("#navHomeBtn");
@@ -57,15 +58,15 @@ navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
 bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
-bookSearchBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    displayAvailableBookings(getStartDateValue(), roomTypes.value);
-});
 bookCardsContainer.addEventListener("click", (event) => {
     let roomNumberToBook = Number(event.target.id);  // returns a string and number is '0' if it's not an actual string number
     if (roomNumberToBook) {
         addNewBooking(roomNumberToBook);
     }
+});
+bookSearchBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    displayAvailableBookings(getStartDateValue(), roomTypes.value);
 });
 loginBtn.addEventListener("click", (event) => {
     event.preventDefault();
@@ -80,6 +81,15 @@ logoutBtn.addEventListener("click", (event) => {
 });
 
 // Login/Logout Functions
+const loginAlert = () => {
+    Swal.fire({
+        title: 'Please login to view this page.',
+        text: 'We can\'t book it without knowing who you are first!',
+        icon: 'warning',
+        confirmButtonText: 'Go to login page'
+    });
+}
+
 const validateUser = (username, password) => {
     let userId = Number(username.substring(8));
 
@@ -102,7 +112,6 @@ const validateUser = (username, password) => {
 const assignCurrentUser = (userId) => {
     currentUser = allUsersData.find(user => user.id === userId);
     currentUser.addAllBookings(allBookingsData);
-    console.log("current user ", currentUser);
 }
 
 const loginUser = () => {
@@ -117,8 +126,6 @@ const logoutUser = () => {
     showElement(loginView);
     displayValidationMessage("You're successfully logged out.");
 }
-
-
 
 // API Functions
 const loadData = () => {
@@ -217,23 +224,31 @@ const loadHomeView = () => {
 }
 
 const loadDashboardView = () => {
-    hideAllElements();
-    showElement(dashboardView);
-    showElement(head);
-    showElement(footer);
-    displayDashboardCards(currentUser.allBookings);
-    displayDashboardHeader(currentUser);
+    if (currentUser === "") {
+        loginAlert();
+    } else {
+        hideAllElements();
+        showElement(dashboardView);
+        showElement(head);
+        showElement(footer);
+        displayDashboardCards(currentUser.allBookings);
+        displayDashboardHeader(currentUser);
+    }
 }
 
 const loadBookView = () => {
-    hideAllElements();
-    showElement(bookView);
-    showElement(head);
-    showElement(subHead);
-    showElement(footer);
-    resetBookViewValues();
-    displayAvailableBookings(getCurrentDate(), roomTypes.value);
-    displayBookHeader();
+    if (currentUser === "") {
+        loginAlert();
+    } else {
+        hideAllElements();
+        showElement(bookView);
+        showElement(head);
+        showElement(subHead);
+        showElement(footer);
+        resetBookViewValues();
+        displayAvailableBookings(getCurrentDate(), roomTypes.value);
+        displayBookHeader();
+    }
 }
 
 const resetBookViewValues = () => {
