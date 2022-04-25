@@ -87,7 +87,7 @@ logoutBtn.addEventListener("click", (event) => {
 });
 
 // Login/Logout Functions
-const loginAlert = (title, text, buttonText) => {
+const loginError = (title, text, buttonText) => {
     Swal.fire({
         title: title,
         text: text,
@@ -99,13 +99,15 @@ const loginAlert = (title, text, buttonText) => {
 // Customer Search
 customerSearchBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    let customerUserData = getCustomerUserData(customerSearchInput.value);
-    if(customerUserData) {
-        displaySearchMessage(`Now viewing bookings for${customerUserData.name}.`);
-        console.log(customerUserData);
+    currentUser = getCustomerUserData(customerSearchInput.value);
+    console.log(currentUser);
+    if(currentUser) {
+        displaySearchMessage(`Now viewing bookings for ${currentUser.name}.`);
     } else {
         displaySearchMessage("Not a valid customer name.");
+        currentUser = "";
     }
+    loadDashboardView();
     customerSearchInput.value = "";
 })
 
@@ -256,7 +258,7 @@ const hideAllElements = () => {
 const loadHomeView = () => {
     hideAllElements();
     showElement(homeView);
-    if(currentUser === "" || currentManager === "") {
+    if(currentUser === "" && currentManager === "") {
         showElement(loginView);
     } else {
         showElement(logoutView);
@@ -265,7 +267,7 @@ const loadHomeView = () => {
 
 const loadDashboardView = () => {
     if (currentUser === "" && currentManager === "") {
-        loginAlert("Please login to view this page.", "We can't book without knowing who you are first!", "Go to login");
+        loginError("Please login to view this page.", "We can't book without knowing who you are first!", "Go to login");
     } else if (currentManager !== "") {
         hideAllElements();
         showElement(dashboardView);
@@ -274,7 +276,11 @@ const loadDashboardView = () => {
         showElement(footer);
         displayManagerDashboard(getAvailableRooms(getCurrentDate(), "all rooms"), getBookedRooms(), getTotalRevenue());
         displayDashboardHeader(currentManager);
-        // displayDashboardCards(currentUser.allBookings);
+        if (currentUser !== "") {
+            displayDashboardCards(currentUser.allBookings);
+        } else {
+            dashboardCardsContainer.innerHTML = "<h2 class='margin-y4 text-center medium'>Use 'Find Customer' search below to Display a Customer's Bookings</h2>";
+        }
     } 
     else {
         hideAllElements();
@@ -289,9 +295,9 @@ const loadDashboardView = () => {
 
 const loadBookView = () => {
     if (currentUser === "" && currentManager === "") {
-        loginAlert("Please login to view this page.", "We can't book without knowing who you are first!", "Go to login");
+        loginError("Please login to view this page.", "We can't book without knowing who you are first!", "Go to login");
     } else if (currentUser === "") {
-        loginAlert("Please search a customer first", "We need to know which customer you want to book for", "Back to dashboard");
+        loginError("Please search a customer first", "We need to know which customer you want to book for", "Back to dashboard");
     } else {
         hideAllElements();
         showElement(bookView);

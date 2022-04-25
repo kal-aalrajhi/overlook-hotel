@@ -143,8 +143,8 @@ export const getCurrentDate = () => {
 export const displayManagerDashboard = (roomsAvailable, bookedRooms, totalRev) => {
     let roomsAvailableCount = roomsAvailable.length;
     let roomsOccupiedPercent = Math.round((bookedRooms.length / 25) * 100);
-
-    managerBookingHistoryCard.innerHTML = `
+    let cardStats = document.querySelector("#cardStats");
+    cardStats.innerHTML = `
         <h2 class="margin-y3 text-center medium">Stats for ${getCurrentDate()}</h2>
         <h2 class="margin-y2 underline">Rooms Available</h2>
         <p class="small">${roomsAvailableCount}</p>
