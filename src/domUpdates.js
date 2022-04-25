@@ -48,6 +48,7 @@ const displayBookedCards = (container, bookings) => {
                         <li class="small"><span>cost/night:</span> $${booking.roomDetails.costPerNight.toFixed(2)}</li>
                     </ul>
                 </summary>
+                <button class="sub-link" id="${booking.roomDetails.number}">Delete</button>
             </div>`
     });
 }
@@ -86,7 +87,7 @@ const displayAvailableRoomCards = (container, startDate, availableRooms) => {
                         <li class="small"><span>cost/night:</span> $${room.costPerNight.toFixed(2)}</li>
                     </ul>
                 </summary>
-                <button class="add-icon sub-link" id="${room.number}">book</button>
+                <button class="sub-link" id="${room.number}">book</button>
             </div>`
     });
 }

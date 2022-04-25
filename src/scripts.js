@@ -3,7 +3,6 @@ import './css/utilities.css';
 import './images/hotel-main.jpg';
 import './images/dashboard-icon.png';
 import './images/book-icon.png';
-import './images/add-icon.png';
 import './images/calendar-icon.png';
 import './images/bed-1-icon.png';
 import './images/bed-2-icon.png';
@@ -64,16 +63,34 @@ navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
 bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
+
+// Add bookings
 bookCardsContainer.addEventListener("click", (event) => {
-    let roomNumberToBook = Number(event.target.id);  // returns a string and number is '0' if it's not an actual string number
+    let roomNumberToBook = Number(event.target.id);  
     if (roomNumberToBook) {
         addNewBooking(roomNumberToBook);
     }
 });
+
+// Delete bookings (only for manager to use)
+dashboardCardsContainer.addEventListener("click", (event) => {
+    let roomNumberToDelete = Number(event.target.id);  
+    if (roomNumberToDelete) {
+        let bookingToDelete = getBookingByRoomNumber(roomNumberToDelete);
+        deleteBooking(bookingToDelete);
+    }
+});
+
+const getBookingByRoomNumber = (roomNumber) => {
+    let booking = allBookingsData.find(booking => Number(booking.roomNumber) === Number(roomNumber));
+    return booking;
+}
+
 bookSearchBtn.addEventListener("click", (event) => {
     event.preventDefault();
     displayAvailableBookings(getStartDateValue(), roomTypes.value);
 });
+
 loginBtn.addEventListener("click", (event) => {
     event.preventDefault();
     if(validateUser(currentUsername.value, currentPassword.value)) {
@@ -81,6 +98,7 @@ loginBtn.addEventListener("click", (event) => {
     }
     loginView.reset();
 });
+
 logoutBtn.addEventListener("click", (event) => {
     event.preventDefault();
     logoutUser();
@@ -100,11 +118,7 @@ const loginError = (title, text, buttonText) => {
 customerSearchBtn.addEventListener("click", (event) => {
     event.preventDefault();
     currentUser = getCustomerUserData(customerSearchInput.value);
-    console.log(currentUser);
-    if(currentUser) {
-        displaySearchMessage(`Now viewing bookings for ${currentUser.name}. 
-                             \n They've spent $${(currentUser.totalCost).toFixed(2)} in bookings.`);
-    } else {
+    if(!currentUser) {
         displaySearchMessage("Not a valid customer name.");
         currentUser = "";
     }
@@ -165,6 +179,7 @@ const logoutUser = () => {
     currentManager = "";
     hideElement(logoutView);
     showElement(loginView);
+    displaySearchMessage("");
     displayValidationMessage("You're successfully logged out.");
 }
 
@@ -199,18 +214,18 @@ const loadData = () => {
     .catch((err) => console.log(err));
 }
 
+const getAllBookingsFromAPI = () => {
+    let url = 'http://localhost:3001/api/v1/bookings';
+    let requestType = 'GET';
+    return custFetchResponse(url, requestType);
+}
+// Add Bookings
 const postNewBookingToAPI = (roomNumberToBook) => {
     let url = 'http://localhost:3001/api/v1/bookings'; 
     let requestType = 'POST';
     let date = getStartDateValue();
     let data = { 'userID': currentUser.id, 'date': date, 'roomNumber': roomNumberToBook }
     return custFetchResponse(url, requestType, data);
-}
-
-const getAllBookingsFromAPI = () => {
-    let url = 'http://localhost:3001/api/v1/bookings';
-    let requestType = 'GET';
-    return custFetchResponse(url, requestType);
 }
 
 const addNewBooking = (roomNumberToBook) => {
@@ -241,6 +256,43 @@ const addNewBooking = (roomNumberToBook) => {
     .catch((err) => console.log(err));
 }
 
+// Delete bookings
+const deleteBookingFromAPI = (bookingToDelete) => {
+    let url = `http://localhost:3001/api/v1/bookings/${bookingToDelete.id}`; 
+    let requestType = 'DELETE';
+    return custFetchResponse(url, requestType);
+}
+
+const deleteBooking = (bookingToDelete) => {
+    Promise.all([deleteBookingFromAPI(bookingToDelete)]).then((deleteResponseData) => {
+        console.log(deleteResponseData[0]); // Hope for success message
+        
+        Promise.all([getAllBookingsFromAPI()]).then((getResponseData) => {
+            let tempData = [];
+            allBookingsData = []; 
+            
+            // update all bookings data
+            tempData = getResponseData[0].bookings;
+            tempData.forEach(bookingData => {
+                allBookingsData.push(new Booking(bookingData));
+            });
+    
+            // update every bookings 'this.roomDetails' property
+            allBookingsData.forEach(booking => {
+                booking.setRoom(allRoomsData);
+            });
+    
+            // update user's bookings
+            currentUser.addAllBookings(allBookingsData);
+    
+            displayDashboardCards(currentUser.allBookings);
+            displaySearchMessage(`Now viewing bookings for ${currentUser.name}. 
+            \n They've spent $${(currentUser.totalCost).toFixed(2)} in bookings.`);
+        }).catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+}
+
 // Functions
 const hideAllElements = () => {
     hideElement(homeView);
@@ -259,7 +311,7 @@ const hideAllElements = () => {
 const loadHomeView = () => {
     hideAllElements();
     showElement(homeView);
-    if(currentUser === "" && currentManager === "") {
+    if(!currentUser && !currentManager) {
         showElement(loginView);
     } else {
         showElement(logoutView);
@@ -267,7 +319,7 @@ const loadHomeView = () => {
 }
 
 const loadDashboardView = () => {
-    if (currentUser === "" && currentManager === "") {
+    if (!currentUser && !currentManager) {
         loginError("Please login to view this page.", "We can't book without knowing who you are first!", "Go to login");
     } else if (currentManager !== "") {
         hideAllElements();
@@ -278,8 +330,11 @@ const loadDashboardView = () => {
         displayManagerDashboard(getAvailableRooms(getCurrentDate(), "all rooms"), getBookedRooms(), getTotalRevenue());
         displayDashboardHeader(currentManager);
         if (currentUser !== "") {
+            displaySearchMessage(`Now viewing bookings for ${currentUser.name}. 
+            \n They've spent $${(currentUser.totalCost).toFixed(2)} in bookings.`);
             displayDashboardCards(currentUser.allBookings);
         } else {
+            // Move to domUpdates
             dashboardCardsContainer.innerHTML = "<h2 class='margin-y4 text-center medium'>Use 'Find Customer' search below to Display a Customer's Bookings</h2>";
         }
     } 
@@ -295,9 +350,9 @@ const loadDashboardView = () => {
 }
 
 const loadBookView = () => {
-    if (currentUser === "" && currentManager === "") {
+    if (!currentUser && !currentManager) {
         loginError("Please login to view this page.", "We can't book without knowing who you are first!", "Go to login");
-    } else if (currentUser === "") {
+    } else if (!currentUser) {
         loginError("Please search a customer first", "We need to know which customer you want to book for", "Back to dashboard");
     } else {
         hideAllElements();
