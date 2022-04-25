@@ -50,8 +50,8 @@ const currentPassword = document.querySelector("#currentPassword");
 
 const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
 const bookCardsContainer = document.querySelector("#bookCardsContainer");
-const customerBookingHistoryCard = document.querySelector("customerBookingHistoryCard");
-const managerBookingHistoryCard = document.querySelector("managerBookingHistoryCard");
+const customerBookingHistoryCard = document.querySelector("#customerBookingHistoryCard");
+const managerBookingHistoryCard = document.querySelector("#managerBookingHistoryCard");
 
 const bookingHistoryOptions = document.querySelector("#bookingHistoryOptions");
 const startDate = document.querySelector("#startDate");
@@ -217,8 +217,8 @@ const addNewBooking = (roomNumberToBook) => {
 const hideAllElements = () => {
     hideElement(homeView);
     hideElement(dashboardView);
-    hideElement(customerBookingHistoryCard)
-    hideElement(managerBookingHistoryCard)
+    hideElement(customerBookingHistoryCard);
+    hideElement(managerBookingHistoryCard);
     hideElement(bookView);
     hideElement(loginView);
     hideElement(logoutView);
@@ -244,10 +244,11 @@ const loadDashboardView = () => {
     } else if (currentUser === manager) {
         hideAllElements();
         showElement(dashboardView);
-        showElement(managerBookingHistoryCard)
+        showElement(managerBookingHistoryCard);
         showElement(head);
         showElement(footer);
-        displayManagerDashboard();
+        getAvailableRooms();
+        displayManagerDashboard(getAvailableRooms(getCurrentDate(), "All rooms"), getBookedRooms(), getTodaysTotalRevenue());
         displayDashboardHeader(currentUser);
     } 
     else {
@@ -298,6 +299,7 @@ const viewBookingsBy = (event) => {
     }
 }
 
+// Customer Dashboard Utilities
 const displayAvailableBookings = (startDate, roomType) => {
     let availableBookings = getAvailableRooms(startDate, allBookingsData, allRoomsData, roomType);
     displayAvailableBookingCards(startDate, availableBookings);
@@ -307,7 +309,7 @@ const getAvailableRooms = (startDate, allBookingsData, allRoomsData, roomType) =
     let bookedRoomNumbers = allBookingsData.filter(booking => booking.date === startDate)
                                            .map(bookedBookings => bookedBookings.roomNumber);
     let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number));
-    let filteredAvailableRooms = filterByRoomType(availableRooms, roomType)
+    let filteredAvailableRooms = filterByRoomType(availableRooms, roomType);
     return filteredAvailableRooms;
 }
 
@@ -319,6 +321,22 @@ const filterByRoomType = (rooms, roomType) => {
     return filteredRooms;
 }
 
+// Manager Dashboard Utilities (put into manager class?)
+const getBookedRooms = (startDate, allBookingsData) => { // returns a booking object
+    let todaysBookings = allBookingsData.filter(booking => booking.date === startDate)
+    return todaysBookings;
+}
+
+const getTodaysTotalRevenue = () => {
+    let bookedRooms = getBookedRooms(getCurrentDate(), allBookingsData);
+    let totalRev = bookedRooms.reduce((sum, booking) => {
+        sum += booking.roomDetails.costPerNight;
+        return sum;
+    }, 0);
+    return totalRev;
+}
+
+// Other
 const getStartDateValue = () => {
     if (!startDate.value) {
         return getCurrentDate();
