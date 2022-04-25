@@ -11,6 +11,12 @@ const clearView = (view) => {
     view.innerHTML = "";
 }
 
+// Login validation
+export const displayValidationMessage = (message) => {
+    const validationMsg = document.querySelector("#validationMsg");
+    validationMsg.innerText = message;
+}
+
 // Display Dashboard
 export const displayDashboardCards = (bookings) => {
     clearView(dashboardCardsContainer);  
@@ -127,7 +133,6 @@ export const getCurrentDate = () => {
         mm = `0${mm}`
     }
     return `${yyyy}/${mm}/${dd}`;
-    // return `2022/01/21`; // Test past, present, today
 }
 
 

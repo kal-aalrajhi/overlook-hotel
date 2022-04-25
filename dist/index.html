@@ -18,9 +18,6 @@
           <li aria-setsize="3" aria-posinset="1"><button class="main-link" id="navHomeBtn">Home</button></li>
           <li aria-setsize="3" aria-posinset="2"><button class="main-link" id="navDashboardBtn">Dashboard</button></li>
           <li aria-setsize="3" aria-posinset="3"><button class="main-link" id="navBookBtn">Book</button></li>
-          <!-- <li id="navHomeBtn">Home</li>
-          <li id="navDashboardBtn">Dashboard</li>
-          <li id="navBookBtn">Book</li> -->
         </ul>
       </nav>
     </div>
@@ -40,17 +37,23 @@
         <p class="txt-primary">Just login to get started.</p>
       </article>
       <section class="home-view-card card">
-        <h2>Please login</h2>
-        <form class="home-view-login">
+        <!-- Login View -->
+        <form class="home-view-login" id="loginView">
+          <h2>Please login</h2>
           <div class="form-control">
-            <input type="text" name="name" placeholder="Username" required>
+            <input type="text" name="name" placeholder="Username" id="currentUsername" required>
           </div>
           <div class="form-control">
-            <input type="text" name="password" placeholder="Password" required>
+            <input type="text" name="password" placeholder="Password" id="currentPassword" required>
           </div>
-            <button class="btn btn-primary" id="loginBtn">Login</button>
-            <!-- <input class="btn btn-primary" type="submit" value="Login"> -->
+            <button class="btn btn-primary" id="loginBtn" type="submit">Login</button>
         </form>
+        <!-- Logout View -->
+        <section class="home-view-logout hidden" id="logoutView">
+          <h2 class="text-center">You're already logged in, would you like to logout?</h2>
+          <button class="btn btn-primary button-center" id="logoutBtn" type="submit">Logout</button>
+        </section>
+        <p class="text-center" id="validationMsg"><p>
       </section>
     </div>
     <section class="home-bottom">
