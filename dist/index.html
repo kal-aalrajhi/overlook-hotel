@@ -38,7 +38,7 @@
       </article>
       <section class="home-view-card card">
         <h2>Please login</h2>
-        <form class="home-view-login">
+        <form class="home-view-login hidden" id="loginView">
           <div class="form-control">
             <input type="text" name="name" placeholder="Username" id="currentUsername" required>
           </div>
@@ -47,6 +47,10 @@
           </div>
             <button class="btn btn-primary" id="loginBtn" type="submit">Login</button>
         </form>
+        <section class="home-view-logout" id="logoutView">
+          <h2>You're already logged in, would you like to logout?</h2>
+          <button class="btn btn-primary" id="logoutBtn" type="submit">Logout</button>
+        </section>
         <p id="validationMsg"><p>
       </section>
     </div>

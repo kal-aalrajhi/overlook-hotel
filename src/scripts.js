@@ -13,7 +13,7 @@ import { User } from './classes/User';
 import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
 import { showElement, hideElement, displayDashboardCards, displayAvailableBookingCards,
-    displayDashboardHeader, displayBookHeader, getCurrentDate } from './domUpdates';
+    displayDashboardHeader, displayBookHeader, getCurrentDate, displayValidationMessage } from './domUpdates';
 
 
 // Globals
@@ -30,10 +30,16 @@ const navBookBtn = document.querySelector("#navBookBtn");
 const homeView = document.querySelector("#homeView");
 const dashboardView = document.querySelector("#dashboardView");
 const bookView = document.querySelector("#bookView");
+const logoutView = document.querySelector("#logoutView");
+const loginView = document.querySelector("#loginView");
 
 const head = document.querySelector("#head");
 const subHead = document.querySelector("#subHead");
 const footer = document.querySelector("#footer");
+
+const loginBtn = document.querySelector("#loginBtn");
+const currentUsername = document.querySelector("#currentUsername");
+const currentPassword = document.querySelector("#currentPassword");
 
 const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
 const bookCardsContainer = document.querySelector("#bookCardsContainer");
@@ -58,6 +64,12 @@ bookCardsContainer.addEventListener("click", (event) => {
     let roomNumberToBook = Number(event.target.id);  // returns a string and number is '0' if it's not an actual string number
     if (roomNumberToBook) {
         addNewBooking(roomNumberToBook);
+    }
+});
+loginBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    if(validateUser(currentUsername.value, currentPassword.value)) {
+        loginUser();
     }
 });
 
@@ -139,6 +151,8 @@ const hideAllElements = () => {
     hideElement(homeView);
     hideElement(dashboardView);
     hideElement(bookView);
+    hideElement(loginView);
+    hideElement(logoutView);
     hideElement(head);
     hideElement(subHead);
     hideElement(footer);
@@ -148,6 +162,11 @@ const hideAllElements = () => {
 const loadHomeView = () => {
     hideAllElements();
     showElement(homeView);
+    if(currentUser === "") {
+        showElement(loginView);
+    } else {
+        showElement(logoutView);
+    }
 }
 
 const loadDashboardView = () => {
@@ -175,36 +194,23 @@ const resetBookViewValues = () => {
     startDate.value = getCurrentDate().replaceAll("/", "-");
 }
 
-const loginBtn = document.querySelector("#loginBtn");
-const currentUsername = document.querySelector("#currentUsername");
-const currentPassword = document.querySelector("#currentPassword");
-
-loginBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    if(validateUser(currentUsername.value, currentPassword.value)) {
-        loginUser();
-    }
-});
 
 const validateUser = (username, password) => {
-    const validationMsg = document.querySelector("#validationMsg");
-    validationMsg.innerText = "";
     let userId = Number(username.substring(8));
 
-    // Validate username and password
     if ((username.length > 10)  
         || (userId < 1 || userId > 50)
         || (userId === NaN)
         || (username.substring(0, 8) !== "customer")) {
-        validationMsg.innerText = "Invalid username.";
+        displayValidationMessage("Invalid username.");
         return false;
     } else if (password !== "overlook2021") {
-        validationMsg.innerText = "Invalid password.";
+        displayValidationMessage("Invalid password.");
         return false;
     }
 
-    validationMsg.innerText = "You've successfully logged in!" // Now blockout login and put 'logout'
     assignCurrentUser(userId);
+    displayValidationMessage(`You've successfully logged in as ${currentUser.name}.`);
     return true; 
 }
 
@@ -214,9 +220,9 @@ const assignCurrentUser = (userId) => {
     console.log("current user ", currentUser);
 }
 
-// Needs to be more robust
 const loginUser = () => {
-    // Modify home view to have 'logout' feature
+    hideElement(loginView);
+    showElement(logoutView);
     loadDashboardView();
 }
 
