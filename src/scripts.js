@@ -58,13 +58,10 @@ const customerSearchBtn = document.querySelector("#customerSearchBtn");
 
 // Event Listeners 
 window.addEventListener("load", () => loadData());
-
 navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
 bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
-
-// Add bookings
 bookCardsContainer.addEventListener("click", (event) => {
     let roomNumberToBook = Number(event.target.id);  
     if (roomNumberToBook) {
@@ -81,11 +78,6 @@ dashboardCardsContainer.addEventListener("click", (event) => {
         deleteBooking(bookingId);
     }
 });
-
-const getBookingDate = (bookingId) => {
-    let bookingToFind = allBookingsData.find(booking => booking.id === bookingId);
-    return bookingToFind.date;
-}
 
 bookSearchBtn.addEventListener("click", (event) => {
     event.preventDefault();
@@ -105,16 +97,6 @@ logoutBtn.addEventListener("click", (event) => {
     logoutUser();
 });
 
-const loginError = (title, text, buttonText) => {
-    Swal.fire({
-        title: title,
-        text: text,
-        icon: 'warning',
-        confirmButtonText: buttonText
-    });
-}
-
-// Customer Search
 customerSearchBtn.addEventListener("click", (event) => {
     event.preventDefault();
     currentUser = getCustomerUserData(customerSearchInput.value);
@@ -124,7 +106,17 @@ customerSearchBtn.addEventListener("click", (event) => {
     }
     loadDashboardView();
     customerSearchInput.value = "";
-})
+});
+
+// Functions
+const loginError = (title, text, buttonText) => {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'warning',
+        confirmButtonText: buttonText
+    });
+}
 
 const getCustomerUserData = (customerName) => {
     let customerUser = allUsersData.find(user => user.name === customerName);
@@ -183,7 +175,6 @@ const logoutUser = () => {
     displayValidationMessage("You're successfully logged out.");
 }
 
-// API Functions
 const loadData = () => {
     const getUsersResponse = custFetchResponse('http://localhost:3001/api/v1/customers', 'GET');
     const getBookingsResponse = custFetchResponse('http://localhost:3001/api/v1/bookings', 'GET');
@@ -223,7 +214,6 @@ const getAllBookingsFromAPI = () => {
     });
 }
 
-// Add Bookings
 const postNewBookingToAPI = (roomNumberToBook) => {
     let url = 'http://localhost:3001/api/v1/bookings'; 
     let requestType = 'POST';
@@ -243,7 +233,6 @@ const addNewBooking = (roomNumberToBook) => {
     });
 }
 
-// Delete bookings
 const deleteBookingFromAPI = (bookingToDelete) => {
     let url = `http://localhost:3001/api/v1/bookings/${bookingToDelete}`; 
     let requestType = 'DELETE';
@@ -251,11 +240,9 @@ const deleteBookingFromAPI = (bookingToDelete) => {
 }
 
 const deleteBooking = (bookingToDelete) => {
-    console.log("before delete: ", allBookingsData);
     Promise.all([deleteBookingFromAPI(bookingToDelete)]).then((deleteResponseData) => {
         console.log(deleteResponseData[0]); 
         getAllBookingsFromAPI();
-        console.log("after delete: ", allBookingsData);
     })
     .catch((err) => {
         displayValidationMessage(`${err} \n We apologize, but we were unable to delete this booking right now.`);
@@ -263,7 +250,6 @@ const deleteBooking = (bookingToDelete) => {
     });
 }
 
-// Functions
 const hideAllElements = () => {
     hideElement(homeView);
     hideElement(dashboardView);
@@ -277,7 +263,6 @@ const hideAllElements = () => {
     hideElement(footer);
 }
 
-// Load Views
 const loadHomeView = () => {
     hideAllElements();
     showElement(homeView);
@@ -357,7 +342,6 @@ const viewBookingsBy = (event) => {
     }
 }
 
-// Customer Dashboard Utilities
 const displayAvailableBookings = (startDate, roomType) => {
     let availableBookings = getAvailableRooms(startDate, roomType);
     displayAvailableBookingCards(startDate, availableBookings);
@@ -379,7 +363,6 @@ const filterByRoomType = (rooms, roomType) => {
     return filteredRooms;
 }
 
-// Manager Dashboard Utilities 
 const getBookedRooms = (startDate = getCurrentDate()) => { // returns a booking object
     let todaysBookings = allBookingsData.filter(booking => booking.date === startDate)
     return todaysBookings;
@@ -394,10 +377,15 @@ const getTotalRevenue = (startDate = getCurrentDate()) => {
     return totalRev.toFixed(2);
 }
 
-// Other
+const getBookingDate = (bookingId) => {
+    let bookingToFind = allBookingsData.find(booking => booking.id === bookingId);
+    return bookingToFind.date;
+}
+
 const getStartDateValue = () => {
     if (!startDate.value) {
         return getCurrentDate();
     }
     return startDate.value.replaceAll("-", "/");
 }
+

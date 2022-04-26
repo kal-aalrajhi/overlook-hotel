@@ -1,12 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
 
-/* Alternative Color Pallette
-  --primary-color: #047aed;
-  --secondary-color: #013a73;
-  --dark-blue: #002240;
-  --light-grey: #f4f4f4;
-*/
-
 :root {
   font-size: 62.5%;
   --primary-color: #21295C;
@@ -19,7 +12,6 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  /* border: 0.1rem solid rgb(245, 11, 11); */
 }
 
 body {
@@ -52,7 +44,7 @@ p {
 }
 
 img {
-  width: 100%; /*Let images take up their whole container*/
+  width: 100%; 
 } 
 
 /* Navbar */
@@ -138,11 +130,11 @@ img {
   font-size: 1.6rem;
 }
 
-.home-view-card input:focus { /*gets rid of login border..which may not be accessable */
+.home-view-card input:focus { 
   outline: none;
 }
 
-.home-view::before, /* homepage slant */
+.home-view::before, 
 .home-view::after {
   content: '';
   position: absolute;
@@ -190,18 +182,15 @@ img {
 
 /* Book View */ 
 .book-view .grid {
-  /* border: 0.1rem solid rgb(245, 11, 11); */
   overflow: visible;
-  grid-template-columns: repeat(3, 1fr); /* repeat twice, 1fractional unit */
+  grid-template-columns: repeat(3, 1fr); 
 }
 
 .bed-icon {
   width: 10rem;
-  /* justify-self: center; */
 }
 
 .booking-card {
-  /* border: 0.1rem solid rgb(11, 245, 148); */
   transition: all 500ms;
   flex-direction: column;
   justify-content: space-between;
@@ -210,10 +199,6 @@ img {
 .booking-card:hover {
   box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
   transform: translateY(-3px) scale(1.1);
-}
-
-.booking-card * {
-  /* border: 0.1rem solid blue; */
 }
 
 .booking-card-text h3 {
@@ -258,7 +243,6 @@ img {
 .booking-history img {
   width: 8rem;
   margin-right: 1rem;
-  /* justify-self: center; */
 }
 
 .booking-history .booking-card-text h3 {
