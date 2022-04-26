@@ -39,7 +39,6 @@ export const custFetchResponse = (url, requestType, data) => { // data is option
             headers: {
                 'Content-Type' : 'application/json',
             },
-            // body: JSON.stringify(data),
         })
         .then(response => {
             if (!response.ok) {
@@ -50,6 +49,5 @@ export const custFetchResponse = (url, requestType, data) => { // data is option
             }
             return response;
         })
-        .catch(error => console.log(error));
     }
 }

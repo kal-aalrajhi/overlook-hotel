@@ -4,7 +4,6 @@ import { User } from './User';
 export class Booking {
     constructor(bookingData) {
         this.id = bookingData.id;
-        // *** WATCH OUT for userId vs userID **
         this.userId = bookingData.userID; 
         this.date = bookingData.date;
         this.roomNumber = bookingData.roomNumber;

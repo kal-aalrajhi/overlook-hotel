@@ -3,7 +3,6 @@ import './css/utilities.css';
 import './images/hotel-main.jpg';
 import './images/dashboard-icon.png';
 import './images/book-icon.png';
-import './images/add-icon.png';
 import './images/calendar-icon.png';
 import './images/bed-1-icon.png';
 import './images/bed-2-icon.png';
@@ -14,7 +13,8 @@ import { User } from './classes/User';
 import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
 import { showElement, hideElement, displayDashboardCards, displayAvailableBookingCards,
-    displayDashboardHeader, displayBookHeader, getCurrentDate, displayValidationMessage } from './domUpdates';
+    displayDashboardHeader, displayBookHeader, getCurrentDate, displayValidationMessage,
+    displayManagerDashboard, displaySearchMessage, displayManagerSearchMessage } from './domUpdates';
 
 
 // Globals
@@ -22,6 +22,7 @@ let allUsersData = [];
 let allBookingsData = [];
 let allRoomsData = [];
 let currentUser = "";
+let currentManager = "";
 
 // Query Selectors
 const navHomeBtn = document.querySelector("#navHomeBtn");
@@ -45,11 +46,15 @@ const currentPassword = document.querySelector("#currentPassword");
 
 const dashboardCardsContainer = document.querySelector("#dashboardCardsContainer");
 const bookCardsContainer = document.querySelector("#bookCardsContainer");
+const customerBookingHistoryCard = document.querySelector("#customerBookingHistoryCard");
+const managerBookingHistoryCard = document.querySelector("#managerBookingHistoryCard");
 
 const bookingHistoryOptions = document.querySelector("#bookingHistoryOptions");
 const startDate = document.querySelector("#startDate");
 const roomTypes = document.querySelector("#roomTypes");
 const bookSearchBtn = document.querySelector("#bookSearchBtn");
+const customerSearchInput = document.querySelector("#customerSearchInput");
+const customerSearchBtn = document.querySelector("#customerSearchBtn");
 
 // Event Listeners 
 window.addEventListener("load", () => loadData());
@@ -58,16 +63,32 @@ navHomeBtn.addEventListener("click", () => loadHomeView());
 navDashboardBtn.addEventListener("click", () => loadDashboardView());
 navBookBtn.addEventListener("click", () => loadBookView());
 bookingHistoryOptions.addEventListener("click", (event) => viewBookingsBy(event));
+
+// Add bookings
 bookCardsContainer.addEventListener("click", (event) => {
-    let roomNumberToBook = Number(event.target.id);  // returns a string and number is '0' if it's not an actual string number
+    let roomNumberToBook = Number(event.target.id);  
     if (roomNumberToBook) {
         addNewBooking(roomNumberToBook);
     }
 });
+
+dashboardCardsContainer.addEventListener("click", (event) => {
+    let bookingId = event.target.id; 
+    if (bookingId && (getBookingDate(bookingId) >= getCurrentDate())) { 
+        deleteBooking(bookingId);
+    }
+});
+
+const getBookingDate = (bookingId) => {
+    let bookingToFind = allBookingsData.find(booking => booking.id === bookingId);
+    return bookingToFind.date;
+}
+
 bookSearchBtn.addEventListener("click", (event) => {
     event.preventDefault();
     displayAvailableBookings(getStartDateValue(), roomTypes.value);
 });
+
 loginBtn.addEventListener("click", (event) => {
     event.preventDefault();
     if(validateUser(currentUsername.value, currentPassword.value)) {
@@ -75,23 +96,53 @@ loginBtn.addEventListener("click", (event) => {
     }
     loginView.reset();
 });
+
 logoutBtn.addEventListener("click", (event) => {
     event.preventDefault();
     logoutUser();
 });
 
-// Login/Logout Functions
-const loginAlert = () => {
+const loginError = (title, text, buttonText) => {
     Swal.fire({
-        title: 'Please login to view this page.',
-        text: 'We can\'t book it without knowing who you are first!',
+        title: title,
+        text: text,
         icon: 'warning',
-        confirmButtonText: 'Go to login page'
+        confirmButtonText: buttonText
     });
+}
+
+// Customer Search
+customerSearchBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    currentUser = getCustomerUserData(customerSearchInput.value);
+    if(!currentUser) {
+        displaySearchMessage("Not a valid customer name.");
+        currentUser = "";
+    }
+    loadDashboardView();
+    customerSearchInput.value = "";
+})
+
+const getCustomerUserData = (customerName) => {
+    let customerUser = allUsersData.find(user => user.name === customerName);
+    if(!customerUser){
+        return false;
+    }
+    customerUser.addAllBookings(allBookingsData);
+    return customerUser;
 }
 
 const validateUser = (username, password) => {
     let userId = Number(username.substring(8));
+
+    if(username === "manager" && password === "overlook2021") {
+        currentManager = new User({
+            id: 0,
+            name: "Space Cowboy"
+        });
+        displayValidationMessage(`You've successfully logged in, ${currentManager.name}.`);
+        return true; 
+    }
 
     if ((username.length > 10)  
         || (userId < 1 || userId > 50)
@@ -122,6 +173,8 @@ const loginUser = () => {
 
 const logoutUser = () => {
     currentUser = "";
+    currentManager = "";
+    displaySearchMessage("");
     hideElement(logoutView);
     showElement(loginView);
     displayValidationMessage("You're successfully logged out.");
@@ -134,30 +187,40 @@ const loadData = () => {
     const getRoomsResponse = custFetchResponse('http://localhost:3001/api/v1/rooms', 'GET');
   
     Promise.all([getUsersResponse, getBookingsResponse, getRoomsResponse]).then((data) => {
-        let tempData = [];
-
-        tempData = data[0].customers; 
-        tempData.forEach(userData => { // MAP
-            allUsersData.push(new User(userData));
-        });
-
-        tempData = data[1].bookings; 
-        tempData.forEach(bookingData => { // MAP
-            allBookingsData.push(new Booking(bookingData));
-        });
+        allUsersData = data[0].customers.map(userData => new User(userData));
+        allBookingsData = data[1].bookings.map(bookingData => new Booking(bookingData));
+        allRoomsData = data[2].rooms.map(roomData => new Room(roomData));
         
-        tempData = data[2].rooms; 
-        tempData.forEach(roomData => { // MAP
-            allRoomsData.push(new Room(roomData));
-        });
-
-        allBookingsData.forEach(booking => { // MAP
-            booking.setRoom(allRoomsData);
-        });
+        allBookingsData.map(booking => booking.setRoom(allRoomsData));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+        displayValidationMessage(`${err} \n We apologize, our servers might be down.`);
+        console.log(err);
+    });
 }
 
+const getAllBookingsFromAPI = () => {
+    let url = 'http://localhost:3001/api/v1/bookings';
+    let requestType = 'GET';
+
+    Promise.all([custFetchResponse(url, requestType)]).then((getResponseData) => {
+        allBookingsData = []; 
+        allBookingsData = getResponseData[0].bookings.map(bookingData => new Booking(bookingData));
+        allBookingsData.map(booking => booking.setRoom(allRoomsData));
+
+        currentUser.addAllBookings(allBookingsData);
+        
+        displayManagerDashboard(getAvailableRooms(getCurrentDate(), "all rooms"), getBookedRooms(), getTotalRevenue());
+        displayDashboardCards(currentUser.allBookings, false);
+        displayAvailableBookings(getStartDateValue(), roomTypes.value);
+    })
+    .catch((err) => {
+        displayValidationMessage(`${err} \n We apologize, but we can't get your booking data right now.`);
+        console.log(err);
+    });
+}
+
+// Add Bookings
 const postNewBookingToAPI = (roomNumberToBook) => {
     let url = 'http://localhost:3001/api/v1/bookings'; 
     let requestType = 'POST';
@@ -166,44 +229,43 @@ const postNewBookingToAPI = (roomNumberToBook) => {
     return custFetchResponse(url, requestType, data);
 }
 
-const getAllBookingsFromAPI = () => {
-    let url = 'http://localhost:3001/api/v1/bookings';
-    let requestType = 'GET';
+const addNewBooking = (roomNumberToBook) => {
+    Promise.all([postNewBookingToAPI(roomNumberToBook)]).then((postResponseData) => {
+        console.log(postResponseData[0]); 
+        getAllBookingsFromAPI();
+    })
+    .catch((err) => {
+        displayValidationMessage(`${err} \n We apologize, but we were unable to add your booking right now.`);
+        console.log(err);
+    });
+}
+
+// Delete bookings
+const deleteBookingFromAPI = (bookingToDelete) => {
+    let url = `http://localhost:3001/api/v1/bookings/${bookingToDelete}`; 
+    let requestType = 'DELETE';
     return custFetchResponse(url, requestType);
 }
 
-const addNewBooking = (roomNumberToBook) => {
-    Promise.all([postNewBookingToAPI(roomNumberToBook)]).then((postResponseData) => {
-        console.log(postResponseData[0]); // Hope for success message
-        
-        Promise.all([getAllBookingsFromAPI()]).then((getResponseData) => {
-            let tempData = [];
-            allBookingsData = []; 
-            
-            // update all bookings data
-            tempData = getResponseData[0].bookings;
-            tempData.forEach(bookingData => {
-                allBookingsData.push(new Booking(bookingData));
-            });
-    
-            // update every bookings 'this.roomDetails' property
-            allBookingsData.forEach(booking => {
-                booking.setRoom(allRoomsData);
-            });
-    
-            // update user's bookings
-            currentUser.addAllBookings(allBookingsData);
-    
-            displayAvailableBookings(getStartDateValue(), roomTypes.value);
-        }).catch((err) => console.log(err));
+const deleteBooking = (bookingToDelete) => {
+    console.log("before delete: ", allBookingsData);
+    Promise.all([deleteBookingFromAPI(bookingToDelete)]).then((deleteResponseData) => {
+        console.log(deleteResponseData[0]); 
+        getAllBookingsFromAPI();
+        console.log("after delete: ", allBookingsData);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+        displayValidationMessage(`${err} \n We apologize, but we were unable to delete this booking right now.`);
+        console.log(err);
+    });
 }
 
 // Functions
 const hideAllElements = () => {
     hideElement(homeView);
     hideElement(dashboardView);
+    hideElement(customerBookingHistoryCard);
+    hideElement(managerBookingHistoryCard);
     hideElement(bookView);
     hideElement(loginView);
     hideElement(logoutView);
@@ -216,7 +278,7 @@ const hideAllElements = () => {
 const loadHomeView = () => {
     hideAllElements();
     showElement(homeView);
-    if(currentUser === "") {
+    if(!currentUser && !currentManager) {
         showElement(loginView);
     } else {
         showElement(logoutView);
@@ -224,21 +286,40 @@ const loadHomeView = () => {
 }
 
 const loadDashboardView = () => {
-    if (currentUser === "") {
-        loginAlert();
-    } else {
+    if (!currentUser && !currentManager) {
+        loginError("Please login to view this page.", "We can't book without knowing who you are first!", "Go to login");
+    } else if (currentManager !== "") {
         hideAllElements();
         showElement(dashboardView);
+        showElement(managerBookingHistoryCard);
         showElement(head);
         showElement(footer);
-        displayDashboardCards(currentUser.allBookings);
+        displayManagerDashboard(getAvailableRooms(getCurrentDate(), "all rooms"), getBookedRooms(), getTotalRevenue());
+        displayDashboardHeader(currentManager);
+        
+        if (currentUser !== "") {
+            displaySearchMessage(`Now viewing bookings for ${currentUser.name}. \n They've spent $${(currentUser.totalCost).toFixed(2)} in bookings.`);
+            displayDashboardCards(currentUser.allBookings, false);
+        } else {
+            displayManagerSearchMessage("Use 'Find Customer' search below to Display a Customer's Bookings");
+        }
+    } 
+    else {
+        hideAllElements();
+        showElement(dashboardView);
+        showElement(customerBookingHistoryCard);
+        showElement(head);
+        showElement(footer);
         displayDashboardHeader(currentUser);
+        displayDashboardCards(currentUser.allBookings);
     }
 }
 
 const loadBookView = () => {
-    if (currentUser === "") {
-        loginAlert();
+    if (!currentUser && !currentManager) {
+        loginError("Please login to view this page.", "We can't book without knowing who you are first!", "Go to login");
+    } else if (!currentUser) {
+        loginError("Please search a customer first", "We need to know which customer you want to book for", "Back to dashboard");
     } else {
         hideAllElements();
         showElement(bookView);
@@ -273,16 +354,17 @@ const viewBookingsBy = (event) => {
     }
 }
 
+// Customer Dashboard Utilities
 const displayAvailableBookings = (startDate, roomType) => {
-    let availableBookings = getAvailableRooms(startDate, allBookingsData, allRoomsData, roomType);
+    let availableBookings = getAvailableRooms(startDate, roomType);
     displayAvailableBookingCards(startDate, availableBookings);
 }
 
-const getAvailableRooms = (startDate, allBookingsData, allRoomsData, roomType) => {
+const getAvailableRooms = (startDate, roomType) => {
     let bookedRoomNumbers = allBookingsData.filter(booking => booking.date === startDate)
                                            .map(bookedBookings => bookedBookings.roomNumber);
     let availableRooms = allRoomsData.filter(room => !bookedRoomNumbers.includes(room.number));
-    let filteredAvailableRooms = filterByRoomType(availableRooms, roomType)
+    let filteredAvailableRooms = filterByRoomType(availableRooms, roomType);
     return filteredAvailableRooms;
 }
 
@@ -294,6 +376,22 @@ const filterByRoomType = (rooms, roomType) => {
     return filteredRooms;
 }
 
+// Manager Dashboard Utilities 
+const getBookedRooms = (startDate = getCurrentDate()) => { // returns a booking object
+    let todaysBookings = allBookingsData.filter(booking => booking.date === startDate)
+    return todaysBookings;
+}
+
+const getTotalRevenue = (startDate = getCurrentDate()) => {
+    let bookedRooms = getBookedRooms(startDate, allBookingsData);
+    let totalRev = bookedRooms.reduce((sum, booking) => {
+        sum += booking.roomDetails.costPerNight;
+        return sum;
+    }, 0);
+    return totalRev.toFixed(2);
+}
+
+// Other
 const getStartDateValue = () => {
     if (!startDate.value) {
         return getCurrentDate();

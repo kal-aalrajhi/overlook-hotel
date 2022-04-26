@@ -16,22 +16,34 @@ export const displayValidationMessage = (message) => {
     const validationMsg = document.querySelector("#validationMsg");
     validationMsg.innerText = message;
 }
+export const displaySearchMessage = (message) => {
+    const searchMsg = document.querySelector("#searchMsg");
+    searchMsg.innerText = message;
+}
+
+export const displayManagerSearchMessage = (message) => {
+    dashboardCardsContainer.innerHTML = `<h2 class='margin-y4 text-center medium'>${message}</h2>`;
+}
 
 // Display Dashboard
-export const displayDashboardCards = (bookings) => {
+export const displayDashboardCards = (bookings, isHidden=true) => {
     clearView(dashboardCardsContainer);  
     if (!bookings.length) {
         dashboardCardsContainer.innerHTML = `<h1>Sorry, no bookings of this type are available.</h1>`
     } else {
-        displayBookedCards(dashboardCardsContainer, bookings);
+        displayBookedCards(bookings, isHidden);
     }
     displayBookingsCost(bookings);
 }
 
-const displayBookedCards = (container, bookings) => {
+const displayBookedCards = (bookings, isHidden) => {
+    let hideBtn = "";
+    if (isHidden) {
+        hideBtn = "hidden";
+    }
     bookings.forEach(booking => { 
-        container.innerHTML += `
-            <div class="booking-card card flex" tabindex="0" id="${booking.id}">
+        dashboardCardsContainer.innerHTML += `
+            <div class="booking-card card flex" tabindex="0">
                 <img class="bed-icon" src="./images/bed-${booking.roomDetails.numBeds}-icon.png" alt="front facing ${booking.roomDetails.numBeds}-bed icon">
                 <summary class="booking-card-text">
                     <h3>room ${booking.roomDetails.number}</h3>
@@ -44,6 +56,7 @@ const displayBookedCards = (container, bookings) => {
                         <li class="small"><span>cost/night:</span> $${booking.roomDetails.costPerNight.toFixed(2)}</li>
                     </ul>
                 </summary>
+                <button class="sub-link ${hideBtn}" id="${booking.id}">Delete</button>
             </div>`
     });
 }
@@ -82,7 +95,7 @@ const displayAvailableRoomCards = (container, startDate, availableRooms) => {
                         <li class="small"><span>cost/night:</span> $${room.costPerNight.toFixed(2)}</li>
                     </ul>
                 </summary>
-                <button class="add-icon sub-link" id="${room.number}">book</button>
+                <button class="sub-link" id="${room.number}">book</button>
             </div>`
     });
 }
@@ -135,4 +148,18 @@ export const getCurrentDate = () => {
     return `${yyyy}/${mm}/${dd}`;
 }
 
+// Manager
+export const displayManagerDashboard = (roomsAvailable, bookedRooms, totalRev) => {
+    let roomsAvailableCount = roomsAvailable.length;
+    let roomsOccupiedPercent = Math.round((bookedRooms.length / 25) * 100);
+    let cardStats = document.querySelector("#cardStats");
+    cardStats.innerHTML = `
+        <h2 class="margin-y3 text-center medium">Stats for ${getCurrentDate()}</h2>
+        <h2 class="margin-y2 underline">Rooms Available</h2>
+        <p class="small">${roomsAvailableCount}</p>
+        <h2 class="margin-y2 underline">Rooms Occupied</h2>
+        <p class="small">${roomsOccupiedPercent}%</p>
+        <h2 class="margin-y2 underline">Total Revenue</h2>
+        <p class="small">$${totalRev}</p>`
+}
 
