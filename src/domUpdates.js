@@ -1,4 +1,3 @@
-// View Control
 export const showElement = (element) => {
     element.classList.remove("hidden");
 }
@@ -11,7 +10,6 @@ const clearView = (view) => {
     view.innerHTML = "";
 }
 
-// Login validation
 export const displayValidationMessage = (message) => {
     const validationMsg = document.querySelector("#validationMsg");
     validationMsg.innerText = message;
@@ -25,7 +23,6 @@ export const displayManagerSearchMessage = (message) => {
     dashboardCardsContainer.innerHTML = `<h2 class='margin-y4 text-center medium'>${message}</h2>`;
 }
 
-// Display Dashboard
 export const displayDashboardCards = (bookings, isHidden=true) => {
     clearView(dashboardCardsContainer);  
     if (!bookings.length) {
@@ -70,7 +67,6 @@ const displayBookingsCost = (bookings) => {
     totalCost.innerText = `$${bookingTotalCost.toFixed(2)}`;
 }
 
-// Display Available Booking Cards
 export const displayAvailableBookingCards = (startDate, availableRooms) => {
     clearView(bookCardsContainer);
     if (!availableRooms.length) {
@@ -100,7 +96,6 @@ const displayAvailableRoomCards = (container, startDate, availableRooms) => {
     });
 }
 
-// Header Content
 export const displayDashboardHeader = (currentUser) => {
     const viewName = `${currentUser.name}`;
     const textDetail = "Welcome back! This is your space to view all the wonderful places you've explored or will explore soon.";
@@ -133,6 +128,20 @@ const displayHeaderContent = (viewName, iconName, textDetail, altText) => {
         <img class="head-icon" src="./images/${iconName}-icon.png" alt=${altText}>`    
 }
 
+export const displayManagerDashboard = (roomsAvailable, bookedRooms, totalRev) => {
+    let roomsAvailableCount = roomsAvailable.length;
+    let roomsOccupiedPercent = Math.round((bookedRooms.length / 25) * 100);
+    let cardStats = document.querySelector("#cardStats");
+    cardStats.innerHTML = `
+        <h2 class="margin-y3 text-center medium">Stats for ${getCurrentDate()}</h2>
+        <h2 class="margin-y2 underline">Rooms Available</h2>
+        <p class="small">${roomsAvailableCount}</p>
+        <h2 class="margin-y2 underline">Rooms Occupied</h2>
+        <p class="small">${roomsOccupiedPercent}%</p>
+        <h2 class="margin-y2 underline">Total Revenue</h2>
+        <p class="small">$${totalRev}</p>`
+}
+
 export const getCurrentDate = () => {
     let today = new Date();
     let dd = today.getDate();
@@ -146,20 +155,5 @@ export const getCurrentDate = () => {
         mm = `0${mm}`
     }
     return `${yyyy}/${mm}/${dd}`;
-}
-
-// Manager
-export const displayManagerDashboard = (roomsAvailable, bookedRooms, totalRev) => {
-    let roomsAvailableCount = roomsAvailable.length;
-    let roomsOccupiedPercent = Math.round((bookedRooms.length / 25) * 100);
-    let cardStats = document.querySelector("#cardStats");
-    cardStats.innerHTML = `
-        <h2 class="margin-y3 text-center medium">Stats for ${getCurrentDate()}</h2>
-        <h2 class="margin-y2 underline">Rooms Available</h2>
-        <p class="small">${roomsAvailableCount}</p>
-        <h2 class="margin-y2 underline">Rooms Occupied</h2>
-        <p class="small">${roomsOccupiedPercent}%</p>
-        <h2 class="margin-y2 underline">Total Revenue</h2>
-        <p class="small">$${totalRev}</p>`
 }
 

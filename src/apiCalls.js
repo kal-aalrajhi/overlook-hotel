@@ -1,4 +1,4 @@
-export const custFetchResponse = (url, requestType, data) => { // data is optional param, it's just for POST and PUT requests
+export const custFetchResponse = (url, requestType, data) => { 
     if (requestType === 'GET') {
         return fetch(url)
         .then(response => {
