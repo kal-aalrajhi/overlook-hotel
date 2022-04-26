@@ -72,14 +72,18 @@ bookCardsContainer.addEventListener("click", (event) => {
     }
 });
 
-// Delete bookings (only for manager to use)
 dashboardCardsContainer.addEventListener("click", (event) => {
     let bookingId = event.target.id; 
-    console.log(bookingId);
-    if (bookingId) {
+    console.log(bookingId && (getBookingDate(bookingId) >= getCurrentDate()));
+    if (bookingId && (getBookingDate(bookingId) >= getCurrentDate())) { 
         deleteBooking(bookingId);
     }
 });
+
+const getBookingDate = (bookingId) => {
+    let bookingToFind = allBookingsData.find(booking => booking.id === bookingId);
+    return bookingToFind.date;
+}
 
 bookSearchBtn.addEventListener("click", (event) => {
     event.preventDefault();
