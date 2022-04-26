@@ -74,7 +74,6 @@ bookCardsContainer.addEventListener("click", (event) => {
 
 dashboardCardsContainer.addEventListener("click", (event) => {
     let bookingId = event.target.id; 
-    console.log(bookingId && (getBookingDate(bookingId) >= getCurrentDate()));
     if (bookingId && (getBookingDate(bookingId) >= getCurrentDate())) { 
         deleteBooking(bookingId);
     }
@@ -103,7 +102,6 @@ logoutBtn.addEventListener("click", (event) => {
     logoutUser();
 });
 
-// Login/Logout Functions
 const loginError = (title, text, buttonText) => {
     Swal.fire({
         title: title,
@@ -211,6 +209,9 @@ const getAllBookingsFromAPI = () => {
         allBookingsData.map(booking => booking.setRoom(allRoomsData));
 
         currentUser.addAllBookings(allBookingsData);
+        
+        displayManagerDashboard(getAvailableRooms(getCurrentDate(), "all rooms"), getBookedRooms(), getTotalRevenue());
+        displayDashboardCards(currentUser.allBookings, false);
         displayAvailableBookings(getStartDateValue(), roomTypes.value);
     })
     .catch((err) => {
@@ -376,7 +377,7 @@ const filterByRoomType = (rooms, roomType) => {
     return filteredRooms;
 }
 
-// Manager Dashboard Utilities (put into manager class?)
+// Manager Dashboard Utilities 
 const getBookedRooms = (startDate = getCurrentDate()) => { // returns a booking object
     let todaysBookings = allBookingsData.filter(booking => booking.date === startDate)
     return todaysBookings;
