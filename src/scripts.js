@@ -14,7 +14,7 @@ import { Booking } from './classes/Booking';
 import { Room } from './classes/Room';
 import { showElement, hideElement, displayDashboardCards, displayAvailableBookingCards,
     displayDashboardHeader, displayBookHeader, getCurrentDate, displayValidationMessage,
-    displayManagerDashboard, displaySearchMessage } from './domUpdates';
+    displayManagerDashboard, displaySearchMessage, displayManagerSearchMessage } from './domUpdates';
 
 
 // Globals
@@ -301,8 +301,7 @@ const loadDashboardView = () => {
             displaySearchMessage(`Now viewing bookings for ${currentUser.name}. \n They've spent $${(currentUser.totalCost).toFixed(2)} in bookings.`);
             displayDashboardCards(currentUser.allBookings, false);
         } else {
-            // Move to domUpdates
-            dashboardCardsContainer.innerHTML = "<h2 class='margin-y4 text-center medium'>Use 'Find Customer' search below to Display a Customer's Bookings</h2>";
+            displayManagerSearchMessage("Use 'Find Customer' search below to Display a Customer's Bookings");
         }
     } 
     else {

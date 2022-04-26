@@ -11,7 +11,7 @@
 
   <!-- Navbar -->
   <nav class="main-nav navbar" aria-label="Main">
-    <div class="container flex">
+    <div class="container flex" aria-description="Navigation container with logo and navigation options">
       <h1 class="logo">Overlook Hotel</h1>
       <nav>
         <ul>
@@ -25,12 +25,13 @@
 
   <!-- Home View -->
   <section class="home-view" id="homeView"> 
-    <div class="container grid">
+    <div class="container grid" aria-description="A home view with a hotel description and login feature">
       <article class="home-view-txt">
         <h1>Best Bookings</h1>
         <p class="txt-primary">
-          Book hotel stays of all kinds. From all over.
-          Keep track of your stays and even book for
+          Book your hotel stay with us. You'll love it here. 
+          With an easy to use booking system, you can
+          keep track of your stays and even book for
           a future getaway. Everything you need to have a 
           magical and relaxing vacation starts here.
         </p>
@@ -38,13 +39,13 @@
       </article>
       <section class="home-view-card card">
         <!-- Login View -->
-        <form class="home-view-login" id="loginView">
+        <form class="home-view-login" id="loginView" aria-description="A login card with username and password fields">
           <h2>Please login</h2>
           <div class="form-control">
             <input type="text" name="name" placeholder="Username" id="currentUsername" required>
           </div>
           <div class="form-control">
-            <input type="text" name="password" placeholder="Password" id="currentPassword" required>
+            <input type="password" name="password" placeholder="Password" id="currentPassword" required>
           </div>
             <button class="btn btn-primary" id="loginBtn" type="submit">Login</button>
         </form>
@@ -63,14 +64,14 @@
 
   <!-- Head -->
   <section class="head bg-primary padding-y3 hidden" id="head">   
-    <div class="container grid head-dashboard" id="headerContainer">
+    <div class="container grid head-dashboard" id="headerContainer" aria-description="A head with a welcoming message and view guidence">
       <!-- display either dashboard header or book header -->
     </div>
   </section>
 
   <!-- Sub-Head -->
   <section class="sub-head bg-light padding-y3 hidden" id="subHead"> 
-    <div class="container grid">
+    <div class="container grid" aria-description="A subheading area with ways to book a room based off date and type">
       <article class="head-text">
         <h2 class="medium">Choose a Date and Room</h2>
         <form class="custom-search-form" role="search">
@@ -98,7 +99,7 @@
   <!-- Dashboard View -->
   <section class="section dashboard-view margin-y4 hidden" id="dashboardView"> 
     <!-- Dashboard Nav Container-->
-    <div class="booking-history container grid">
+    <div class="booking-history container grid" aria-description="A card with all booking history links you can use to sort your bookings">
       <!-- Customer Dashboard -->
       <nav class="booking-history-card card bg-light padding-3" id="customerBookingHistoryCard">
         <h2 class="margin-y2 underline">View Bookings</h2>
@@ -127,7 +128,7 @@
         <h2 class="small" id="searchMsg"></h2>
       </nav>
       <!-- Dashboard Booking Cards Container-->
-      <div class="dashboard-cards-container container grid padding-1" id="dashboardCardsContainer"> 
+      <div class="dashboard-cards-container container grid padding-1" id="dashboardCardsContainer" aria-description="A container displaying existing bookings"> 
         <!-- display dashboard cards here -->
       </div>
     </div>
@@ -136,14 +137,14 @@
   <!-- Book View --> 
   <section class="book-view margin-y2 hidden" id="bookView"> 
     <!-- Book Options Booking Cards Container-->
-    <div class="book-cards-container container grid" id="bookCardsContainer">
+    <div class="book-cards-container container grid" id="bookCardsContainer" aria-description="A container containing possible bookings">
       <!-- display book cards here -->
     </div>
   </section>
 
   <!-- Footer -->
   <footer class="footer bg-dark padding-y5 hidden" id="footer"> 
-    <div class="container grid grid-3">
+    <div class="container grid grid-3" aria-description="A footer with the website name and copyright">
       <h1>Overlook Hotel</h1>
       <p>Copyright &copy; 2022</p>
     </div>

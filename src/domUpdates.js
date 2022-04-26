@@ -21,6 +21,10 @@ export const displaySearchMessage = (message) => {
     searchMsg.innerText = message;
 }
 
+export const displayManagerSearchMessage = (message) => {
+    dashboardCardsContainer.innerHTML = `<h2 class='margin-y4 text-center medium'>${message}</h2>`;
+}
+
 // Display Dashboard
 export const displayDashboardCards = (bookings, isHidden=true) => {
     clearView(dashboardCardsContainer);  

@@ -130,6 +130,14 @@ img {
   font-size: 1.6rem;
 }
 
+.home-view-card input[type='password'] {
+  border: 0;
+  border-bottom: 0.1rem solid #b4becb;
+  width: 100%;
+  padding: 0.3rem;
+  font-size: 1.6rem;
+}
+
 .home-view-card input:focus { /*gets rid of login border..which may not be accessable */
   outline: none;
 }
