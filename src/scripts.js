@@ -72,7 +72,7 @@ bookCardsContainer.addEventListener("click", (event) => {
 dashboardCardsContainer.addEventListener("click", (event) => {
     let bookingId = event.target.id; 
     if (!(getBookingDate(bookingId) >= getCurrentDate())) {
-        displaySearchMessage("You cannot delete past bookings.")
+        displaySearchMessage("You cannot delete past bookings.");
     }
     if (bookingId && (getBookingDate(bookingId) >= getCurrentDate())) { 
         deleteBooking(bookingId);
