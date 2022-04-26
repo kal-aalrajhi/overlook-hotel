@@ -74,18 +74,12 @@ bookCardsContainer.addEventListener("click", (event) => {
 
 // Delete bookings (only for manager to use)
 dashboardCardsContainer.addEventListener("click", (event) => {
-    let roomNumberToDelete = Number(event.target.id);  
-    if (roomNumberToDelete) {
-        let bookingToDelete = getBookingByRoomNumber(roomNumberToDelete);
-        console.log("id to delete: ", bookingToDelete.id);
-        deleteBooking(bookingToDelete.id);
+    let bookingId = event.target.id; 
+    console.log(bookingId);
+    if (bookingId) {
+        deleteBooking(bookingId);
     }
 });
-
-const getBookingByRoomNumber = (roomNumber) => {
-    let booking = allBookingsData.find(booking => Number(booking.roomNumber) === Number(roomNumber));
-    return booking;
-}
 
 bookSearchBtn.addEventListener("click", (event) => {
     event.preventDefault();
@@ -249,9 +243,11 @@ const deleteBookingFromAPI = (bookingToDelete) => {
 }
 
 const deleteBooking = (bookingToDelete) => {
+    console.log("before delete: ", allBookingsData);
     Promise.all([deleteBookingFromAPI(bookingToDelete)]).then((deleteResponseData) => {
         console.log(deleteResponseData[0]); 
         getAllBookingsFromAPI();
+        console.log("after delete: ", allBookingsData);
     })
     .catch((err) => {
         displayValidationMessage(`${err} \n We apologize, but we were unable to delete this booking right now.`);
@@ -295,10 +291,10 @@ const loadDashboardView = () => {
         showElement(footer);
         displayManagerDashboard(getAvailableRooms(getCurrentDate(), "all rooms"), getBookedRooms(), getTotalRevenue());
         displayDashboardHeader(currentManager);
+        
         if (currentUser !== "") {
-            displaySearchMessage(`Now viewing bookings for ${currentUser.name}. 
-            \n They've spent $${(currentUser.totalCost).toFixed(2)} in bookings.`);
-            displayDashboardCards(currentUser.allBookings);
+            displaySearchMessage(`Now viewing bookings for ${currentUser.name}. \n They've spent $${(currentUser.totalCost).toFixed(2)} in bookings.`);
+            displayDashboardCards(currentUser.allBookings, false);
         } else {
             // Move to domUpdates
             dashboardCardsContainer.innerHTML = "<h2 class='margin-y4 text-center medium'>Use 'Find Customer' search below to Display a Customer's Bookings</h2>";

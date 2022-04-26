@@ -22,20 +22,24 @@ export const displaySearchMessage = (message) => {
 }
 
 // Display Dashboard
-export const displayDashboardCards = (bookings) => {
+export const displayDashboardCards = (bookings, isHidden=true) => {
     clearView(dashboardCardsContainer);  
     if (!bookings.length) {
         dashboardCardsContainer.innerHTML = `<h1>Sorry, no bookings of this type are available.</h1>`
     } else {
-        displayBookedCards(dashboardCardsContainer, bookings);
+        displayBookedCards(bookings, isHidden);
     }
     displayBookingsCost(bookings);
 }
 
-const displayBookedCards = (container, bookings) => {
+const displayBookedCards = (bookings, isHidden) => {
+    let hideBtn = "";
+    if (isHidden) {
+        hideBtn = "hidden";
+    }
     bookings.forEach(booking => { 
-        container.innerHTML += `
-            <div class="booking-card card flex" tabindex="0" id="${booking.id}">
+        dashboardCardsContainer.innerHTML += `
+            <div class="booking-card card flex" tabindex="0">
                 <img class="bed-icon" src="./images/bed-${booking.roomDetails.numBeds}-icon.png" alt="front facing ${booking.roomDetails.numBeds}-bed icon">
                 <summary class="booking-card-text">
                     <h3>room ${booking.roomDetails.number}</h3>
@@ -48,7 +52,7 @@ const displayBookedCards = (container, bookings) => {
                         <li class="small"><span>cost/night:</span> $${booking.roomDetails.costPerNight.toFixed(2)}</li>
                     </ul>
                 </summary>
-                <button class="sub-link" id="${booking.roomDetails.number}">Delete</button>
+                <button class="sub-link ${hideBtn}" id="${booking.id}">Delete</button>
             </div>`
     });
 }
@@ -154,6 +158,4 @@ export const displayManagerDashboard = (roomsAvailable, bookedRooms, totalRev) =
         <h2 class="margin-y2 underline">Total Revenue</h2>
         <p class="small">$${totalRev}</p>`
 }
-
-// I can use viewBookingsBy to display dashboard cards of todays bookings
 
