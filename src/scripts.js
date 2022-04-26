@@ -77,7 +77,8 @@ dashboardCardsContainer.addEventListener("click", (event) => {
     let roomNumberToDelete = Number(event.target.id);  
     if (roomNumberToDelete) {
         let bookingToDelete = getBookingByRoomNumber(roomNumberToDelete);
-        deleteBooking(bookingToDelete);
+        console.log("id to delete: ", bookingToDelete.id);
+        deleteBooking(bookingToDelete.id);
     }
 });
 
@@ -177,9 +178,9 @@ const loginUser = () => {
 const logoutUser = () => {
     currentUser = "";
     currentManager = "";
+    displaySearchMessage("");
     hideElement(logoutView);
     showElement(loginView);
-    displaySearchMessage("");
     displayValidationMessage("You're successfully logged out.");
 }
 
@@ -190,35 +191,36 @@ const loadData = () => {
     const getRoomsResponse = custFetchResponse('http://localhost:3001/api/v1/rooms', 'GET');
   
     Promise.all([getUsersResponse, getBookingsResponse, getRoomsResponse]).then((data) => {
-        let tempData = [];
-
-        tempData = data[0].customers; 
-        tempData.forEach(userData => { // MAP
-            allUsersData.push(new User(userData));
-        });
-
-        tempData = data[1].bookings; 
-        tempData.forEach(bookingData => { // MAP
-            allBookingsData.push(new Booking(bookingData));
-        });
+        allUsersData = data[0].customers.map(userData => new User(userData));
+        allBookingsData = data[1].bookings.map(bookingData => new Booking(bookingData));
+        allRoomsData = data[2].rooms.map(roomData => new Room(roomData));
         
-        tempData = data[2].rooms; 
-        tempData.forEach(roomData => { // MAP
-            allRoomsData.push(new Room(roomData));
-        });
-
-        allBookingsData.forEach(booking => { // MAP
-            booking.setRoom(allRoomsData);
-        });
+        allBookingsData.map(booking => booking.setRoom(allRoomsData));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+        displayValidationMessage(`${err} \n We apologize, our servers might be down.`);
+        console.log(err);
+    });
 }
 
 const getAllBookingsFromAPI = () => {
     let url = 'http://localhost:3001/api/v1/bookings';
     let requestType = 'GET';
-    return custFetchResponse(url, requestType);
+
+    Promise.all([custFetchResponse(url, requestType)]).then((getResponseData) => {
+        allBookingsData = []; 
+        allBookingsData = getResponseData[0].bookings.map(bookingData => new Booking(bookingData));
+        allBookingsData.map(booking => booking.setRoom(allRoomsData));
+
+        currentUser.addAllBookings(allBookingsData);
+        displayAvailableBookings(getStartDateValue(), roomTypes.value);
+    })
+    .catch((err) => {
+        displayValidationMessage(`${err} \n We apologize, but we can't get your booking data right now.`);
+        console.log(err);
+    });
 }
+
 // Add Bookings
 const postNewBookingToAPI = (roomNumberToBook) => {
     let url = 'http://localhost:3001/api/v1/bookings'; 
@@ -230,67 +232,31 @@ const postNewBookingToAPI = (roomNumberToBook) => {
 
 const addNewBooking = (roomNumberToBook) => {
     Promise.all([postNewBookingToAPI(roomNumberToBook)]).then((postResponseData) => {
-        console.log(postResponseData[0]); // Hope for success message
-        
-        Promise.all([getAllBookingsFromAPI()]).then((getResponseData) => {
-            let tempData = [];
-            allBookingsData = []; 
-            
-            // update all bookings data
-            tempData = getResponseData[0].bookings;
-            tempData.forEach(bookingData => {
-                allBookingsData.push(new Booking(bookingData));
-            });
-    
-            // update every bookings 'this.roomDetails' property
-            allBookingsData.forEach(booking => {
-                booking.setRoom(allRoomsData);
-            });
-    
-            // update user's bookings
-            currentUser.addAllBookings(allBookingsData);
-    
-            displayAvailableBookings(getStartDateValue(), roomTypes.value);
-        }).catch((err) => console.log(err));
+        console.log(postResponseData[0]); 
+        getAllBookingsFromAPI();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+        displayValidationMessage(`${err} \n We apologize, but we were unable to add your booking right now.`);
+        console.log(err);
+    });
 }
 
 // Delete bookings
 const deleteBookingFromAPI = (bookingToDelete) => {
-    let url = `http://localhost:3001/api/v1/bookings/${bookingToDelete.id}`; 
+    let url = `http://localhost:3001/api/v1/bookings/${bookingToDelete}`; 
     let requestType = 'DELETE';
     return custFetchResponse(url, requestType);
 }
 
 const deleteBooking = (bookingToDelete) => {
     Promise.all([deleteBookingFromAPI(bookingToDelete)]).then((deleteResponseData) => {
-        console.log(deleteResponseData[0]); // Hope for success message
-        
-        Promise.all([getAllBookingsFromAPI()]).then((getResponseData) => {
-            let tempData = [];
-            allBookingsData = []; 
-            
-            // update all bookings data
-            tempData = getResponseData[0].bookings;
-            tempData.forEach(bookingData => {
-                allBookingsData.push(new Booking(bookingData));
-            });
-    
-            // update every bookings 'this.roomDetails' property
-            allBookingsData.forEach(booking => {
-                booking.setRoom(allRoomsData);
-            });
-    
-            // update user's bookings
-            currentUser.addAllBookings(allBookingsData);
-    
-            displayDashboardCards(currentUser.allBookings);
-            displaySearchMessage(`Now viewing bookings for ${currentUser.name}. 
-            \n They've spent $${(currentUser.totalCost).toFixed(2)} in bookings.`);
-        }).catch((err) => console.log(err));
+        console.log(deleteResponseData[0]); 
+        getAllBookingsFromAPI();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+        displayValidationMessage(`${err} \n We apologize, but we were unable to delete this booking right now.`);
+        console.log(err);
+    });
 }
 
 // Functions
