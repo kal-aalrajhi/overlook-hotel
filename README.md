@@ -92,7 +92,7 @@ This app has a fully working login system that saves all the customers bookings 
 
 6. You can delete bookings for users
 
-![Delete bookings](https://media.giphy.com/media/3hPiZ5Y7ujvqnItkni/giphy.gif)
+![Delete bookings](https://media.giphy.com/media/J4AhOo0gvAV80fcLkN/giphy.gif)
 
 7. You can add bookings for users
 
