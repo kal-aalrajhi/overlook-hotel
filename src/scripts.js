@@ -138,11 +138,12 @@ const validateUser = (username, password) => {
         displayValidationMessage(`You've successfully logged in, ${currentManager.name}.`);
         return true; 
     }
-
+    console.log(typeof username[8]);
     if ((username.length > 10)  
         || (userId < 1 || userId > 50)
         || (userId === NaN)
-        || (username.substring(0, 8) !== "customer")) {
+        || (username.substring(0, 8) !== "customer")
+        || (Number(username[8]) === 0)) {
         displayValidationMessage("Invalid username.");
         return false;
     } else if (password !== "overlook2021") {
