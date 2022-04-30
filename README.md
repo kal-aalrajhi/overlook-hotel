@@ -123,5 +123,5 @@ And be sure to explore our other features!
 - Allow users to book using a date range
 
 #### Deployable
-[Overlook-Hotel](https://kal-aalrajhi.github.io/overlook-hotel/)
-[Please visit Instructions on Use before using](#instructions-on-use)
+- [Visit Overlook-Hotel](https://kal-aalrajhi.github.io/overlook-hotel/)
+    - [Please visit Instructions on Use before using](#instructions-on-use)
