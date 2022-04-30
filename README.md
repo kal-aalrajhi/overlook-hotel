@@ -25,6 +25,7 @@
 - [Challenges and Wins](#challenges-and-wins)
 - [Project Overview and Goals](#project-overview-and-goals)
 - [Future Additons](#future-additons)
+- [Deployable](#deployable)
 
 #### About the Project
 Welcome to Overlook hotel, where the sights are sightful and rooms are plenty! Book your hotel stay with us. You'll love it here. With an easy to use booking system, you can keep track of your stays and even book for a future getaway. There is so much to explore, to get started login as either a *customer* or *manager*. As a customer you can book future stays, see all your bookings, and total cost. As a manager you can delete future bookings for customers and see various hotel stats. 
@@ -120,3 +121,7 @@ And be sure to explore our other features!
 - Allow managers to delete accounts
 - Add room images
 - Allow users to book using a date range
+
+#### Deployable
+[Overlook-Hotel](https://kal-aalrajhi.github.io/overlook-hotel/)
+[Please visit Instructions on Use before using](#instructions-on-use)
