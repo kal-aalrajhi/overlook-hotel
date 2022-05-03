@@ -128,4 +128,4 @@ And be sure to explore our other features!
 
 #### Deployable
 - [Visit Overlook-Hotel](https://kal-aalrajhi.github.io/overlook-hotel/)
-    - [Please visit Instructions on Use before using](#instructions-on-use)
+[Please visit instructions before using](#instructions-on-use)
