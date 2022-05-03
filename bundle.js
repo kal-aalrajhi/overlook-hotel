@@ -4345,8 +4345,6 @@ const getCurrentDate = () => {
     let dd = today.getDate();
     let mm = today.getMonth() + 1;
     let yyyy = today.getFullYear();
-    console.log('dd ', dd)
-    console.log('mm', mm)
 
     if(Number(dd) < 10) {
         dd = `0${dd}`
