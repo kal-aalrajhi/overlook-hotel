@@ -44,7 +44,6 @@ This was part of the Turing School of Software and Design project curriculum. We
 - Javascript
 - HTML
 - CSS
-- CSS grid and flexbox
 - Mocha
 - Chai
 - Webpack
