@@ -1,5 +1,10 @@
 # Overlook Hotel
+<img width="1253" alt="overlook-heropage" src="https://user-images.githubusercontent.com/97044701/166574478-f0fe017d-cb8a-4098-b7df-4148e4794817.png">
 
+
+
+
+#### Getting Started
 1. Clone the repo from github.
 2. Cd into the directory from your terminal and install the project dependencies:
 - Run `npm install` or `npm i` in the terminal
@@ -30,7 +35,7 @@
 #### About the Project
 Welcome to Overlook hotel, where the sights are sightful and rooms are plenty! Book your hotel stay with us. You'll love it here. With an easy to use booking system, you can keep track of your stays and even book for a future getaway. There is so much to explore, to get started login as either a *customer* or *manager*. As a customer you can book future stays, see all your bookings, and total cost. As a manager you can delete future bookings for customers and see various hotel stats. 
 
-This was part of the Turing School of Software and Design project curriculum. We were given 1 week to develop a hotel booking application using only vanilla JS and using Test Driven Development.
+This was part of the Turing School of Software and Design project curriculum. We were given 1 week to develop a hotel booking application using only vanilla JS and using Test Driven Development. The project spec can be found [here](https://frontend.turing.edu/projects/overlook.html).
 
 #### Contributors
  - [Kal Al-Rajhi](https://github.com/kal-aalrajhi)
