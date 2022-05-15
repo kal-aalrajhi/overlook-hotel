@@ -177,9 +177,9 @@ const logoutUser = () => {
 }
 
 const loadData = () => {
-    const getUsersResponse = custFetchResponse('http://localhost:3001/api/v1/customers', 'GET');
-    const getBookingsResponse = custFetchResponse('http://localhost:3001/api/v1/bookings', 'GET');
-    const getRoomsResponse = custFetchResponse('http://localhost:3001/api/v1/rooms', 'GET');
+    const getUsersResponse = custFetchResponse('https://overlook-hotel-project-2022.herokuapp.com/api/v1/customers', 'GET');
+    const getBookingsResponse = custFetchResponse('https://overlook-hotel-project-2022.herokuapp.com/api/v1/bookings', 'GET');
+    const getRoomsResponse = custFetchResponse('https://overlook-hotel-project-2022.herokuapp.com/api/v1/rooms', 'GET');
   
     Promise.all([getUsersResponse, getBookingsResponse, getRoomsResponse]).then((data) => {
         allUsersData = data[0].customers.map(userData => new User(userData));
