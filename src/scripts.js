@@ -195,7 +195,7 @@ const loadData = () => {
 }
 
 const getAllBookingsFromAPI = () => {
-    let url = 'http://localhost:3001/api/v1/bookings';
+    let url = 'https://overlook-hotel-project-2022.herokuapp.com/api/v1/bookings';
     let requestType = 'GET';
 
     Promise.all([custFetchResponse(url, requestType)]).then((getResponseData) => {
@@ -216,7 +216,7 @@ const getAllBookingsFromAPI = () => {
 }
 
 const postNewBookingToAPI = (roomNumberToBook) => {
-    let url = 'http://localhost:3001/api/v1/bookings'; 
+    let url = 'https://overlook-hotel-project-2022.herokuapp.com/api/v1/bookings'; 
     let requestType = 'POST';
     let date = getStartDateValue();
     let data = { 'userID': currentUser.id, 'date': date, 'roomNumber': roomNumberToBook }
@@ -235,7 +235,7 @@ const addNewBooking = (roomNumberToBook) => {
 }
 
 const deleteBookingFromAPI = (bookingToDelete) => {
-    let url = `http://localhost:3001/api/v1/bookings/${bookingToDelete}`; 
+    let url = `https://overlook-hotel-project-2022.herokuapp.com/api/v1/bookings/${bookingToDelete}`; 
     let requestType = 'DELETE';
     return custFetchResponse(url, requestType);
 }
