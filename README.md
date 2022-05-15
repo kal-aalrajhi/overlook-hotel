@@ -1,8 +1,9 @@
 # Overlook Hotel
 <img width="1253" alt="overlook-heropage" src="https://user-images.githubusercontent.com/97044701/166574478-f0fe017d-cb8a-4098-b7df-4148e4794817.png">
 
-
-
+#### Deployable
+- [Visit Overlook-Hotel](https://kal-aalrajhi.github.io/overlook-hotel/) | **Quick start: login with `username: customer50` and `password: overlook2021`** 
+- [Please visit instructions before using](#instructions-on-use)
 
 #### Getting Started
 1. Clone the repo from github.
@@ -22,6 +23,7 @@
 7. Your server should be ready! Test it by picking any of the given end-points.
 
 ### Table of Contents
+- [Deployable](#deployable)
 - [About the Project](#about-the-project)
 - [Contributors](#contributors)
 - [Technologies Used](#technologies-used)
@@ -30,7 +32,6 @@
 - [Challenges and Wins](#challenges-and-wins)
 - [Project Overview and Goals](#project-overview-and-goals)
 - [Future Additons](#future-additons)
-- [Deployable](#deployable)
 
 #### About the Project
 Welcome to Overlook hotel, where the sights are sightful and rooms are plenty! Book your hotel stay with us. You'll love it here. With an easy to use booking system, you can keep track of your stays and even book for a future getaway. There is so much to explore, to get started login as either a *customer* or *manager*. As a customer you can book future stays, see all your bookings, and total cost. As a manager you can delete future bookings for customers and see various hotel stats. 
@@ -125,7 +126,3 @@ And be sure to explore our other features!
 - Allow managers to delete accounts
 - Add room images
 - Allow users to book using a date range
-
-#### Deployable
-- [Visit Overlook-Hotel](https://kal-aalrajhi.github.io/overlook-hotel/)
-- [Please visit instructions before using](#instructions-on-use)
